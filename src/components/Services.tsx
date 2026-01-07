@@ -1,4 +1,4 @@
-import { BookOpen, Users, Calendar, Sparkles } from "lucide-react";
+import { BookOpen, Users, Calendar, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const services = [
@@ -36,66 +36,54 @@ const services = [
 
 const Services = () => {
   return (
-    <section className="py-24 bg-gradient-warm">
-      <div className="container px-4">
+    <section className="py-24 bg-muted/50">
+      <div className="container px-6">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6">
-            <Sparkles size={16} className="text-primary" />
-            <span className="text-sm font-sans font-medium text-primary">
-              What I Offer
-            </span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-serif font-semibold mb-4">
-            Your Path to <span className="text-gradient-gold">Resilience</span>
+        <div className="max-w-xl mb-16">
+          <p className="text-primary text-sm font-medium mb-3">Services</p>
+          <h2 className="text-3xl md:text-4xl font-serif font-semibold mb-4">
+            Your Path to Resilience
           </h2>
-          <p className="text-muted-foreground font-sans">
-            Choose the support that fits your journey. Every option is designed
-            to help you and your family thrive in your new home.
+          <p className="text-muted-foreground">
+            Choose the support that fits your journey.
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6">
           {services.map((service, index) => (
             <Link
               key={index}
               to={service.href}
-              className={`group relative p-8 rounded-2xl transition-all duration-500 hover:-translate-y-2 ${
+              className={`group p-6 rounded-xl transition-all duration-300 ${
                 service.featured
-                  ? "bg-gradient-gold text-primary-foreground shadow-gold"
-                  : "bg-card border border-border hover:shadow-elevated"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-card border border-border hover:border-primary/30"
               }`}
             >
-              {service.featured && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-card text-primary text-xs font-sans font-semibold rounded-full shadow-soft">
-                  Most Popular
-                </div>
-              )}
-
               <div
-                className={`w-14 h-14 flex items-center justify-center rounded-xl mb-6 ${
+                className={`w-10 h-10 flex items-center justify-center rounded-lg mb-5 ${
                   service.featured
-                    ? "bg-primary-foreground/20"
-                    : "bg-primary/10"
+                    ? "bg-primary-foreground/10"
+                    : "bg-muted"
                 }`}
               >
                 <service.icon
-                  size={28}
+                  size={20}
                   className={service.featured ? "text-primary-foreground" : "text-primary"}
                 />
               </div>
 
-              <div
-                className={`text-sm font-sans font-medium mb-2 ${
-                  service.featured ? "text-primary-foreground/80" : "text-primary"
+              <p
+                className={`text-xs font-medium mb-1 ${
+                  service.featured ? "text-primary-foreground/70" : "text-primary"
                 }`}
               >
                 {service.subtitle}
-              </div>
+              </p>
 
               <h3
-                className={`text-2xl font-serif font-semibold mb-3 ${
+                className={`text-xl font-serif font-semibold mb-3 ${
                   service.featured ? "text-primary-foreground" : "text-foreground"
                 }`}
               >
@@ -103,7 +91,7 @@ const Services = () => {
               </h3>
 
               <p
-                className={`text-sm font-sans leading-relaxed mb-6 ${
+                className={`text-sm leading-relaxed mb-5 ${
                   service.featured
                     ? "text-primary-foreground/80"
                     : "text-muted-foreground"
@@ -112,28 +100,20 @@ const Services = () => {
                 {service.description}
               </p>
 
-              <div
-                className={`text-lg font-serif font-semibold ${
-                  service.featured ? "text-primary-foreground" : "text-primary"
-                }`}
-              >
-                {service.price}
-              </div>
-
-              <div
-                className={`mt-6 pt-6 border-t ${
-                  service.featured
-                    ? "border-primary-foreground/20"
-                    : "border-border"
-                }`}
-              >
+              <div className="flex items-center justify-between">
                 <span
-                  className={`text-sm font-sans font-medium group-hover:underline ${
-                    service.featured ? "text-primary-foreground" : "text-primary"
+                  className={`text-sm font-medium ${
+                    service.featured ? "text-primary-foreground" : "text-foreground"
                   }`}
                 >
-                  Learn more →
+                  {service.price}
                 </span>
+                <ArrowRight
+                  size={16}
+                  className={`transition-transform group-hover:translate-x-1 ${
+                    service.featured ? "text-primary-foreground" : "text-primary"
+                  }`}
+                />
               </div>
             </Link>
           ))}

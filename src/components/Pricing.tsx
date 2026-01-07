@@ -1,4 +1,4 @@
-import { Check, Sparkles, Star } from "lucide-react";
+import { Check, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const tiers = [
@@ -58,71 +58,57 @@ const tiers = [
 
 const Pricing = () => {
   return (
-    <section className="py-24 bg-gradient-warm">
-      <div className="container px-4">
+    <section className="py-24 bg-muted/50">
+      <div className="container px-6">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6">
-            <Sparkles size={16} className="text-primary" />
-            <span className="text-sm font-sans font-medium text-primary">
-              Simple Pricing
-            </span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-serif font-semibold mb-4">
-            Invest in Your <span className="text-gradient-gold">Wellbeing</span>
+        <div className="max-w-xl mb-16">
+          <p className="text-primary text-sm font-medium mb-3">Pricing</p>
+          <h2 className="text-3xl md:text-4xl font-serif font-semibold mb-4">
+            Invest in Your Wellbeing
           </h2>
-          <p className="text-muted-foreground font-sans">
-            Choose the membership that fits your needs. All options include access
-            to our supportive expat community.
+          <p className="text-muted-foreground">
+            Choose the membership that fits your needs.
           </p>
         </div>
 
         {/* Pricing Grid */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6">
           {tiers.map((tier, index) => (
             <div
               key={index}
-              className={`relative rounded-2xl p-8 transition-all duration-300 ${
+              className={`relative rounded-xl p-6 ${
                 tier.featured
-                  ? "bg-gradient-gold text-primary-foreground shadow-gold scale-105"
-                  : "bg-card border border-border hover:shadow-elevated"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-card border border-border"
               }`}
             >
               {tier.featured && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-4 py-1 bg-card text-primary text-xs font-sans font-semibold rounded-full shadow-soft">
-                  <Star size={12} />
+                <div className="absolute -top-3 left-4 inline-flex items-center gap-1 px-3 py-1 bg-accent text-accent-foreground text-xs font-medium rounded-full">
+                  <Star size={10} />
                   Best Value
                 </div>
               )}
 
-              <div className="mb-6">
-                <div
-                  className={`text-sm font-sans font-medium mb-1 ${
-                    tier.featured ? "text-primary-foreground/80" : "text-primary"
+              <div className="mb-5">
+                <p
+                  className={`text-xs font-medium mb-1 ${
+                    tier.featured ? "text-primary-foreground/70" : "text-primary"
                   }`}
                 >
                   {tier.subtitle}
-                </div>
-                <h3
-                  className={`text-2xl font-serif font-semibold ${
-                    tier.featured ? "text-primary-foreground" : "text-foreground"
-                  }`}
-                >
+                </p>
+                <h3 className="text-xl font-serif font-semibold">
                   {tier.name}
                 </h3>
               </div>
 
-              <div className="mb-6">
+              <div className="mb-5">
                 <div className="flex items-baseline gap-1">
-                  <span
-                    className={`text-4xl font-serif font-bold ${
-                      tier.featured ? "text-primary-foreground" : "text-foreground"
-                    }`}
-                  >
+                  <span className="text-3xl font-serif font-bold">
                     €{tier.monthlyPrice}
                   </span>
                   <span
-                    className={`text-sm font-sans ${
+                    className={`text-sm ${
                       tier.featured ? "text-primary-foreground/70" : "text-muted-foreground"
                     }`}
                   >
@@ -130,41 +116,34 @@ const Pricing = () => {
                   </span>
                 </div>
                 {tier.yearlyPrice && (
-                  <div
-                    className={`text-sm font-sans mt-1 ${
-                      tier.featured ? "text-primary-foreground/80" : "text-muted-foreground"
+                  <p
+                    className={`text-xs mt-1 ${
+                      tier.featured ? "text-primary-foreground/70" : "text-muted-foreground"
                     }`}
                   >
-                    or €{tier.yearlyPrice}/year{" "}
-                    <span className="text-primary font-semibold">
-                      ({tier.yearlySavings})
-                    </span>
-                  </div>
+                    or €{tier.yearlyPrice}/year ({tier.yearlySavings})
+                  </p>
                 )}
               </div>
 
               <p
-                className={`text-sm font-sans mb-6 ${
+                className={`text-sm mb-5 ${
                   tier.featured ? "text-primary-foreground/80" : "text-muted-foreground"
                 }`}
               >
                 {tier.description}
               </p>
 
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-2.5 mb-6">
                 {tier.features.map((feature, i) => (
-                  <li key={i} className="flex items-start gap-3">
+                  <li key={i} className="flex items-start gap-2.5">
                     <Check
-                      size={18}
+                      size={16}
                       className={`flex-shrink-0 mt-0.5 ${
                         tier.featured ? "text-primary-foreground" : "text-primary"
                       }`}
                     />
-                    <span
-                      className={`text-sm font-sans ${
-                        tier.featured ? "text-primary-foreground/90" : "text-foreground"
-                      }`}
-                    >
+                    <span className="text-sm">
                       {feature}
                     </span>
                   </li>
@@ -173,10 +152,10 @@ const Pricing = () => {
 
               <Link
                 to={tier.name === "1:1 Session" ? "/booking" : "/resilient-hub"}
-                className={`block w-full py-3.5 text-center font-sans font-semibold rounded-xl transition-all duration-300 ${
+                className={`block w-full py-3 text-center font-medium text-sm rounded-lg transition-all ${
                   tier.featured
-                    ? "bg-card text-primary hover:bg-card/90"
-                    : "bg-gradient-gold text-primary-foreground shadow-gold hover:shadow-elevated"
+                    ? "bg-card text-foreground hover:bg-card/90"
+                    : "bg-primary text-primary-foreground hover:opacity-90"
                 }`}
               >
                 {tier.cta}

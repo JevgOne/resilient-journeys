@@ -1,54 +1,36 @@
 import { Link } from "react-router-dom";
-import { Mail, Instagram, Facebook, Linkedin } from "lucide-react";
-import Logo from "./Logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary border-t border-border">
-      <div className="container px-4 py-16">
-        <div className="grid md:grid-cols-4 gap-12">
+    <footer className="py-16 border-t border-border">
+      <div className="container px-6">
+        <div className="grid md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="md:col-span-2">
-            <div className="mb-6">
-              <Logo />
-            </div>
-            <p className="text-muted-foreground font-sans max-w-sm mb-6">
+            <Link to="/" className="font-serif text-xl font-semibold tracking-tight">
+              Resilient Mind
+            </Link>
+            <p className="text-muted-foreground text-sm mt-4 max-w-xs">
               Helping expat families build resilience through creative art therapy
-              and evidence-based techniques. Based in Spain, serving worldwide.
+              and evidence-based techniques.
             </p>
-            <div className="flex gap-4">
-              {[
-                { icon: Instagram, href: "#" },
-                { icon: Facebook, href: "#" },
-                { icon: Linkedin, href: "#" },
-                { icon: Mail, href: "mailto:hello@resilientmind.com" },
-              ].map((social, index) => (
-                <a
-                  key={index}
-                  href={social.href}
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                >
-                  <social.icon size={18} />
-                </a>
-              ))}
-            </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Links */}
           <div>
-            <h4 className="font-serif font-semibold text-lg mb-4">Explore</h4>
+            <h4 className="font-medium text-sm mb-4">Explore</h4>
             <ul className="space-y-3">
               {[
                 { label: "Home", href: "/" },
-                { label: "About Me", href: "/about" },
+                { label: "About", href: "/about" },
                 { label: "Resilient Hub", href: "/resilient-hub" },
-                { label: "Book a Session", href: "/booking" },
+                { label: "Booking", href: "/booking" },
                 { label: "Blog", href: "/blog" },
-              ].map((link, index) => (
-                <li key={index}>
+              ].map((link) => (
+                <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="text-muted-foreground font-sans hover:text-primary transition-colors"
+                    className="text-muted-foreground text-sm hover:text-foreground transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -59,39 +41,37 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-serif font-semibold text-lg mb-4">Contact</h4>
-            <ul className="space-y-3 text-muted-foreground font-sans">
+            <h4 className="font-medium text-sm mb-4">Contact</h4>
+            <ul className="space-y-3 text-muted-foreground text-sm">
               <li>hello@resilientmind.com</li>
               <li>Spain (GMT+1)</li>
-              <li className="pt-4">
-                <Link
-                  to="/booking"
-                  className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-gold text-primary-foreground font-semibold text-sm rounded-full shadow-gold hover:shadow-elevated transition-all duration-300"
-                >
-                  Book a Call
-                </Link>
-              </li>
             </ul>
+            <Link
+              to="/booking"
+              className="btn-primary mt-6 text-sm"
+            >
+              Book a Call
+            </Link>
           </div>
         </div>
 
         {/* Bottom */}
-        <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-muted-foreground font-sans">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-border">
+          <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} Resilient Mind. All rights reserved.
           </p>
           <div className="flex gap-6">
             <Link
               to="/privacy"
-              className="text-sm text-muted-foreground font-sans hover:text-primary transition-colors"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
-              Privacy Policy
+              Privacy
             </Link>
             <Link
               to="/terms"
-              className="text-sm text-muted-foreground font-sans hover:text-primary transition-colors"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
-              Terms of Service
+              Terms
             </Link>
           </div>
         </div>

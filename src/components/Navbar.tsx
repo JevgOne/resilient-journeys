@@ -14,10 +14,10 @@ import {
 import Logo from "./Logo";
 
 const navLinks = [
-  { href: "/", label: "Domů" },
-  { href: "/about", label: "O mně" },
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
   { href: "/resilient-hub", label: "Resilient Hub" },
-  { href: "/booking", label: "Rezervace" },
+  { href: "/booking", label: "Booking" },
   { href: "/blog", label: "Blog" },
 ];
 
@@ -84,7 +84,7 @@ const Navbar = () => {
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="border-gold/30 hover:bg-gold/10">
                     <User className="h-4 w-4 mr-2" />
-                    {profile?.full_name?.split(' ')[0] || 'Účet'}
+                    {profile?.full_name?.split(' ')[0] || 'Account'}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
@@ -106,13 +106,13 @@ const Navbar = () => {
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link to="/profile" className="cursor-pointer">
-                      Nastavení profilu
+                      Profile Settings
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-destructive">
                     <LogOut className="h-4 w-4 mr-2" />
-                    Odhlásit se
+                    Sign Out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -120,14 +120,14 @@ const Navbar = () => {
               <>
                 <Link to="/auth">
                   <Button variant="ghost" className="text-foreground/80 hover:text-foreground">
-                    Přihlásit
+                    Sign In
                   </Button>
                 </Link>
                 <Link
                   to="/resilient-hub"
                   className="inline-flex items-center justify-center px-6 py-2.5 bg-gradient-gold text-primary-foreground font-sans font-semibold text-sm rounded-full shadow-gold hover:shadow-elevated transition-all duration-300 hover:scale-105"
                 >
-                  Začít
+                  Get Started
                 </Link>
               </>
             )}
@@ -188,7 +188,7 @@ const Navbar = () => {
                     }}
                     className="font-sans text-base font-medium px-2 py-2 text-left text-destructive"
                   >
-                    Odhlásit se
+                    Sign Out
                   </button>
                 </>
               ) : (
@@ -198,14 +198,14 @@ const Navbar = () => {
                     onClick={() => setIsOpen(false)}
                     className="font-sans text-base font-medium px-2 py-2 text-foreground/80"
                   >
-                    Přihlásit
+                    Sign In
                   </Link>
                   <Link
                     to="/resilient-hub"
                     onClick={() => setIsOpen(false)}
                     className="inline-flex items-center justify-center px-6 py-3 bg-gradient-gold text-primary-foreground font-sans font-semibold text-sm rounded-full mt-2"
                   >
-                    Začít
+                    Get Started
                   </Link>
                 </>
               )}

@@ -56,7 +56,7 @@ const Admin = () => {
   if (loading || checkingAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="animate-pulse text-gold">Ověřuji přístup...</div>
+        <div className="animate-pulse text-gold">Verifying access...</div>
       </div>
     );
   }
@@ -78,9 +78,9 @@ const Admin = () => {
             </div>
             <div>
               <h1 className="font-serif text-3xl md:text-4xl text-foreground">
-                Administrace
+                Administration
               </h1>
-              <p className="text-muted-foreground">Správa obsahu a uživatelů</p>
+              <p className="text-muted-foreground">Content and user management</p>
             </div>
           </div>
 
@@ -89,27 +89,27 @@ const Admin = () => {
             <TabsList className="bg-cream/50 mb-6 flex-wrap h-auto gap-1">
               <TabsTrigger value="videos" className="data-[state=active]:bg-gold data-[state=active]:text-white">
                 <Video className="h-4 w-4 mr-2" />
-                Videa
+                Videos
               </TabsTrigger>
               <TabsTrigger value="categories" className="data-[state=active]:bg-gold data-[state=active]:text-white">
                 <FileText className="h-4 w-4 mr-2" />
-                Kategorie
+                Categories
               </TabsTrigger>
               <TabsTrigger value="subscriptions" className="data-[state=active]:bg-gold data-[state=active]:text-white">
                 <CreditCard className="h-4 w-4 mr-2" />
-                Předplatné
+                Subscriptions
               </TabsTrigger>
               <TabsTrigger value="users" className="data-[state=active]:bg-gold data-[state=active]:text-white">
                 <Users className="h-4 w-4 mr-2" />
-                Uživatelé
+                Users
               </TabsTrigger>
               <TabsTrigger value="testimonials" className="data-[state=active]:bg-gold data-[state=active]:text-white">
                 <Star className="h-4 w-4 mr-2" />
-                Recenze
+                Testimonials
               </TabsTrigger>
               <TabsTrigger value="settings" className="data-[state=active]:bg-gold data-[state=active]:text-white">
                 <Settings className="h-4 w-4 mr-2" />
-                Nastavení
+                Settings
               </TabsTrigger>
             </TabsList>
 

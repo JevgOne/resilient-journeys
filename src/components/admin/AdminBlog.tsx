@@ -136,8 +136,8 @@ const AdminBlog = () => {
       published_at: formData.is_published && !editingPost?.is_published ? new Date().toISOString() : undefined,
       min_membership: formData.min_membership,
       tags: formData.tags.split(',').map(t => t.trim()).filter(t => t),
-      meta_title: formData.meta_title || null,
-      meta_description: formData.meta_description || null,
+      meta_title: formData.meta_title || formData.title,
+      meta_description: formData.meta_description || formData.excerpt || formData.content.substring(0, 160),
       author_id: user?.id
     };
 
@@ -324,7 +324,7 @@ const AdminBlog = () => {
                     value={formData.meta_description}
                     onChange={(e) => setFormData({ ...formData, meta_description: e.target.value })}
                     rows={2}
-                    placeholder="SEO description for search engines"
+                    placeholder="Leave empty to use excerpt"
                   />
                 </div>
 

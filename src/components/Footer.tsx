@@ -13,15 +13,15 @@ const Footer = () => {
               <Logo />
             </div>
             <p className="text-muted-foreground font-sans max-w-sm mb-6">
-              Helping expat families build resilience through creative art therapy
-              and evidence-based techniques. Based in Spain, serving worldwide.
+              Helping expatriates and globally mobile individuals build resilience
+              through creative art expressive therapy and evidence-based techniques.
             </p>
             <div className="flex gap-4">
               {[
                 { icon: Instagram, href: "#" },
                 { icon: Facebook, href: "#" },
                 { icon: Linkedin, href: "#" },
-                { icon: Mail, href: "mailto:hello@resilientmind.com" },
+                { icon: Mail, href: "mailto:silvie@artexpressivetherapy.com" },
               ].map((social, index) => (
                 <a
                   key={index}
@@ -61,8 +61,8 @@ const Footer = () => {
           <div>
             <h4 className="font-serif font-semibold text-lg mb-4">Contact</h4>
             <ul className="space-y-3 text-muted-foreground font-sans">
-              <li>hello@resilientmind.com</li>
-              <li>Spain (GMT+1)</li>
+              <li>silvie@artexpressivetherapy.com</li>
+              <li>Based in Spain, serving worldwide</li>
               <li className="pt-4">
                 <Link
                   to="/booking"

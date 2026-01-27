@@ -48,14 +48,14 @@ const About = () => {
                 </div>
 
                 <h1 className="text-3xl md:text-5xl font-serif font-semibold mb-6">
-                  Your Guide to Building a{" "}
-                  <span className="text-gradient-gold">Resilient Mind</span>
+                  I Help Expatriates and{" "}
+                  <span className="text-gradient-gold">Globally Mobile Individuals</span>
                 </h1>
 
                 <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-6">
-                  I understand the unique challenges of expat life because I have lived it. 
-                  From the excitement of new beginnings to the quiet moments of missing 
-                  home—I have experienced it all.
+                  I'm Silvie Bogdanova, and I understand the unique challenges of expat life
+                  because I have lived it. From the excitement of new beginnings to the quiet
+                  moments of missing home—I have experienced it all.
                 </p>
               </div>
             </div>
@@ -69,29 +69,34 @@ const About = () => {
               <h2 className="text-2xl md:text-4xl font-serif font-semibold mb-8 text-center">
                 My Journey
               </h2>
-              
+
               <div className="prose prose-lg max-w-none">
                 <p className="text-muted-foreground font-sans leading-relaxed mb-6">
-                  My journey into resilience coaching began in Australia, where I first 
-                  experienced what it means to rebuild your life in a completely new 
-                  environment. The language was familiar, but the culture, the social 
-                  norms, and the sheer distance from family tested me in ways I never 
-                  anticipated.
-                </p>
-                
-                <p className="text-muted-foreground font-sans leading-relaxed mb-6">
-                  Now living in Spain, I face new challenges—learning Spanish, navigating 
-                  a different bureaucratic system, and helping my family adapt to yet 
-                  another culture. These experiences have taught me that resilience is 
-                  not about being unbreakable; it is about learning to bend without 
-                  breaking.
+                  Originally from the Czech Republic, my journey into resilience work began
+                  in Australia, where I first experienced what it means to rebuild your life
+                  in a completely new environment. The language was familiar, but the culture,
+                  the social norms, and the sheer distance from family tested me in ways I
+                  never anticipated.
                 </p>
 
                 <p className="text-muted-foreground font-sans leading-relaxed mb-6">
-                  Through my work with art therapy and creative expression, I discovered 
-                  that resilience can be cultivated through intentional practice. The 
-                  combination of evidence-based psychological techniques with creative 
-                  expression—like silk painting—creates a powerful pathway to inner strength.
+                  Now living in Spain, I continue to embrace new challenges—learning Spanish,
+                  navigating a different system, and helping others adapt to life abroad.
+                  These experiences have taught me that resilience is not about being
+                  unbreakable; it is about learning to bend without breaking.
+                </p>
+
+                <p className="text-muted-foreground font-sans leading-relaxed mb-6">
+                  Through my work with art expressive therapy and creative expression, I discovered
+                  that resilience can be cultivated through intentional practice. The combination
+                  of evidence-based psychological techniques with creative expression—like silk
+                  painting—creates a powerful pathway to inner strength and healing.
+                </p>
+
+                <p className="text-muted-foreground font-sans leading-relaxed mb-6">
+                  I am passionate about inspiring, empowering and uplifting people. My focus
+                  is on how creative practices can enhance mindfulness and support subconscious
+                  healing, working on multiple levels—mentally, emotionally, and physically.
                 </p>
               </div>
             </div>
@@ -103,25 +108,25 @@ const About = () => {
           <div className="container px-4">
             <div className="max-w-5xl mx-auto">
               <h2 className="text-2xl md:text-4xl font-serif font-semibold mb-12 text-center">
-                What I Bring to Your Journey
+                Qualifications & Expertise
               </h2>
-              
+
               <div className="grid md:grid-cols-3 gap-8">
                 {[
                   {
                     icon: Palette,
-                    title: "Art Therapy",
-                    description: "Creative techniques including silk painting to process emotions and build resilience through artistic expression.",
+                    title: "Art Expressive Therapy",
+                    description: "Art Therapist Diploma (HH Dip A.Th). Specialized in silk painting and creative techniques for emotional processing.",
                   },
                   {
                     icon: Award,
-                    title: "Evidence-Based Methods",
-                    description: "Psychological techniques grounded in research, adapted specifically for the expat experience.",
+                    title: "Professional Credentials",
+                    description: "Member of the International Institute for Complementary Therapists. Diploma in Holistic Counselling.",
                   },
                   {
                     icon: Users,
-                    title: "Family-Centered Approach",
-                    description: "Programs designed for both parents and children, recognizing that resilience is a family affair.",
+                    title: "Expat Experience",
+                    description: "Lived and worked in Czech Republic, Australia, and Spain. Deep understanding of globally mobile life challenges.",
                   },
                 ].map((item, index) => (
                   <div key={index} className="text-center p-6">

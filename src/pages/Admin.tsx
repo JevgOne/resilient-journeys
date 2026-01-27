@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Shield, Video, Users, Star, Settings, FileText, CreditCard, Download, BookOpen, Type } from 'lucide-react';
+import { Shield, Video, Users, Star, Settings, FileText, CreditCard, Download, BookOpen, Type, CalendarDays } from 'lucide-react';
 import AdminVideos from '@/components/admin/AdminVideos';
 import AdminUsers from '@/components/admin/AdminUsers';
 import AdminTestimonials from '@/components/admin/AdminTestimonials';
@@ -15,6 +15,7 @@ import AdminSubscriptions from '@/components/admin/AdminSubscriptions';
 import AdminResources from '@/components/admin/AdminResources';
 import AdminBlog from '@/components/admin/AdminBlog';
 import AdminCMS from '@/components/admin/AdminCMS';
+import AdminBookings from '@/components/admin/AdminBookings';
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -110,6 +111,10 @@ const Admin = () => {
                 <Download className="h-4 w-4 mr-2" />
                 Resources
               </TabsTrigger>
+              <TabsTrigger value="bookings" className="data-[state=active]:bg-gold data-[state=active]:text-white">
+                <CalendarDays className="h-4 w-4 mr-2" />
+                Bookings
+              </TabsTrigger>
               <TabsTrigger value="subscriptions" className="data-[state=active]:bg-gold data-[state=active]:text-white">
                 <CreditCard className="h-4 w-4 mr-2" />
                 Subscriptions
@@ -146,6 +151,10 @@ const Admin = () => {
 
             <TabsContent value="resources">
               <AdminResources />
+            </TabsContent>
+
+            <TabsContent value="bookings">
+              <AdminBookings />
             </TabsContent>
 
             <TabsContent value="subscriptions">

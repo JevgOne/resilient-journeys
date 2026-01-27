@@ -46,28 +46,28 @@ const AboutPreview = () => {
               </div>
 
               <h2 className="text-3xl md:text-5xl font-serif font-semibold mb-6">
-                I Know What It Feels Like to{" "}
-                <span className="text-gradient-gold">Start Over</span>
+                I Help Expatriates{" "}
+                <span className="text-gradient-gold">Build Resilience</span>
               </h2>
 
               <p className="text-muted-foreground font-sans leading-relaxed mb-6">
-                Having lived as an expat in Australia and now Spain, I intimately 
-                understand the challenges of building a new life abroad. The language 
-                barriers, the cultural differences, and the constant feeling of being 
-                slightly out of place.
+                I'm Silvie Bogdanova. Having lived as an expat in Australia and now Spain,
+                I intimately understand the challenges of building a new life abroad.
+                The cultural differences, the distance from family, and the journey of
+                creating a new sense of belonging.
               </p>
 
               <p className="text-muted-foreground font-sans leading-relaxed mb-8">
-                Through my journey, I discovered the power of creative art therapy 
-                and evidence-based resilience techniques. Now I help other expat 
-                families—especially mothers and their children—develop the inner 
-                strength to not just survive, but truly thrive.
+                Through my journey, I discovered the power of creative art expressive therapy
+                and evidence-based resilience techniques. Now I help expatriates and
+                globally mobile individuals develop the inner strength to not just survive,
+                but truly thrive.
               </p>
 
               {/* Skills */}
               <div className="flex flex-wrap gap-3 mb-8">
                 {[
-                  { icon: Palette, label: "Art Therapy" },
+                  { icon: Palette, label: "Art Expressive Therapy" },
                   { icon: Heart, label: "Resilience Coaching" },
                   { icon: MapPin, label: "Expat Experience" },
                 ].map((skill, index) => (

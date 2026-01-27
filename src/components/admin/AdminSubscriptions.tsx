@@ -48,7 +48,7 @@ const plans = [
     price: 47,
     interval: 'monthly',
     type: 'premium' as const,
-    features: ['Everything from Basic', 'Quarterly 1:1 consultations', 'Art therapy materials']
+    features: ['Everything from Basic', 'Quarterly 1:1 consultations', 'Art expressive therapy materials']
   },
   {
     id: 'premium_yearly',
@@ -57,7 +57,7 @@ const plans = [
     interval: 'yearly',
     type: 'premium' as const,
     savings: '2 months free',
-    features: ['Everything from Basic', 'Quarterly 1:1 consultations', 'Art therapy materials']
+    features: ['Everything from Basic', 'Quarterly 1:1 consultations', 'Art expressive therapy materials']
   }
 ];
 

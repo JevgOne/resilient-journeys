@@ -34,6 +34,7 @@ import {
   Music,
   File
 } from 'lucide-react';
+import UserBookings from '@/components/booking/UserBookings';
 
 interface VideoCategory {
   id: string;
@@ -519,94 +520,45 @@ const Dashboard = () => {
 
             {/* Sessions Tab */}
             <TabsContent value="sessions">
-              {profile?.membership_type === 'premium' ? (
-                <div className="space-y-6">
-                  {/* Premium Credits Widget */}
-                  {premiumCredits && (
-                    <Card className="border-gold/20 bg-gradient-to-br from-gold/5 to-transparent">
-                      <CardHeader>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="p-3 bg-gradient-gold rounded-full">
-                              <Crown className="h-6 w-6 text-white" />
-                            </div>
-                            <div>
-                              <CardTitle className="font-serif text-xl">Premium Consultations</CardTitle>
-                              <CardDescription>Your annual consultation credits for {new Date().getFullYear()}</CardDescription>
-                            </div>
+              <div className="space-y-6">
+                {/* Premium Credits Widget - only for premium members */}
+                {profile?.membership_type === 'premium' && premiumCredits && (
+                  <Card className="border-gold/20 bg-gradient-to-br from-gold/5 to-transparent">
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="p-3 bg-gradient-gold rounded-full">
+                            <Crown className="h-6 w-6 text-white" />
                           </div>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="flex items-center justify-between mb-4">
                           <div>
-                            <p className="text-3xl font-semibold text-gold">
-                              {premiumCredits.total - premiumCredits.used} / {premiumCredits.total}
-                            </p>
-                            <p className="text-sm text-muted-foreground">Sessions remaining</p>
+                            <CardTitle className="font-serif text-xl">Premium Consultations</CardTitle>
+                            <CardDescription>Your annual consultation credits for {new Date().getFullYear()}</CardDescription>
                           </div>
-                          <Link to="/booking">
-                            <Button className="bg-gold hover:bg-gold-dark text-white">
-                              <Calendar className="h-4 w-4 mr-2" />
-                              Book Consultation
-                            </Button>
-                          </Link>
                         </div>
-                        <div className="w-full bg-muted rounded-full h-3">
-                          <div
-                            className="bg-gradient-gold h-3 rounded-full transition-all"
-                            style={{ width: `${((premiumCredits.total - premiumCredits.used) / premiumCredits.total) * 100}%` }}
-                          />
-                        </div>
-                      </CardContent>
-                    </Card>
-                  )}
-
-                  {/* Booking Info */}
-                  <Card className="border-gold/20">
-                    <CardContent className="py-12 text-center">
-                      <div className="p-4 bg-gold/10 rounded-full w-fit mx-auto mb-4">
-                        <Calendar className="h-8 w-8 text-gold" />
                       </div>
-                      <h3 className="font-serif text-xl mb-2">Book Your Session</h3>
-                      <p className="text-muted-foreground mb-6">
-                        Schedule a 60-minute consultation at your convenience
-                      </p>
-                      <Link to="/booking">
-                        <Button className="bg-gold hover:bg-gold-dark text-white">
-                          <Calendar className="h-4 w-4 mr-2" />
-                          View Available Times
-                        </Button>
-                      </Link>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-center justify-between mb-4">
+                        <div>
+                          <p className="text-3xl font-semibold text-gold">
+                            {premiumCredits.total - premiumCredits.used} / {premiumCredits.total}
+                          </p>
+                          <p className="text-sm text-muted-foreground">Sessions remaining</p>
+                        </div>
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-3">
+                        <div
+                          className="bg-gradient-gold h-3 rounded-full transition-all"
+                          style={{ width: `${((premiumCredits.total - premiumCredits.used) / premiumCredits.total) * 100}%` }}
+                        />
+                      </div>
                     </CardContent>
                   </Card>
-                </div>
-              ) : (
-                <Card className="border-gold/20">
-                  <CardContent className="py-12 text-center">
-                    <div className="p-4 bg-gold/10 rounded-full w-fit mx-auto mb-4">
-                      <Calendar className="h-8 w-8 text-gold" />
-                    </div>
-                    <h3 className="font-serif text-xl mb-2">Personal Consultations</h3>
-                    <p className="text-muted-foreground mb-6">
-                      Personal consultations are available for Premium members or as individual sessions
-                    </p>
-                    <div className="flex flex-wrap gap-4 justify-center">
-                      <Link to="/booking">
-                        <Button variant="outline" className="border-gold text-gold hover:bg-gold hover:text-white">
-                          Book Individual Session (87€/h)
-                        </Button>
-                      </Link>
-                      <Link to="/resilient-hub">
-                        <Button className="bg-gold hover:bg-gold-dark text-white">
-                          <Crown className="h-4 w-4 mr-2" />
-                          Upgrade to Premium
-                        </Button>
-                      </Link>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
+                )}
+
+                {/* User Bookings */}
+                <UserBookings />
+              </div>
             </TabsContent>
           </Tabs>
         </div>

@@ -44,9 +44,9 @@ const ResilientHub = () => {
               </h1>
               
               <p className="text-lg text-muted-foreground font-sans mb-8 max-w-2xl mx-auto">
-                A structured journey through 12 aspects of resilience, combining 
-                creative art therapy techniques with evidence-based approaches 
-                designed specifically for expat families.
+                A structured journey through 12 aspects of resilience, combining
+                creative art expressive therapy techniques with evidence-based approaches
+                designed specifically for expatriates and globally mobile individuals.
               </p>
               
               <Link
@@ -157,12 +157,12 @@ const ResilientHub = () => {
                 </div>
                 
                 <h2 className="text-2xl md:text-4xl font-serif font-semibold mb-6">
-                  Art Therapy Materials Kit
+                  Art Expressive Therapy Materials Kit
                 </h2>
-                
+
                 <p className="text-primary-foreground/80 font-sans mb-8 max-w-2xl">
-                  Premium members receive a curated art therapy materials kit delivered 
-                  to their home, including supplies for silk painting and other creative 
+                  Premium members receive a curated art expressive therapy materials kit delivered
+                  to their home, including supplies for silk painting and other creative
                   exercises featured in the program.
                 </p>
                 

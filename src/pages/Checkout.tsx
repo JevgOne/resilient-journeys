@@ -51,7 +51,7 @@ const plans = {
     features: [
       'Vše z Basic',
       '4 osobní konzultace/rok',
-      'Art therapy materiály',
+      'Art expressive therapy materiály',
       'Prioritní email podpora',
       'Exkluzivní workshopy',
       'Materiály pro partnery',
@@ -68,7 +68,7 @@ const plans = {
     features: [
       'Vše z Basic',
       '4 osobní konzultace/rok',
-      'Art therapy materiály',
+      'Art expressive therapy materiály',
       'Prioritní email podpora',
       'Exkluzivní workshopy',
       'Materiály pro partnery',

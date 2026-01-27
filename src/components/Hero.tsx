@@ -20,7 +20,7 @@ const Hero = () => {
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/20 backdrop-blur-sm rounded-full mb-8 animate-fade-in border border-gold/30">
             <span className="w-2 h-2 bg-gold rounded-full animate-pulse" />
             <span className="text-sm font-sans font-semibold text-gold-dark">
-              For Expat Women in Spain
+              For Expat Women Worldwide
             </span>
           </div>
 
@@ -34,8 +34,8 @@ const Hero = () => {
 
           {/* Subheading */}
           <p className="text-lg md:text-xl text-foreground/80 font-sans font-medium leading-relaxed max-w-2xl mx-auto mb-10 animate-fade-in drop-shadow-sm" style={{ animationDelay: "0.2s" }}>
-            A transformative 12-month journey combining creative art therapy and
-            proven resilience techniques for expat families living abroad.
+            A transformative 12-month journey combining creative art expressive therapy and
+            proven resilience techniques for expatriates and globally mobile individuals.
           </p>
 
           {/* CTA Buttons */}

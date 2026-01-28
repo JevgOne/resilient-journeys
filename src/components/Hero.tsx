@@ -57,12 +57,12 @@ const Hero = () => {
             </button>
           </div>
 
-          {/* Stats */}
+          {/* Features */}
           <div className="grid grid-cols-3 gap-8 max-w-lg mx-auto animate-fade-in" style={{ animationDelay: "0.6s" }}>
             {[
-              { number: "500+", label: "Families Helped" },
               { number: "12", label: "Month Program" },
-              { number: "10+", label: "Years Experience" },
+              { number: "1:1", label: "Personal Sessions" },
+              { number: "Online", label: "& In-Person" },
             ].map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="text-2xl md:text-3xl font-serif font-bold text-gold drop-shadow-sm mb-1">

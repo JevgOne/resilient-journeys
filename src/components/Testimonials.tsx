@@ -24,13 +24,6 @@ const Testimonials = () => {
       
       if (data && data.length > 0) {
         setTestimonials(data);
-      } else {
-        // Fallback data
-        setTestimonials([
-          { id: '1', name: "Sarah M.", role: "Expat Mom, Madrid", content: "Moving to Spain was overwhelming until I found Resilient Mind. The creative techniques helped both me and my daughter process our feelings about the move.", rating: 5 },
-          { id: '2', name: "Jennifer K.", role: "Expat Mom, Barcelona", content: "The 12-month program gave me structure when everything else felt chaotic. I finally feel like I belong here.", rating: 5 },
-          { id: '3', name: "Emma T.", role: "Expat Mom, Valencia", content: "The art expressive therapy sessions opened up conversations with my kids that we never would have had otherwise. Truly transformative.", rating: 5 },
-        ]);
       }
       setLoading(false);
     };
@@ -38,8 +31,9 @@ const Testimonials = () => {
     fetchTestimonials();
   }, []);
 
-  if (loading) {
-    return <section className="py-24 bg-background"><div className="container px-4 text-center text-muted-foreground">Loading...</div></section>;
+  // Don't show section if loading or no testimonials
+  if (loading || testimonials.length === 0) {
+    return null;
   }
 
   return (

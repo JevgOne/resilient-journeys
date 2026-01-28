@@ -68,13 +68,11 @@ const WorkshopPost = () => {
     const canAccess = membershipLevels[userMembership] >= membershipLevels[requiredMembership];
     setHasAccess(canAccess);
 
-    // Increment view count
-    if (canAccess) {
-      await supabase
-        .from('blog_posts')
-        .update({ view_count: (data.view_count || 0) + 1 })
-        .eq('id', data.id);
-    }
+    // Increment view count (for all visitors)
+    await supabase
+      .from('blog_posts')
+      .update({ view_count: (data.view_count || 0) + 1 })
+      .eq('id', data.id);
 
     setLoading(false);
   };
@@ -148,8 +146,8 @@ const WorkshopPost = () => {
             )}
           </header>
 
-          {/* Gallery Images */}
-          {hasAccess && workshop.gallery_images && workshop.gallery_images.length > 0 && (
+          {/* Gallery Images - Public */}
+          {workshop.gallery_images && workshop.gallery_images.length > 0 && (
             <div className="mb-12">
               <h2 className="text-2xl font-serif font-semibold mb-6">Workshop Gallery</h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -166,8 +164,8 @@ const WorkshopPost = () => {
             </div>
           )}
 
-          {/* Video Content */}
-          {hasAccess && workshop.video_urls && workshop.video_urls.length > 0 && (
+          {/* Video Content - Public */}
+          {workshop.video_urls && workshop.video_urls.length > 0 && (
             <div className="mb-12">
               <h2 className="text-2xl font-serif font-semibold mb-6">Workshop Videos</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Pricing from "@/components/Pricing";
 import ProgramOverview from "@/components/ProgramOverview";
-import { Check, Sparkles, Calendar, BookOpen, Video, Users, Palette, Download, Play } from "lucide-react";
+import { Check, Sparkles, Calendar, BookOpen, Video, Users, Palette, Download, Play, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 

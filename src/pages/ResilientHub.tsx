@@ -295,6 +295,58 @@ const ResilientHub = () => {
           </div>
         </section>
 
+        {/* Additional Resilient Hubs */}
+        <section className="py-16 md:py-24 bg-card">
+          <div className="container px-4">
+            <div className="max-w-4xl mx-auto text-center mb-12">
+              <h2 className="text-2xl md:text-4xl font-serif font-semibold mb-4">
+                Additional <span className="text-gradient-gold">Resilient Hubs</span>
+              </h2>
+              <p className="text-muted-foreground font-sans">
+                Specialized programs for specific challenges
+              </p>
+            </div>
+
+            <div className="max-w-3xl mx-auto">
+              <Link
+                to="/endometriosis-hub"
+                className="block bg-background rounded-2xl p-8 border border-border hover:shadow-soft transition-all group"
+              >
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-serif font-semibold mb-3 group-hover:text-gold transition-colors">
+                      Navigating Expat Life with Endometriosis & Chronic Pain
+                    </h3>
+                    <p className="text-muted-foreground font-sans mb-4">
+                      Specialized support for women managing chronic conditions like endometriosis while living abroad. Focus on nervous system regulation, emotional resilience, and identity integrity.
+                    </p>
+                    <ul className="space-y-2 mb-4">
+                      {[
+                        "Complete access to all modules (A, B, C)",
+                        "1-hour personal consultation including Reiki treatment",
+                        "Tools for managing pain while expatriating",
+                      ].map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <Check size={16} className="text-primary mt-0.5 flex-shrink-0" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="flex-shrink-0 text-right">
+                    <div className="text-3xl font-serif font-bold text-gold mb-2">€127</div>
+                    <div className="text-xs text-muted-foreground">One-time fee</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 text-primary font-sans font-medium group-hover:underline">
+                  Learn more
+                  <ArrowRight size={18} />
+                </div>
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* Pricing */}
         <div id="pricing">
           <Pricing />

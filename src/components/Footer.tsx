@@ -21,7 +21,7 @@ const Footer = () => {
                 { icon: Instagram, href: "#" },
                 { icon: Facebook, href: "#" },
                 { icon: Linkedin, href: "#" },
-                { icon: Mail, href: "mailto:silvie@artexpressivetherapy.com" },
+                { icon: Mail, href: "mailto:silvie@resilientmind.io" },
               ].map((social, index) => (
                 <a
                   key={index}
@@ -61,14 +61,14 @@ const Footer = () => {
           <div>
             <h4 className="font-serif font-semibold text-lg mb-4">Contact</h4>
             <ul className="space-y-3 text-muted-foreground font-sans">
-              <li>silvie@artexpressivetherapy.com</li>
+              <li>silvie@resilientmind.io</li>
               <li>Based in Spain, serving worldwide</li>
               <li className="pt-4">
                 <Link
                   to="/booking"
                   className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-gold text-primary-foreground font-semibold text-sm rounded-full shadow-gold hover:shadow-elevated transition-all duration-300"
                 >
-                  Book a Call
+                  Book a Session
                 </Link>
               </li>
             </ul>

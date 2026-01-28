@@ -47,15 +47,18 @@ const About = () => {
                 </div>
 
                 <h1 className="text-3xl md:text-5xl font-serif font-semibold mb-6">
-                  I Help Expatriates and{" "}
-                  <span className="text-gradient-gold">Globally Mobile Individuals</span>
+                  Hi, I'm <span className="text-gradient-gold">Silvie</span>
                 </h1>
 
                 <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-6">
-                  I'm Silvie Bogdanova, and I understand the unique challenges of expat life
-                  because I have lived it. From the excitement of new beginnings to the quiet
-                  moments of missing home—I have experienced it all.
+                  I help expatriates and globally mobile individuals build mental resilience, blending proven personal development techniques with insights from my own 13 years of living and thriving abroad.
                 </p>
+
+                {/* Video Placeholder - TODO: Add video embed */}
+                <div className="bg-muted rounded-xl p-8 mb-6 text-center">
+                  <div className="text-sm text-muted-foreground font-sans mb-2">Short Introduction Video</div>
+                  <p className="text-xs text-muted-foreground italic">Video embed coming soon</p>
+                </div>
               </div>
             </div>
           </div>
@@ -71,31 +74,19 @@ const About = () => {
 
               <div className="prose prose-lg max-w-none">
                 <p className="text-muted-foreground font-sans leading-relaxed mb-6">
-                  Originally from the Czech Republic, my journey into resilience work began
-                  in Australia, where I first experienced what it means to rebuild your life
-                  in a completely new environment. The language was familiar, but the culture,
-                  the social norms, and the sheer distance from family tested me in ways I
-                  never anticipated.
+                  My journey began in the Czech Republic, where I completed my Master's degree in Economics and Management. Life presented me with unexpected challenges: a diagnosis of endometriosis, multiple surgeries, and navigating new cultures and healthcare systems far from home. These experiences became profound teachers that shaped my understanding of inner strength and resilience.
                 </p>
 
                 <p className="text-muted-foreground font-sans leading-relaxed mb-6">
-                  Now living in Spain, I continue to embrace new challenges—learning Spanish,
-                  navigating a different system, and helping others adapt to life abroad.
-                  These experiences have taught me that resilience is not about being
-                  unbreakable; it is about learning to bend without breaking.
+                  Over the years, I've devoted myself to holistic approaches, obtaining a Certificate in Holistic Counselling, an Art Therapy Diploma (HH Dip A.Th), and Reiki Master certification. I integrate these tools to help people cultivate mental, emotional, and energetic balance, often using creative expression—like silk painting—as a powerful way to process emotions beyond words.
                 </p>
 
                 <p className="text-muted-foreground font-sans leading-relaxed mb-6">
-                  Through my work with art expressive therapy and creative expression, I discovered
-                  that resilience can be cultivated through intentional practice. The combination
-                  of evidence-based psychological techniques with creative expression—like silk
-                  painting—creates a powerful pathway to inner strength and healing.
+                  Through Resilient Mind, I guide individuals—especially women living abroad—toward inner strength and clarity, including specialized support for those managing chronic conditions like endometriosis.
                 </p>
 
-                <p className="text-muted-foreground font-sans leading-relaxed mb-6">
-                  I am passionate about inspiring, empowering and uplifting people. My focus
-                  is on how creative practices can enhance mindfulness and support subconscious
-                  healing, working on multiple levels—mentally, emotionally, and physically.
+                <p className="text-lg text-foreground/90 font-sans font-medium leading-relaxed">
+                  My mission is simple: to help you transform challenges into growth, creating a life that transcends borders, limitations, and self-doubt.
                 </p>
               </div>
             </div>
@@ -113,19 +104,19 @@ const About = () => {
               <div className="grid md:grid-cols-3 gap-8">
                 {[
                   {
-                    icon: Palette,
-                    title: "Art Expressive Therapy",
-                    description: "Art Therapist Diploma (HH Dip A.Th). Specialized in silk painting and creative techniques for emotional processing.",
-                  },
-                  {
                     icon: Award,
-                    title: "Professional Credentials",
-                    description: "Member of the International Institute for Complementary Therapists. Diploma in Holistic Counselling.",
+                    title: "Holistic Counselling",
+                    description: "Certificate in Holistic Counselling with focus on mental, emotional, and energetic balance.",
                   },
                   {
-                    icon: Users,
-                    title: "Expat Experience",
-                    description: "Lived and worked in Czech Republic, Australia, and Spain. Deep understanding of globally mobile life challenges.",
+                    icon: Palette,
+                    title: "Art Therapy Diploma",
+                    description: "HH Dip A.Th - Specialized in creative expression like silk painting for processing emotions beyond words.",
+                  },
+                  {
+                    icon: Heart,
+                    title: "Reiki Master",
+                    description: "Certified Reiki Master integrating energy work with personal development techniques.",
                   },
                 ].map((item, index) => (
                   <div key={index} className="text-center p-6">
@@ -165,7 +156,7 @@ const About = () => {
                   to="/booking"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-card border border-border font-sans font-medium rounded-full hover:bg-secondary transition-all"
                 >
-                  Book a Free Call
+                  Book Individual Session
                 </Link>
               </div>
             </div>

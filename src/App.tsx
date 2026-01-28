@@ -7,6 +7,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import ResilientHub from "./pages/ResilientHub";
+import EndometriosisHub from "./pages/EndometriosisHub";
 import Booking from "./pages/Booking";
 import BookingSuccess from "./pages/BookingSuccess";
 import Blog from "./pages/Blog";
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
             <Route path="/resilient-hub" element={<ResilientHub />} />
+            <Route path="/endometriosis-hub" element={<EndometriosisHub />} />
             <Route path="/booking" element={<Booking />} />
             <Route path="/booking/success" element={<BookingSuccess />} />
             <Route path="/blog" element={<Blog />} />

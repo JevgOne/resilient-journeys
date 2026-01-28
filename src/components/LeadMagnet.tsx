@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 
-const emailSchema = z.string().email('Zadejte platnou emailovou adresu');
+const emailSchema = z.string().email('Please enter a valid email address');
 
 const LeadMagnet = () => {
   const [email, setEmail] = useState("");
@@ -15,13 +15,13 @@ const LeadMagnet = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       emailSchema.parse(email);
     } catch {
       toast({
-        title: 'Chyba',
-        description: 'Zadejte platnou emailovou adresu',
+        title: 'Error',
+        description: 'Please enter a valid email address',
         variant: 'destructive'
       });
       return;
@@ -36,22 +36,22 @@ const LeadMagnet = () => {
     if (error) {
       if (error.code === '23505') {
         toast({
-          title: 'Již jste registrováni',
-          description: 'Tento email je již v našem seznamu'
+          title: 'Already registered',
+          description: 'This email is already in our list'
         });
         setIsSubmitted(true);
       } else {
         toast({
-          title: 'Chyba',
-          description: 'Něco se pokazilo. Zkuste to prosím znovu.',
+          title: 'Error',
+          description: 'Something went wrong. Please try again.',
           variant: 'destructive'
         });
       }
     } else {
       setIsSubmitted(true);
       toast({
-        title: 'Děkujeme!',
-        description: 'Brzy obdržíte email s materiály'
+        title: 'Thank you!',
+        description: 'You will receive an email with the materials soon'
       });
     }
 
@@ -73,25 +73,25 @@ const LeadMagnet = () => {
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6">
                   <Download size={16} className="text-primary" />
                   <span className="text-sm font-sans font-medium text-primary">
-                    Zdarma ke stažení
+                    Free Download
                   </span>
                 </div>
 
                 <h2 className="text-2xl md:text-4xl font-serif font-semibold mb-4">
-                  Začněte svou cestu k odolnosti
+                  Start Your Journey to Resilience
                 </h2>
 
                 <p className="text-muted-foreground font-sans mb-6">
-                  Získejte zdarma mini e-book a video kurz s praktickými cvičeními
-                  pro budování vaší mentální odolnosti.
+                  Get a free mini e-book and video course with practical exercises
+                  for building your mental resilience.
                 </p>
 
                 <ul className="space-y-3 mb-6">
                   {[
-                    "5 základních technik resilience",
-                    "Řízená meditace (audio)",
-                    "Tisknutelný pracovní sešit (PDF)",
-                    "Video lekce",
+                    "5 core resilience techniques",
+                    "Guided meditation (audio)",
+                    "Printable workbook (PDF)",
+                    "Video lessons",
                   ].map((item, index) => (
                     <li key={index} className="flex items-center gap-3 font-sans text-sm">
                       <CheckCircle size={18} className="text-primary flex-shrink-0" />
@@ -109,19 +109,19 @@ const LeadMagnet = () => {
                       <CheckCircle size={32} className="text-primary" />
                     </div>
                     <h3 className="text-xl font-serif font-semibold mb-2">
-                      Děkujeme!
+                      Thank you!
                     </h3>
                     <p className="text-muted-foreground font-sans text-sm">
-                      Podívejte se do své schránky na materiály zdarma.
+                      Check your inbox for your free materials.
                     </p>
                   </div>
                 ) : (
                   <>
                     <h3 className="text-xl font-serif font-semibold mb-2">
-                      Získejte přístup zdarma
+                      Get Free Access
                     </h3>
                     <p className="text-muted-foreground font-sans text-sm mb-6">
-                      Zadejte svůj email a ihned obdržíte materiály.
+                      Enter your email and receive the materials instantly.
                     </p>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
@@ -130,7 +130,7 @@ const LeadMagnet = () => {
                           type="text"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
-                          placeholder="Vaše jméno (volitelné)"
+                          placeholder="Your name (optional)"
                           className="w-full px-4 py-3.5 rounded-xl border border-border bg-background font-sans text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                         />
                       </div>
@@ -143,7 +143,7 @@ const LeadMagnet = () => {
                           type="email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          placeholder="Váš email"
+                          placeholder="Your email"
                           required
                           className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-border bg-background font-sans text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                         />
@@ -154,11 +154,11 @@ const LeadMagnet = () => {
                         disabled={isLoading}
                         className="w-full py-3.5 bg-gradient-gold text-primary-foreground font-sans font-semibold rounded-xl shadow-gold hover:shadow-elevated transition-all duration-300 hover:scale-[1.02] disabled:opacity-50"
                       >
-                        {isLoading ? 'Odesílám...' : 'Poslat mi materiály zdarma'}
+                        {isLoading ? 'Sending...' : 'Send Me Free Materials'}
                       </button>
 
                       <p className="text-xs text-muted-foreground font-sans text-center">
-                        Žádný spam. Odhlášení kdykoliv. Vaše data jsou v bezpečí.
+                        No spam. Unsubscribe anytime. Your data is safe.
                       </p>
                     </form>
                   </>

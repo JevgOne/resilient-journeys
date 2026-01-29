@@ -187,7 +187,13 @@ const Booking = () => {
         },
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase function error:", error);
+        console.error("Error details:", JSON.stringify(error, null, 2));
+        throw error;
+      }
+
+      console.log("Booking response:", data);
 
       // Free session (discovery) - redirect to success page
       if (data.status === "confirmed") {
@@ -202,7 +208,11 @@ const Booking = () => {
       }
     } catch (error: any) {
       console.error("Error creating booking:", error);
-      toast.error(error.message || "Booking failed");
+      console.error("Full error object:", JSON.stringify(error, null, 2));
+
+      // Try to get more details from the error
+      const errorMessage = error?.message || error?.error?.message || error?.msg || "Booking failed. Please try again.";
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

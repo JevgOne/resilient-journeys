@@ -147,9 +147,7 @@ const Workshopy = () => {
                           <div className="inline-flex items-center gap-1 px-3 py-1 bg-green-100 rounded-full">
                             <CreditCard size={12} className="text-green-700" />
                             <span className="text-xs font-sans font-semibold text-green-700">
-                              {workshop.workshop_currency === 'CZK'
-                                ? `${workshop.workshop_price.toLocaleString('cs-CZ')} Kč`
-                                : `€${workshop.workshop_price.toLocaleString('de-DE')}`}
+                              €{workshop.workshop_price}
                             </span>
                           </div>
                         )}

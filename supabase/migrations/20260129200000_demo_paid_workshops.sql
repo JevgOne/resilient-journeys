@@ -34,8 +34,8 @@ Anyone feeling emotionally overwhelmed, stuck in transition, or looking for a cr
  true,
  NOW() - INTERVAL '2 days',
  true,
- 1800,
- 'CZK',
+ 75,
+ 'EUR',
  'CZ6508000000192000145399',
  'Workshop Silk Painting Prague');
 
@@ -121,8 +121,8 @@ Price: Per-person rate for individual registration',
  true,
  NOW() - INTERVAL '1 day',
  true,
- 3500,
- 'CZK',
+ 140,
+ 'EUR',
  'CZ6508000000192000145399',
  'Workshop Team Resilience');
 

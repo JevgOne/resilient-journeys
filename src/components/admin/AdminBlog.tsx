@@ -67,7 +67,7 @@ const AdminBlog = () => {
     meta_description: '',
     is_paid_workshop: false,
     workshop_price: 0,
-    workshop_currency: 'CZK',
+    workshop_currency: 'EUR',
     payment_iban: '',
     payment_message: ''
   });
@@ -108,7 +108,7 @@ const AdminBlog = () => {
       meta_description: '',
       is_paid_workshop: false,
       workshop_price: 0,
-      workshop_currency: 'CZK',
+      workshop_currency: 'EUR',
       payment_iban: '',
       payment_message: ''
     });
@@ -387,7 +387,6 @@ const AdminBlog = () => {
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  <SelectItem value="CZK">CZK</SelectItem>
                                   <SelectItem value="EUR">EUR</SelectItem>
                                 </SelectContent>
                               </Select>
@@ -535,7 +534,7 @@ const AdminBlog = () => {
                           <TableCell>
                             {post.is_paid_workshop ? (
                               <Badge className="bg-green-100 text-green-800">
-                                {post.workshop_price} {post.workshop_currency}
+                                €{post.workshop_price}
                               </Badge>
                             ) : (
                               <span className="text-muted-foreground text-sm">Free inquiry</span>

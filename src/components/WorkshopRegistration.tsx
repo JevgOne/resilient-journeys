@@ -33,11 +33,8 @@ function generateSpayd({
   return spayd;
 }
 
-function formatPrice(price: number, currency: string) {
-  if (currency === 'CZK') {
-    return `${price.toLocaleString('cs-CZ')} Kč`;
-  }
-  return `€${price.toLocaleString('de-DE')}`;
+function formatPrice(price: number) {
+  return `€${price}`;
 }
 
 const WorkshopRegistration = ({
@@ -119,7 +116,7 @@ const WorkshopRegistration = ({
           {spaydString && (
             <div className="bg-card rounded-2xl p-6 shadow-elevated max-w-sm mx-auto">
               <p className="font-sans text-sm font-medium mb-4">
-                Scan to pay <strong>{formatPrice(price, currency)}</strong>
+                Scan to pay <strong>{formatPrice(price)}</strong>
               </p>
               <div className="bg-white p-4 rounded-xl inline-block">
                 <QRCodeSVG value={spaydString} size={180} />
@@ -166,7 +163,7 @@ const WorkshopRegistration = ({
               <CreditCard size={20} className="text-primary" />
             </div>
             <div className="text-3xl font-serif font-semibold text-gradient-gold">
-              {formatPrice(price, currency)}
+              {formatPrice(price)}
             </div>
           </div>
 
@@ -253,7 +250,7 @@ const WorkshopRegistration = ({
               disabled={submitting}
               className="w-full py-3.5 bg-gradient-gold text-primary-foreground font-sans font-semibold rounded-xl shadow-gold hover:shadow-elevated transition-all duration-300 hover:scale-[1.02] disabled:opacity-50"
             >
-              {submitting ? 'Registering...' : `Register — ${formatPrice(price, currency)}`}
+              {submitting ? 'Registering...' : `Register — ${formatPrice(price)}`}
             </button>
 
             <p className="text-xs text-muted-foreground font-sans text-center">

@@ -18,6 +18,7 @@ import AdminCMS from '@/components/admin/AdminCMS';
 import AdminBookings from '@/components/admin/AdminBookings';
 import AdminAvailability from '@/components/admin/AdminAvailability';
 import AdminInquiries from '@/components/admin/AdminInquiries';
+import AdminWeekOverview from '@/components/admin/AdminWeekOverview';
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -125,6 +126,10 @@ const Admin = () => {
                 <Download className="h-4 w-4 mr-2" />
                 Resources
               </TabsTrigger>
+              <TabsTrigger value="week-overview" className="data-[state=active]:bg-gold data-[state=active]:text-white">
+                <Calendar className="h-4 w-4 mr-2" />
+                Week Overview
+              </TabsTrigger>
               <TabsTrigger value="subscriptions" className="data-[state=active]:bg-gold data-[state=active]:text-white">
                 <CreditCard className="h-4 w-4 mr-2" />
                 Subscriptions
@@ -173,6 +178,10 @@ const Admin = () => {
 
             <TabsContent value="resources">
               <AdminResources />
+            </TabsContent>
+
+            <TabsContent value="week-overview">
+              <AdminWeekOverview />
             </TabsContent>
 
             <TabsContent value="subscriptions">

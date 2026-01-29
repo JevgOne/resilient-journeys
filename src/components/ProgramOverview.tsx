@@ -52,42 +52,24 @@ const ProgramOverview = () => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState(true);
   const [visibleCategories, setVisibleCategories] = useState(3);
-  const [debugInfo, setDebugInfo] = useState<string>('');
-
   useEffect(() => {
     const fetchContent = async () => {
-      try {
-        const { data: categoriesData, error: catError } = await supabase
-          .from('video_categories')
-          .select('*')
-          .order('month_number');
+      const { data: categoriesData } = await supabase
+        .from('video_categories')
+        .select('*')
+        .order('month_number');
 
-        if (catError) {
-          setDebugInfo(prev => prev + `CAT ERROR: ${JSON.stringify(catError)} | `);
-        }
-        if (categoriesData) {
-          setCategories(categoriesData);
-          setDebugInfo(prev => prev + `CAT OK: ${categoriesData.length} | `);
-        } else {
-          setDebugInfo(prev => prev + `CAT DATA: null | `);
-        }
+      if (categoriesData) {
+        setCategories(categoriesData);
+      }
 
-        const { data: videosData, error: vidError } = await supabase
-          .from('videos')
-          .select('*')
-          .order('sort_order');
+      const { data: videosData } = await supabase
+        .from('videos')
+        .select('*')
+        .order('sort_order');
 
-        if (vidError) {
-          setDebugInfo(prev => prev + `VID ERROR: ${JSON.stringify(vidError)} | `);
-        }
-        if (videosData) {
-          setVideos(videosData as Video[]);
-          setDebugInfo(prev => prev + `VID OK: ${videosData.length}`);
-        } else {
-          setDebugInfo(prev => prev + `VID DATA: null`);
-        }
-      } catch (err: any) {
-        setDebugInfo(prev => prev + `EXCEPTION: ${err.message}`);
+      if (videosData) {
+        setVideos(videosData as Video[]);
       }
 
       setLoading(false);
@@ -125,11 +107,6 @@ const ProgramOverview = () => {
         <p className="text-muted-foreground max-w-md mx-auto">
           We're preparing video lessons and materials. Subscribe for updates!
         </p>
-        {debugInfo && (
-          <div className="mt-4 p-4 bg-red-50 text-red-800 rounded text-xs text-left max-w-xl mx-auto font-mono">
-            DEBUG: {debugInfo}
-          </div>
-        )}
       </div>
     );
   }

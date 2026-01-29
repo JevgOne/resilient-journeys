@@ -177,21 +177,32 @@ const Booking = () => {
       // Combine date and time to ISO string
       const startTime = new Date(`${selectedDate}T${selectedTime}:00Z`).toISOString();
 
-      const { data, error } = await supabase.functions.invoke("booking-create", {
-        body: {
-          session_type: selectedType,
-          client_name: formData.client_name,
-          client_email: formData.client_email,
-          start_time: startTime,
-          notes: formData.notes,
-        },
-      });
+      // Direct fetch call with proper headers instead of supabase.functions.invoke
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/booking-create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify({
+            session_type: selectedType,
+            client_name: formData.client_name,
+            client_email: formData.client_email,
+            start_time: startTime,
+            notes: formData.notes,
+          }),
+        }
+      );
 
-      if (error) {
-        console.error("Supabase function error:", error);
-        console.error("Error details:", JSON.stringify(error, null, 2));
-        throw error;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Server error: ${response.status}`);
       }
+
+      const data = await response.json();
 
       console.log("Booking response:", data);
 

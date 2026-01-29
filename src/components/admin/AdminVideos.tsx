@@ -24,6 +24,9 @@ interface Video {
   min_membership: 'free' | 'basic' | 'premium';
   category_id: string;
   sort_order: number;
+  week_number: number | null;
+  video_type: 'eft' | 'art_therapy' | 'meditation' | 'other';
+  is_intro: boolean;
 }
 
 interface Category {
@@ -38,13 +41,24 @@ const membershipLabels = {
   premium: 'Premium'
 };
 
+const videoTypeLabels = {
+  eft: 'EFT',
+  art_therapy: 'Art Therapy',
+  meditation: 'Meditation',
+  other: 'Other'
+};
+
 const AdminVideos = () => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingVideo, setEditingVideo] = useState<Video | null>(null);
-  
+
+  // Filters
+  const [weekFilter, setWeekFilter] = useState<string>('all');
+  const [videoTypeFilter, setVideoTypeFilter] = useState<string>('all');
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -54,7 +68,10 @@ const AdminVideos = () => {
     is_free: false,
     min_membership: 'basic' as 'free' | 'basic' | 'premium',
     category_id: '',
-    sort_order: '0'
+    sort_order: '0',
+    week_number: '',
+    video_type: 'other' as 'eft' | 'art_therapy' | 'meditation' | 'other',
+    is_intro: false
   });
 
   useEffect(() => {
@@ -82,7 +99,10 @@ const AdminVideos = () => {
       is_free: false,
       min_membership: 'basic',
       category_id: categories[0]?.id || '',
-      sort_order: '0'
+      sort_order: '0',
+      week_number: '',
+      video_type: 'other',
+      is_intro: false
     });
     setEditingVideo(null);
   };
@@ -98,14 +118,17 @@ const AdminVideos = () => {
       is_free: video.is_free,
       min_membership: video.min_membership,
       category_id: video.category_id,
-      sort_order: video.sort_order.toString()
+      sort_order: video.sort_order.toString(),
+      week_number: video.week_number?.toString() || '',
+      video_type: video.video_type,
+      is_intro: video.is_intro
     });
     setDialogOpen(true);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const videoData = {
       title: formData.title,
       description: formData.description || null,
@@ -115,7 +138,10 @@ const AdminVideos = () => {
       is_free: formData.is_free,
       min_membership: formData.min_membership,
       category_id: formData.category_id,
-      sort_order: parseInt(formData.sort_order) || 0
+      sort_order: parseInt(formData.sort_order) || 0,
+      week_number: formData.week_number ? parseInt(formData.week_number) : null,
+      video_type: formData.video_type,
+      is_intro: formData.is_intro
     };
 
     if (editingVideo) {
@@ -253,6 +279,41 @@ const AdminVideos = () => {
                   </Select>
                 </div>
                 <div>
+                  <Label htmlFor="week_number">Week Number</Label>
+                  <Select
+                    value={formData.week_number}
+                    onValueChange={(value) => setFormData({ ...formData, week_number: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Not assigned" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="">Not assigned</SelectItem>
+                      <SelectItem value="1">Week 1</SelectItem>
+                      <SelectItem value="2">Week 2</SelectItem>
+                      <SelectItem value="3">Week 3</SelectItem>
+                      <SelectItem value="4">Week 4</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="video_type">Video Type</Label>
+                  <Select
+                    value={formData.video_type}
+                    onValueChange={(value: 'eft' | 'art_therapy' | 'meditation' | 'other') => setFormData({ ...formData, video_type: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="eft">EFT</SelectItem>
+                      <SelectItem value="art_therapy">Art Therapy</SelectItem>
+                      <SelectItem value="meditation">Meditation</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
                   <Label htmlFor="duration_minutes">Duration (minutes)</Label>
                   <Input
                     id="duration_minutes"
@@ -278,6 +339,14 @@ const AdminVideos = () => {
                   />
                   <Label htmlFor="is_free">Free for Everyone</Label>
                 </div>
+                <div className="flex items-center gap-2">
+                  <Switch
+                    id="is_intro"
+                    checked={formData.is_intro}
+                    onCheckedChange={(checked) => setFormData({ ...formData, is_intro: checked })}
+                  />
+                  <Label htmlFor="is_intro">Intro Video</Label>
+                </div>
               </div>
               <div className="flex justify-end gap-2">
                 <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
@@ -292,6 +361,40 @@ const AdminVideos = () => {
         </Dialog>
       </CardHeader>
       <CardContent>
+        <div className="flex gap-4 mb-6">
+          <div className="flex-1">
+            <Label htmlFor="weekFilter" className="mb-2 block">Filter by Week</Label>
+            <Select value={weekFilter} onValueChange={setWeekFilter}>
+              <SelectTrigger id="weekFilter">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Weeks</SelectItem>
+                <SelectItem value="intro">Intro Videos</SelectItem>
+                <SelectItem value="1">Week 1</SelectItem>
+                <SelectItem value="2">Week 2</SelectItem>
+                <SelectItem value="3">Week 3</SelectItem>
+                <SelectItem value="4">Week 4</SelectItem>
+                <SelectItem value="unassigned">Not Assigned</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex-1">
+            <Label htmlFor="videoTypeFilter" className="mb-2 block">Filter by Type</Label>
+            <Select value={videoTypeFilter} onValueChange={setVideoTypeFilter}>
+              <SelectTrigger id="videoTypeFilter">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Types</SelectItem>
+                <SelectItem value="eft">EFT</SelectItem>
+                <SelectItem value="art_therapy">Art Therapy</SelectItem>
+                <SelectItem value="meditation">Meditation</SelectItem>
+                <SelectItem value="other">Other</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
         {videos.length === 0 ? (
           <p className="text-center text-muted-foreground py-8">No videos yet</p>
         ) : (
@@ -300,44 +403,72 @@ const AdminVideos = () => {
               <TableRow>
                 <TableHead>Title</TableHead>
                 <TableHead>Category</TableHead>
+                <TableHead>Week</TableHead>
+                <TableHead>Type</TableHead>
                 <TableHead>Access</TableHead>
                 <TableHead>Duration</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {videos.map((video) => {
-                const category = categories.find(c => c.id === video.category_id);
-                return (
-                  <TableRow key={video.id}>
-                    <TableCell className="font-medium">
-                      <div className="flex items-center gap-2">
-                        <Play className="h-4 w-4 text-gold" />
-                        {video.title}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      {category ? `${category.month_number}. ${category.name}` : '-'}
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={video.is_free ? 'secondary' : 'outline'}>
-                        {video.is_free ? 'Free' : membershipLabels[video.min_membership]}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>{video.duration_minutes ? `${video.duration_minutes} min` : '-'}</TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex justify-end gap-2">
-                        <Button size="sm" variant="outline" onClick={() => handleEdit(video)}>
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                        <Button size="sm" variant="destructive" onClick={() => handleDelete(video.id)}>
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              {videos
+                .filter((video) => {
+                  // Week filter
+                  if (weekFilter === 'intro' && !video.is_intro) return false;
+                  if (weekFilter === 'unassigned' && (video.week_number !== null || video.is_intro)) return false;
+                  if (weekFilter !== 'all' && weekFilter !== 'intro' && weekFilter !== 'unassigned') {
+                    if (video.week_number !== parseInt(weekFilter)) return false;
+                  }
+
+                  // Video type filter
+                  if (videoTypeFilter !== 'all' && video.video_type !== videoTypeFilter) return false;
+
+                  return true;
+                })
+                .map((video) => {
+                  const category = categories.find(c => c.id === video.category_id);
+                  return (
+                    <TableRow key={video.id}>
+                      <TableCell className="font-medium">
+                        <div className="flex items-center gap-2">
+                          <Play className="h-4 w-4 text-gold" />
+                          {video.title}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        {category ? `${category.month_number}. ${category.name}` : '-'}
+                      </TableCell>
+                      <TableCell>
+                        {video.is_intro ? (
+                          <Badge variant="default" className="bg-purple-500">Intro</Badge>
+                        ) : video.week_number ? (
+                          <Badge variant="outline">Week {video.week_number}</Badge>
+                        ) : (
+                          <span className="text-muted-foreground">-</span>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="secondary">{videoTypeLabels[video.video_type]}</Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={video.is_free ? 'secondary' : 'outline'}>
+                          {video.is_free ? 'Free' : membershipLabels[video.min_membership]}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>{video.duration_minutes ? `${video.duration_minutes} min` : '-'}</TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
+                          <Button size="sm" variant="outline" onClick={() => handleEdit(video)}>
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button size="sm" variant="destructive" onClick={() => handleDelete(video.id)}>
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
           </Table>
         )}

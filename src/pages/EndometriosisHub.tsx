@@ -115,16 +115,35 @@ const EndometriosisHub = () => {
                 </div>
               </div>
 
-              {/* Personal Consultation */}
+              {/* What You Get */}
               <div className="bg-gradient-warm rounded-2xl p-8 border border-border">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Heart size={24} className="text-primary" />
+                <h3 className="text-xl font-serif font-semibold mb-6 text-center">What You Get</h3>
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Heart size={24} className="text-primary" />
+                    </div>
+                    <h4 className="font-serif font-semibold mb-2">1 hour individual session</h4>
+                    <p className="text-sm text-muted-foreground font-sans">
+                      Personalized online consultation
+                    </p>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-serif font-semibold mb-2">1-Hour Personal Consultation</h3>
-                    <p className="text-muted-foreground font-sans">
-                      Online session including Reiki treatment, tailored support for your unique journey with endometriosis abroad.
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Heart size={24} className="text-primary" />
+                    </div>
+                    <h4 className="font-serif font-semibold mb-2">1 hour Reiki treatment</h4>
+                    <p className="text-sm text-muted-foreground font-sans">
+                      Energy healing session
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Heart size={24} className="text-primary" />
+                    </div>
+                    <h4 className="font-serif font-semibold mb-2">Art Therapy tool kit</h4>
+                    <p className="text-sm text-muted-foreground font-sans">
+                      For managing chronic pain
                     </p>
                   </div>
                 </div>

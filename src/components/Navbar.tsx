@@ -16,6 +16,7 @@ import Logo from "./Logo";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
+  { href: "/resilient-hub", label: "Resilient Hub" },
   { href: "/resilient-hubs", label: "Membership" },
   { href: "/blog", label: "Blog" },
   { href: "/workshopy", label: "Workshopy" },

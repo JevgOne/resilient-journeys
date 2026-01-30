@@ -257,44 +257,6 @@ const ResilientHub = () => {
           </div>
         </section>
 
-        {/* Premium Benefits */}
-        <section className="py-16 md:py-24 bg-background">
-          <div className="container px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-gradient-gold rounded-3xl p-8 md:p-12 text-primary-foreground">
-                <div className="flex items-center gap-2 mb-6">
-                  <Palette size={24} />
-                  <span className="font-sans font-semibold">Premium Exclusive</span>
-                </div>
-                
-                <h2 className="text-2xl md:text-4xl font-serif font-semibold mb-6">
-                  Art Expressive Therapy Materials Kit
-                </h2>
-
-                <p className="text-primary-foreground/80 font-sans mb-8 max-w-2xl">
-                  Premium members receive a curated art expressive therapy materials kit delivered
-                  to their home, including supplies for silk painting and other creative
-                  exercises featured in the program.
-                </p>
-                
-                <div className="grid md:grid-cols-2 gap-4">
-                  {[
-                    "Silk painting supplies",
-                    "Quality art paper",
-                    "Specialty pens & markers",
-                    "Guided project cards",
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <Check size={18} />
-                      <span className="font-sans">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Additional Resilient Hubs */}
         <section className="py-16 md:py-24 bg-card">
           <div className="container px-4">

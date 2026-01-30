@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Check, Sparkles, Download, ArrowRight, Heart, Brain, Users, Globe } from "lucide-react";
+import { Check, Sparkles, Download, ArrowRight, Heart, Brain, Users, Globe, Coins, Fingerprint } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const whatYouWillGain = [
@@ -23,6 +23,16 @@ const whatYouWillGain = [
     icon: Users,
     title: "Strengthen Relationships",
     description: "With loved ones despite distance"
+  },
+  {
+    icon: Coins,
+    title: "Build Financial and Practical Resilience",
+    description: "In a new environment"
+  },
+  {
+    icon: Fingerprint,
+    title: "Transform Your Identity",
+    description: "Draw strength from both your home and new country"
   }
 ];
 
@@ -106,18 +116,6 @@ const ResilientHubs = () => {
                     </div>
                   </div>
                 ))}
-                <div className="flex gap-4 p-6 bg-card rounded-2xl border border-border">
-                  <div className="flex-1">
-                    <h3 className="text-lg font-serif font-semibold mb-2">Build Financial and Practical Resilience</h3>
-                    <p className="text-sm text-muted-foreground font-sans">In a new environment</p>
-                  </div>
-                </div>
-                <div className="flex gap-4 p-6 bg-card rounded-2xl border border-border">
-                  <div className="flex-1">
-                    <h3 className="text-lg font-serif font-semibold mb-2">Transform Your Identity</h3>
-                    <p className="text-sm text-muted-foreground font-sans">Draw strength from both your home and new country</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

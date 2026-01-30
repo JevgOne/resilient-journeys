@@ -30,12 +30,41 @@ serve(async (req) => {
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session;
         const userId = session.metadata?.user_id;
+        const bookingId = session.metadata?.booking_id;
         const mode = session.mode; // 'subscription' or 'payment'
 
-        console.log(`Checkout completed - Mode: ${mode}, User: ${userId}`);
+        console.log(`Checkout completed - Mode: ${mode}, User: ${userId}, Booking: ${bookingId}`);
 
+        // Handle BOOKING payments (consultations)
+        if (bookingId) {
+          console.log(`Processing booking payment for booking_id: ${bookingId}`);
+
+          try {
+            const { error } = await supabaseAdmin
+              .from("session_bookings")
+              .update({
+                status: "confirmed",
+                payment_expires_at: null,
+                updated_at: new Date().toISOString(),
+              })
+              .eq("id", bookingId);
+
+            if (error) {
+              console.error(`Failed to confirm booking ${bookingId}:`, error);
+              throw error;
+            }
+
+            console.log(`Booking ${bookingId} confirmed successfully`);
+          } catch (error) {
+            console.error(`Error processing booking payment:`, error);
+            throw error;
+          }
+          break;
+        }
+
+        // Handle MEMBERSHIP payments
         if (!userId) {
-          console.error("No user_id in session metadata");
+          console.error("No user_id in session metadata for membership payment");
           break;
         }
 
@@ -197,6 +226,36 @@ serve(async (req) => {
             .eq("user_id", profile.user_id);
 
           console.log(`Cancelled subscription for user ${profile.user_id}`);
+        }
+        break;
+      }
+
+      case "checkout.session.expired": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const bookingId = session.metadata?.booking_id;
+
+        if (bookingId) {
+          console.log(`Checkout session expired for booking: ${bookingId}`);
+
+          try {
+            const { error } = await supabaseAdmin
+              .from("session_bookings")
+              .update({
+                status: "expired",
+                updated_at: new Date().toISOString(),
+              })
+              .eq("id", bookingId);
+
+            if (error) {
+              console.error(`Failed to expire booking ${bookingId}:`, error);
+              throw error;
+            }
+
+            console.log(`Booking ${bookingId} marked as expired`);
+          } catch (error) {
+            console.error(`Error processing expired session:`, error);
+            throw error;
+          }
         }
         break;
       }

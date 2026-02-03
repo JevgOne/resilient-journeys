@@ -188,7 +188,7 @@ const ProgramOverview = () => {
                   Start Free
                 </Button>
               </Link>
-              <Link to="#pricing">
+              <Link to="/pricing">
                 <Button variant="outline" className="border-gold text-gold">
                   View Pricing
                 </Button>

@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ProgramOverview from "@/components/ProgramOverview";
 import { Check, Sparkles, Download, ArrowRight, Heart, Brain, Users, Globe, Coins, Fingerprint } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/PageHero";
@@ -148,6 +149,21 @@ const ResilientHubs = () => {
           </div>
         </section>
 
+        {/* Program Content / Video Lessons */}
+        <section className="py-16 md:py-24 bg-card">
+          <div className="container px-4">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="text-2xl md:text-4xl font-serif font-semibold mb-4 text-center">
+                Explore the <span className="text-gradient-gold">Program Content</span>
+              </h2>
+              <p className="text-center text-muted-foreground font-sans mb-8">
+                Preview the monthly video lessons, workbooks, and exercises included in your membership.
+              </p>
+              <ProgramOverview />
+            </div>
+          </div>
+        </section>
+
         {/* Why Different */}
         <section className="py-16 md:py-24 bg-background">
           <div className="container px-4">
@@ -190,7 +206,7 @@ const ResilientHubs = () => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                 <Link
-                  to="/resilient-hub#pricing"
+                  to="/pricing"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-gold text-primary-foreground font-sans font-semibold rounded-full shadow-gold hover:shadow-elevated transition-all"
                 >
                   Choose Your Membership – Start Today

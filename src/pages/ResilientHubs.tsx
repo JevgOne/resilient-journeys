@@ -4,6 +4,7 @@ import ProgramOverview from "@/components/ProgramOverview";
 import { Check, Sparkles, Download, ArrowRight, Heart, Brain, Users, Globe, Coins, Fingerprint } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/PageHero";
+import SEO from "@/components/SEO";
 
 const whatYouWillGain = [
   {
@@ -68,6 +69,11 @@ const whyDifferent = [
 const ResilientHubs = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="12-Month Membership Program to Inner Strength | Resilient Mind"
+        description="Join a 12-month guided program with video lessons, workbooks and community support designed for expatriates seeking inner strength."
+        path="/resilient-hubs"
+      />
       <Navbar />
 
       <main className="pt-20">

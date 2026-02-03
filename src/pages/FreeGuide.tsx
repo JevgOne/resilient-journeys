@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import Logo from '@/components/Logo';
 import PageHero from '@/components/PageHero';
+import SEO from '@/components/SEO';
 import { z } from 'zod';
 
 const emailSchema = z.string().email('Please enter a valid email address');
@@ -199,6 +200,28 @@ const FreeGuide = () => {
   // Main form UI
   return (
     <div className="min-h-screen bg-gradient-to-b from-cream to-background flex flex-col">
+      <SEO
+        title="Free 7-Day Practice Kit — Calm, Clarity & Resilience Overseas | Resilient Mind"
+        description="Download a free 7-day EFT practice kit with workbooks and guided exercises. Build calm and clarity as an expatriate."
+        path="/free-guide"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "Free 7-Day Practice Kit",
+          "description": "A free 7-day EFT practice kit with workbooks and guided exercises for expatriates.",
+          "brand": {
+            "@type": "Organization",
+            "name": "Resilient Mind"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR",
+            "availability": "https://schema.org/InStock",
+            "url": "https://resilient-journeys.vercel.app/free-guide"
+          }
+        }}
+      />
       <header className="p-6">
         <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
           <ArrowLeft className="h-4 w-4" />

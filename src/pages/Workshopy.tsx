@@ -6,6 +6,7 @@ import { Sparkles, Calendar, ArrowRight, Tag, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
 import WorkshopInquiryForm from '@/components/WorkshopInquiryForm';
 import PageHero from "@/components/PageHero";
+import SEO from "@/components/SEO";
 
 interface Workshop {
   id: string;
@@ -53,6 +54,11 @@ const Workshopy = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Workshops — Interactive Sessions for Organizations | Resilient Mind"
+        description="Interactive art expressive therapy workshops for organizations and groups. Build team resilience through creative sessions."
+        path="/workshopy"
+      />
       <Navbar />
 
       <main className="pt-20">

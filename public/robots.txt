@@ -12,3 +12,10 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /checkout
+Disallow: /video/
+
+Sitemap: https://resilient-journeys.vercel.app/sitemap.xml

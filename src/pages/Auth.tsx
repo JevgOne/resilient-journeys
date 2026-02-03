@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { z } from 'zod';
 import Logo from '@/components/Logo';
+import SEO from '@/components/SEO';
 
 const emailSchema = z.string().email('Please enter a valid email address');
 const passwordSchema = z.string().min(6, 'Password must be at least 6 characters');
@@ -135,6 +136,11 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-cream to-background flex flex-col">
+      <SEO
+        title="Sign In | Resilient Mind"
+        description="Sign in or create an account to access your Resilient Mind membership, video lessons and resources."
+        path="/auth"
+      />
       {/* Header */}
       <header className="p-6">
         <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">

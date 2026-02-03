@@ -4,10 +4,16 @@ import { Heart, CheckCircle, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/components/PageHero";
+import SEO from "@/components/SEO";
 
 const EndometriosisHub = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Endometriosis Management Hub for Expats Living Abroad | Resilient Mind"
+        description="Support module for women managing endometriosis and chronic pain while living abroad. Creative techniques for daily resilience."
+        path="/endometriosis-hub"
+      />
       <Navbar />
 
       <main className="pt-20">

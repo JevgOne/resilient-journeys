@@ -13,6 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { format, addMonths, startOfMonth } from "date-fns";
 import PageHero from "@/components/PageHero";
+import SEO from "@/components/SEO";
 import { enUS } from "date-fns/locale";
 
 // Session types configuration
@@ -259,6 +260,11 @@ const Booking = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Book a Session — Individual Consultations €87/hour | Resilient Mind"
+        description="Schedule a free discovery call or book an individual art expressive therapy session with Silvie Bogdanova. Online consultations from €87/hour."
+        path="/booking"
+      />
       <Navbar />
 
       <main className="pt-20 pb-16">

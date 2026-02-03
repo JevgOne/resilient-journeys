@@ -6,6 +6,7 @@ import { Check, Sparkles, Calendar, BookOpen, Video, Users, Palette, Download, P
 import { Link } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PageHero from "@/components/PageHero";
+import SEO from "@/components/SEO";
 
 const programs = [
   {
@@ -109,6 +110,11 @@ const programs = [
 const ResilientHub = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Resilient Hub — Monthly Video Lessons & Workbooks for Expats | Resilient Mind"
+        description="Access monthly video lessons, guided workbooks and creative exercises to build resilience as an expatriate. Start your journey today."
+        path="/resilient-hub"
+      />
       <Navbar />
       
       <main className="pt-20">

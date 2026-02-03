@@ -5,6 +5,7 @@ import { ArrowRight, Heart, MapPin, Palette, Award, BookOpen, Users } from "luci
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import PageHero from "@/components/PageHero";
+import SEO from "@/components/SEO";
 
 const About = () => {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
@@ -33,6 +34,23 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="About Silvie Bogdanova — Art Expressive Therapist for Expatriates | Resilient Mind"
+        description="Meet Silvie Bogdanova, art expressive therapist helping expatriates build resilience and navigate life transitions abroad."
+        path="/about"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": "Silvie Bogdanova",
+          "jobTitle": "Art Expressive Therapist",
+          "description": "Art expressive therapist helping expatriates build resilience and navigate life transitions abroad.",
+          "url": "https://resilient-journeys.vercel.app/about",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Resilient Mind"
+          }
+        }}
+      />
       <Navbar />
       
       <main className="pt-20">

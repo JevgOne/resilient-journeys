@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { BookOpen, Calendar, ArrowRight, Tag } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/PageHero";
+import SEO from "@/components/SEO";
 
 interface BlogPost {
   id: string;
@@ -47,6 +48,22 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Blog — Resilience Tips for Expatriates | Resilient Mind"
+        description="Read articles on building resilience, managing expat stress, art therapy techniques and thriving while living abroad."
+        path="/blog"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Blog",
+          "name": "Resilient Mind Blog",
+          "description": "Resilience tips and art therapy insights for expatriates.",
+          "url": "https://resilient-journeys.vercel.app/blog",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Resilient Mind"
+          }
+        }}
+      />
       <Navbar />
 
       <main className="pt-20">

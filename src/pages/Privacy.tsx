@@ -2,10 +2,16 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Shield } from "lucide-react";
 import PageHero from "@/components/PageHero";
+import SEO from "@/components/SEO";
 
 const Privacy = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Privacy Policy | Resilient Mind"
+        description="Read how Resilient Mind collects, uses and protects your personal data. GDPR-compliant privacy practices."
+        path="/privacy"
+      />
       <Navbar />
 
       <main className="pt-20">

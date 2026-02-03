@@ -2,10 +2,16 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { FileText } from "lucide-react";
 import PageHero from "@/components/PageHero";
+import SEO from "@/components/SEO";
 
 const Terms = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Terms of Service | Resilient Mind"
+        description="Terms and conditions for using Resilient Mind platform, membership services and consultations."
+        path="/terms"
+      />
       <Navbar />
 
       <main className="pt-20">

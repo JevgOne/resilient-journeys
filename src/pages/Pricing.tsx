@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import PageHero from "@/components/PageHero";
+import SEO from "@/components/SEO";
 import {
   Check,
   Crown,
@@ -186,6 +187,55 @@ const Pricing = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Pricing — Membership Plans from €27/month | Resilient Mind"
+        description="Choose from Basic or Premium membership plans. Monthly from €27 or yearly from €270 with savings. Includes video lessons, workbooks and more."
+        path="/pricing"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "Resilient Mind Membership",
+          "description": "Membership plans for art expressive therapy programs for expatriates.",
+          "brand": {
+            "@type": "Organization",
+            "name": "Resilient Mind"
+          },
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Basic Monthly",
+              "price": "27",
+              "priceCurrency": "EUR",
+              "availability": "https://schema.org/InStock",
+              "url": "https://resilient-journeys.vercel.app/pricing"
+            },
+            {
+              "@type": "Offer",
+              "name": "Basic Yearly",
+              "price": "270",
+              "priceCurrency": "EUR",
+              "availability": "https://schema.org/InStock",
+              "url": "https://resilient-journeys.vercel.app/pricing"
+            },
+            {
+              "@type": "Offer",
+              "name": "Premium Monthly",
+              "price": "47",
+              "priceCurrency": "EUR",
+              "availability": "https://schema.org/InStock",
+              "url": "https://resilient-journeys.vercel.app/pricing"
+            },
+            {
+              "@type": "Offer",
+              "name": "Premium Yearly",
+              "price": "470",
+              "priceCurrency": "EUR",
+              "availability": "https://schema.org/InStock",
+              "url": "https://resilient-journeys.vercel.app/pricing"
+            }
+          ]
+        }}
+      />
       <Navbar />
 
       <main className="pt-20 pb-16">

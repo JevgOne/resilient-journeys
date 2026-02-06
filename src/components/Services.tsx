@@ -19,7 +19,7 @@ const services = [
     subtitle: "1:1 Personalized Guidance",
     description:
       "Personalized one-on-one guidance tailored to your unique experience. Book your session through our calendar.",
-    price: "€87/hour",
+    price: "€107/hour",
     href: "/booking",
     featured: false,
   },

@@ -53,6 +53,15 @@ const LeadMagnet = () => {
         title: 'Thank you!',
         description: 'You will receive an email with the materials soon'
       });
+
+      // Fire-and-forget: add contact to Brevo
+      try {
+        await supabase.functions.invoke('brevo-add-contact', {
+          body: { email, name: name || undefined },
+        });
+      } catch {
+        // Non-blocking — Brevo failure should not affect user flow
+      }
     }
 
     setIsLoading(false);

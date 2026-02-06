@@ -58,7 +58,7 @@ const Hero = () => {
               to="/booking"
               className="inline-flex items-center gap-2 px-8 py-4 bg-card/90 backdrop-blur-sm border border-border text-foreground font-sans font-medium rounded-full hover:bg-card transition-all duration-300"
             >
-              Book Individual Session (€87/hour)
+              Book Individual Session (€107/hour)
             </Link>
             <Link
               to="/free-guide"

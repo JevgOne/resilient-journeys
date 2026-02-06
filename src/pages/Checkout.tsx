@@ -8,83 +8,55 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  MEMBERSHIP_TIERS,
+  getTierPrice,
+  isEarlyBird,
+  formatEarlyBirdEnd,
+} from "@/lib/pricing";
 
-const plans = {
-  basic_monthly: {
-    id: 'basic_monthly',
-    name: 'Basic',
-    subtitle: 'Monthly',
-    price: 27,
-    interval: 'month',
-    membershipType: 'basic' as const,
-    features: [
-      '4 video lessons per month',
-      'Downloadable worksheets',
-      'Meditation library',
-      'Community access',
-      'Monthly Q&A',
-    ],
-  },
-  basic_yearly: {
-    id: 'basic_yearly',
-    name: 'Basic',
-    subtitle: 'Yearly',
-    price: 270,
-    interval: 'year',
-    membershipType: 'basic' as const,
-    savings: 54,
-    features: [
-      '4 video lessons per month',
-      'Downloadable worksheets',
-      'Meditation library',
-      'Community access',
-      'Monthly Q&A',
-    ],
-  },
-  premium_monthly: {
-    id: 'premium_monthly',
-    name: 'Premium',
-    subtitle: 'Monthly',
-    price: 47,
-    interval: 'month',
-    membershipType: 'premium' as const,
-    features: [
-      'Everything in Basic',
-      '4 personal consultations/year',
-      'Art expressive therapy materials',
-      'Priority email support',
-      'Exclusive workshops',
-      'Partner materials',
-    ],
-  },
-  premium_yearly: {
-    id: 'premium_yearly',
-    name: 'Premium',
-    subtitle: 'Yearly',
-    price: 470,
-    interval: 'year',
-    membershipType: 'premium' as const,
-    savings: 94,
-    features: [
-      'Everything in Basic',
-      '4 personal consultations/year',
-      'Art expressive therapy materials',
-      'Priority email support',
-      'Exclusive workshops',
-      'Partner materials',
-    ],
-  },
+// Build plans from centralized pricing (only monthly visible)
+const buildPlans = () => {
+  const plans: Record<string, {
+    id: string;
+    name: string;
+    subtitle: string;
+    price: number;
+    regularPrice: number;
+    interval: string;
+    membershipType: 'basic' | 'premium';
+    features: string[];
+    hidden: boolean;
+  }> = {};
+
+  for (const tier of MEMBERSHIP_TIERS) {
+    plans[tier.id] = {
+      id: tier.id,
+      name: tier.membershipType === 'basic' ? 'Basic' : 'Premium',
+      subtitle: tier.interval === 'month' ? 'Monthly' : 'Yearly',
+      price: getTierPrice(tier),
+      regularPrice: tier.regularPrice,
+      interval: tier.interval,
+      membershipType: tier.membershipType,
+      features: tier.features,
+      hidden: tier.hidden,
+    };
+  }
+
+  return plans;
 };
 
-type PlanId = keyof typeof plans;
+type PlanId = string;
 
 const Checkout = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { user, profile, loading: authLoading } = useAuth();
 
+  const plans = buildPlans();
   const planId = (searchParams.get('plan') || 'basic_monthly') as PlanId;
   const plan = plans[planId] || plans.basic_monthly;
+  const earlyBird = isEarlyBird();
 
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -133,6 +105,9 @@ const Checkout = () => {
     );
   }
 
+  // Only show non-hidden plans in the switcher
+  const visiblePlans = Object.entries(plans).filter(([, p]) => !p.hidden);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -157,6 +132,13 @@ const Checkout = () => {
               </CardHeader>
 
               <CardContent className="space-y-6">
+                {/* Early-bird notice */}
+                {earlyBird && plan.regularPrice !== plan.price && (
+                  <div className="bg-green-50 border border-green-200 rounded-lg px-4 py-3 text-center text-sm text-green-800 font-medium">
+                    Early-bird pricing active until {formatEarlyBirdEnd()}!
+                  </div>
+                )}
+
                 {/* Plan summary */}
                 <div className="p-4 bg-gradient-warm rounded-xl">
                   <div className="flex justify-between items-start mb-2">
@@ -164,13 +146,13 @@ const Checkout = () => {
                       <h3 className="font-serif font-semibold text-lg">
                         {plan.name} - {plan.subtitle}
                       </h3>
-                      {'savings' in plan && plan.savings && (
-                        <span className="text-sm text-gold font-medium">
-                          You save €{String(plan.savings)}
-                        </span>
-                      )}
                     </div>
                     <div className="text-right">
+                      {earlyBird && plan.regularPrice !== plan.price && (
+                        <span className="text-sm text-muted-foreground line-through mr-2">
+                          €{plan.regularPrice}
+                        </span>
+                      )}
                       <span className="text-2xl font-serif font-bold">€{plan.price}</span>
                       <span className="text-muted-foreground text-sm">/{plan.interval}</span>
                     </div>
@@ -238,11 +220,11 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
-            {/* Other plans */}
+            {/* Other plans (only visible/monthly) */}
             <div className="mt-8 text-center">
               <p className="text-muted-foreground mb-3">Different plan?</p>
               <div className="flex flex-wrap justify-center gap-2">
-                {(Object.entries(plans) as [PlanId, typeof plans[PlanId]][]).map(([id, p]) => (
+                {visiblePlans.map(([id, p]) => (
                   <Button
                     key={id}
                     variant={id === planId ? "default" : "outline"}

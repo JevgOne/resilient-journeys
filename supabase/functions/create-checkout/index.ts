@@ -7,23 +7,33 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Plan configurations
-const planConfigs: Record<string, {
+// Early-bird cutoff — must match frontend (src/lib/pricing.ts)
+const EARLY_BIRD_END = new Date('2026-04-25T23:59:59Z');
+function isEarlyBird(): boolean {
+  return new Date() < EARLY_BIRD_END;
+}
+
+// Plan configurations with early-bird pricing
+function getPlanConfigs(): Record<string, {
   priceAmount: number;
   interval: 'month' | 'year';
   membershipType: 'basic' | 'premium';
   name: string;
-}> = {
-  basic_monthly: { priceAmount: 2700, interval: 'month', membershipType: 'basic', name: 'Basic Monthly' },
-  basic_yearly: { priceAmount: 27000, interval: 'year', membershipType: 'basic', name: 'Basic Yearly' },
-  premium_monthly: { priceAmount: 4700, interval: 'month', membershipType: 'premium', name: 'Premium Monthly' },
-  premium_yearly: { priceAmount: 47000, interval: 'year', membershipType: 'premium', name: 'Premium Yearly' },
-  // Legacy support (with underscore prefix)
-  monthly_basic: { priceAmount: 2700, interval: 'month', membershipType: 'basic', name: 'Basic Monthly' },
-  yearly_basic: { priceAmount: 27000, interval: 'year', membershipType: 'basic', name: 'Basic Yearly' },
-  monthly_premium: { priceAmount: 4700, interval: 'month', membershipType: 'premium', name: 'Premium Monthly' },
-  yearly_premium: { priceAmount: 47000, interval: 'year', membershipType: 'premium', name: 'Premium Yearly' },
-};
+}> {
+  const earlyBird = isEarlyBird();
+
+  return {
+    basic_monthly: { priceAmount: earlyBird ? 2700 : 3700, interval: 'month', membershipType: 'basic', name: 'Basic Monthly' },
+    basic_yearly: { priceAmount: 37000, interval: 'year', membershipType: 'basic', name: 'Basic Yearly' },
+    premium_monthly: { priceAmount: earlyBird ? 3700 : 4700, interval: 'month', membershipType: 'premium', name: 'Premium Monthly' },
+    premium_yearly: { priceAmount: 47000, interval: 'year', membershipType: 'premium', name: 'Premium Yearly' },
+    // Legacy support (with underscore prefix)
+    monthly_basic: { priceAmount: earlyBird ? 2700 : 3700, interval: 'month', membershipType: 'basic', name: 'Basic Monthly' },
+    yearly_basic: { priceAmount: 37000, interval: 'year', membershipType: 'basic', name: 'Basic Yearly' },
+    monthly_premium: { priceAmount: earlyBird ? 3700 : 4700, interval: 'month', membershipType: 'premium', name: 'Premium Monthly' },
+    yearly_premium: { priceAmount: 47000, interval: 'year', membershipType: 'premium', name: 'Premium Yearly' },
+  };
+}
 
 // Hub configurations (one-time payments)
 const hubConfigs: Record<string, {
@@ -149,6 +159,7 @@ serve(async (req) => {
       });
     } else {
       // Membership plan - subscription
+      const planConfigs = getPlanConfigs();
       const planConfig = planConfigs[productType];
       if (!planConfig) {
         throw new Error("Invalid plan");

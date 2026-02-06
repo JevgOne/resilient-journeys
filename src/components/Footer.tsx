@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail } from "lucide-react";
+import { Mail, Instagram, GraduationCap } from "lucide-react";
 import Logo from "./Logo";
 
 const Footer = () => {
@@ -22,6 +22,22 @@ const Footer = () => {
                 className="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
               >
                 <Mail size={18} />
+              </a>
+              <a
+                href="https://instagram.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+              >
+                <Instagram size={18} />
+              </a>
+              <a
+                href="https://www.skool.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+              >
+                <GraduationCap size={18} />
               </a>
             </div>
           </div>

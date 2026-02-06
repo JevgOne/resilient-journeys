@@ -9,19 +9,20 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import PageHero from "@/components/PageHero";
 import SEO from "@/components/SEO";
-import PricingCards, { PricingTrustSignals } from "@/components/PricingCards";
+import PricingCards, { PricingTrustSignals, EarlyBirdBanner } from "@/components/PricingCards";
+import {
+  isEarlyBird,
+  formatEarlyBirdEnd,
+} from "@/lib/pricing";
 import {
   Check,
   Crown,
   Loader2,
   Sparkles,
   Heart,
-  Brain,
   Video,
   FileText,
-  Music,
   User,
-  Zap,
 } from "lucide-react";
 
 // Additional hubs that can be purchased separately
@@ -60,6 +61,8 @@ const Pricing = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [loadingTier, setLoadingTier] = useState<string | null>(null);
+
+  const earlyBird = isEarlyBird();
 
   const createHubCheckout = async (hubSlug: string) => {
     const { data: userData } = await supabase.auth.getUser();
@@ -138,24 +141,8 @@ const Pricing = () => {
             },
             {
               "@type": "Offer",
-              name: "Basic Yearly",
-              price: "270",
-              priceCurrency: "EUR",
-              availability: "https://schema.org/InStock",
-              url: "https://resilient-journeys.vercel.app/pricing",
-            },
-            {
-              "@type": "Offer",
               name: "Premium Monthly",
               price: "47",
-              priceCurrency: "EUR",
-              availability: "https://schema.org/InStock",
-              url: "https://resilient-journeys.vercel.app/pricing",
-            },
-            {
-              "@type": "Offer",
-              name: "Premium Yearly",
-              price: "470",
               priceCurrency: "EUR",
               availability: "https://schema.org/InStock",
               url: "https://resilient-journeys.vercel.app/pricing",
@@ -177,7 +164,7 @@ const Pricing = () => {
             </div>
 
             <h1 className="text-3xl md:text-5xl font-serif font-semibold mb-4">
-              Choose Your Journey
+              From Navigating Life Abroad to Truly Thriving
             </h1>
 
             <p className="text-lg text-muted-foreground font-sans">
@@ -186,6 +173,32 @@ const Pricing = () => {
             </p>
           </div>
         </PageHero>
+
+        {/* Program description */}
+        <section className="py-8">
+          <div className="container px-4">
+            <div className="max-w-3xl mx-auto text-center">
+              <p className="text-muted-foreground font-sans leading-relaxed">
+                Our 12-month program combines evidence-based techniques, expressive arts, and energy work to help you build lasting resilience. Each month delivers fresh video content, downloadable worksheets, and guided meditations tailored to the expatriate experience.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Early-bird banner */}
+        {earlyBird && (
+          <section className="py-4">
+            <div className="container px-4">
+              <div className="max-w-3xl mx-auto">
+                <div className="bg-gradient-gold text-primary-foreground rounded-xl px-6 py-4 text-center">
+                  <p className="font-sans font-semibold text-lg">
+                    Save €10/month! Early-bird pricing ends on {formatEarlyBirdEnd()}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Main Membership Tiers */}
         <section className="py-12">

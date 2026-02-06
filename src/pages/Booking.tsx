@@ -32,9 +32,9 @@ const SESSION_TYPES = [
   },
   {
     type: "one_on_one",
-    title: "Individual Consultation",
+    title: "Individual Session",
     duration: 60,
-    price: 87,
+    price: 107,
     description: "Deep personal work tailored to your unique situation and goals.",
     features: [
       "Personalized approach",
@@ -47,13 +47,26 @@ const SESSION_TYPES = [
     type: "family",
     title: "Family Session",
     duration: 90,
-    price: 120,
-    description: "Work together as a family to build collective resilience.",
+    price: 127,
+    description: "Child-led creative art session with supportive parent participation.",
     features: [
       "Parent & child focused",
       "Creative activities",
       "Family action plan",
       "Take-home exercises",
+    ],
+  },
+  {
+    type: "endometriosis_support",
+    title: "Endo & Chronic Pain Support",
+    duration: 180,
+    price: 147,
+    description: "A comprehensive 3-hour bundle combining art therapy, energy work, and personalized coping strategies for chronic pain management.",
+    features: [
+      "3-hour comprehensive session",
+      "Art therapy for pain management",
+      "Energy work & Reiki",
+      "Personalized coping toolkit",
     ],
   },
 ] as const;

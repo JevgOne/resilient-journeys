@@ -13,14 +13,16 @@ const SESSION_DURATIONS: Record<string, number> = {
   discovery: 30,
   one_on_one: 60,
   family: 90,
+  endometriosis_support: 180,
   premium_consultation: 60,
 };
 
 // Session prices (in cents)
 const SESSION_PRICES: Record<string, number> = {
   discovery: 0,
-  one_on_one: 8700, // €87
-  family: 12000, // €120
+  one_on_one: 10700, // €107
+  family: 12700, // €127
+  endometriosis_support: 14700, // €147
   premium_consultation: 8700, // €87
 };
 
@@ -209,8 +211,9 @@ serve(async (req) => {
     // Session type names for display
     const sessionNames: Record<string, string> = {
       discovery: "Discovery Call",
-      one_on_one: "Individual Consultation",
+      one_on_one: "Individual Session",
       family: "Family Session",
+      endometriosis_support: "Endo & Chronic Pain Support",
       premium_consultation: "Premium Consultation",
     };
 

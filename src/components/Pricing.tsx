@@ -1,14 +1,13 @@
 import { Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-import PricingCards, { PricingTrustSignals } from "@/components/PricingCards";
+import PricingCards, { PricingTrustSignals, EarlyBirdBanner } from "@/components/PricingCards";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const SESSION_TIER = {
   name: "1:1 Session",
-  price: 87,
+  price: 107,
   period: "/session",
   features: [
     "60-minute private session",
@@ -22,7 +21,7 @@ const SESSION_TIER = {
 
 const Pricing = () => {
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section id="pricing" className="relative py-24 overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -50,9 +49,13 @@ const Pricing = () => {
           <p className="text-muted-foreground font-sans">
             Choose the membership that fits your needs. All options include access to our supportive expat community.
           </p>
+
+          <div className="mt-6">
+            <EarlyBirdBanner />
+          </div>
         </div>
 
-        {/* 4 Membership Cards */}
+        {/* Membership Cards */}
         <div className="max-w-7xl mx-auto mb-8">
           <PricingCards cancelUrl="/" />
           <PricingTrustSignals />

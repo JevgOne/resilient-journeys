@@ -72,6 +72,15 @@ const FreeGuide = () => {
           },
         });
         if (error) throw error;
+
+        // Fire-and-forget: add contact to Brevo
+        try {
+          await supabase.functions.invoke('brevo-add-contact', {
+            body: { email: formData.email, name: formData.name || undefined },
+          });
+        } catch {
+          // Non-blocking
+        }
       } else {
         const { error } = await supabase.auth.signInWithOtp({
           email: formData.email,
@@ -84,6 +93,15 @@ const FreeGuide = () => {
           },
         });
         if (error) throw error;
+
+        // Fire-and-forget: add contact to Brevo
+        try {
+          await supabase.functions.invoke('brevo-add-contact', {
+            body: { email: formData.email, name: formData.name || undefined },
+          });
+        } catch {
+          // Non-blocking
+        }
       }
 
       toast.success('Check your email for the magic link!');

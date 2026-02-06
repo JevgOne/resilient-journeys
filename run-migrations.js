@@ -231,7 +231,7 @@ async function runMigrations() {
   }
 
   console.log('\n\n✨ Setup complete!\n');
-  console.log('🧪 Test the accounts at: https://resilient-journeys-ten.vercel.app/auth\n');
+  console.log('🧪 Test the accounts at: https://resilientmind.io/auth\n');
 }
 
 runMigrations().catch(console.error);

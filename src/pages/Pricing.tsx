@@ -137,7 +137,7 @@ const Pricing = () => {
               price: "27",
               priceCurrency: "EUR",
               availability: "https://schema.org/InStock",
-              url: "https://resilient-journeys-ten.vercel.app/pricing",
+              url: "https://resilientmind.io/pricing",
             },
             {
               "@type": "Offer",
@@ -145,7 +145,7 @@ const Pricing = () => {
               price: "47",
               priceCurrency: "EUR",
               availability: "https://schema.org/InStock",
-              url: "https://resilient-journeys-ten.vercel.app/pricing",
+              url: "https://resilientmind.io/pricing",
             },
           ],
         }}

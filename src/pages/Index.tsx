@@ -19,8 +19,8 @@ const Index = () => {
           "@context": "https://schema.org",
           "@type": "Organization",
           "name": "Resilient Mind",
-          "url": "https://resilient-journeys-ten.vercel.app",
-          "logo": "https://resilient-journeys-ten.vercel.app/assets/resilient-mind-logo.png",
+          "url": "https://resilientmind.io",
+          "logo": "https://resilientmind.io/assets/resilient-mind-logo.png",
           "description": "Online platform for building mental resilience through art expressive therapy for expatriates.",
           "founder": {
             "@type": "Person",

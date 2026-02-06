@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail, Facebook, GraduationCap } from "lucide-react";
+import { Mail, Facebook, Instagram, GraduationCap } from "lucide-react";
 import Logo from "./Logo";
 
 const Footer = () => {
@@ -30,6 +30,14 @@ const Footer = () => {
                 className="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
               >
                 <Facebook size={18} />
+              </a>
+              <a
+                href="https://www.instagram.com/resilientmind_expats"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+              >
+                <Instagram size={18} />
               </a>
               <a
                 href="https://www.skool.com/resilient-mind-expats-premium-3871"

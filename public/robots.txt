@@ -18,4 +18,4 @@ Disallow: /profile
 Disallow: /checkout
 Disallow: /video/
 
-Sitemap: https://resilient-journeys-ten.vercel.app/sitemap.xml
+Sitemap: https://resilientmind.io/sitemap.xml

@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-const BASE_URL = "https://resilient-journeys-ten.vercel.app";
+const BASE_URL = "https://resilientmind.io";
 const DEFAULT_OG_IMAGE = "/assets/resilient-mind-logo.png";
 const SITE_NAME = "Resilient Mind";
 

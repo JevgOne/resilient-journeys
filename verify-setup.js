@@ -49,9 +49,9 @@ async function verify() {
   console.log('   basic@test.com                 | Test123!  | 📦 BASIC (standard access)');
   console.log('   premium@test.com               | Test123!  | ⭐ PREMIUM (full content)');
 
-  console.log('\n\n🌐 Website URL: https://resilient-journeys-ten.vercel.app');
-  console.log('🔗 Login Page:  https://resilient-journeys-ten.vercel.app/auth');
-  console.log('🛠️  Admin Panel: https://resilient-journeys-ten.vercel.app/admin');
+  console.log('\n\n🌐 Website URL: https://resilientmind.io');
+  console.log('🔗 Login Page:  https://resilientmind.io/auth');
+  console.log('🛠️  Admin Panel: https://resilientmind.io/admin');
 
   console.log('\n' + '='.repeat(80));
   console.log('✨ Setup Complete! Ready to test.\n');

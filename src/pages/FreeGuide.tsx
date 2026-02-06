@@ -236,7 +236,7 @@ const FreeGuide = () => {
             "price": "0",
             "priceCurrency": "EUR",
             "availability": "https://schema.org/InStock",
-            "url": "https://resilient-journeys-ten.vercel.app/free-guide"
+            "url": "https://resilientmind.io/free-guide"
           }
         }}
       />

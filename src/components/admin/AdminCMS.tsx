@@ -20,7 +20,7 @@ interface CMSContent {
   description: string | null;
   page: string;
   section: string | null;
-  field_type: 'text' | 'textarea' | 'html' | 'image_url';
+  field_type: 'text' | 'textarea' | 'html' | 'image_url' | 'video_url';
 }
 
 const AdminCMS = () => {
@@ -36,7 +36,7 @@ const AdminCMS = () => {
     description: '',
     page: 'homepage',
     section: '',
-    field_type: 'text' as 'text' | 'textarea' | 'html' | 'image_url'
+    field_type: 'text' as 'text' | 'textarea' | 'html' | 'image_url' | 'video_url'
   });
 
   // Get unique pages from content
@@ -244,13 +244,14 @@ const AdminCMS = () => {
                     <SelectItem value="textarea">Textarea (multi-line)</SelectItem>
                     <SelectItem value="html">HTML (rich content)</SelectItem>
                     <SelectItem value="image_url">Image URL</SelectItem>
+                    <SelectItem value="video_url">Video URL (YouTube/Vimeo)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="value">Value *</Label>
-                {formData.field_type === 'text' || formData.field_type === 'image_url' ? (
+                {formData.field_type === 'text' || formData.field_type === 'image_url' || formData.field_type === 'video_url' ? (
                   <Input
                     id="value"
                     value={formData.value}
@@ -331,7 +332,7 @@ const AdminCMS = () => {
                             </div>
                           </div>
 
-                          {item.field_type === 'text' || item.field_type === 'image_url' ? (
+                          {item.field_type === 'text' || item.field_type === 'image_url' || item.field_type === 'video_url' ? (
                             <Input
                               value={item.value}
                               onChange={(e) => {
@@ -359,6 +360,17 @@ const AdminCMS = () => {
                           {item.field_type === 'image_url' && item.value && (
                             <div className="mt-2">
                               <img src={item.value} alt="Preview" className="max-w-xs rounded border" />
+                            </div>
+                          )}
+                          {item.field_type === 'video_url' && item.value && (
+                            <div className="mt-2 aspect-video max-w-sm rounded overflow-hidden border">
+                              <iframe
+                                src={item.value.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/')}
+                                className="w-full h-full"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                title="Video preview"
+                              />
                             </div>
                           )}
                         </CardContent>

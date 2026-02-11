@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-import { Plus, Pencil, Trash2, Eye, EyeOff } from 'lucide-react';
+import { Plus, Pencil, Trash2, Eye, EyeOff, Upload, ImageIcon, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 interface BlogPost {
@@ -51,6 +51,8 @@ const AdminBlog = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [activeCategory, setActiveCategory] = useState<'blog' | 'workshop'>('blog');
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -120,6 +122,46 @@ const AdminBlog = () => {
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+
+    try {
+      const { data, error } = await supabase.storage
+        .from('blog-images')
+        .upload(fileName, file, { contentType: file.type });
+
+      if (error) {
+        if (error.message?.includes('not found') || error.message?.includes('Bucket')) {
+          toast.error('Storage bucket "blog-images" not found. Please create it in Supabase Dashboard → Storage → New Bucket (name: blog-images, public: yes)');
+        } else {
+          toast.error('Upload error: ' + error.message);
+        }
+        setUploading(false);
+        return;
+      }
+
+      const { data: urlData } = supabase.storage
+        .from('blog-images')
+        .getPublicUrl(fileName);
+
+      setFormData(prev => ({
+        ...prev,
+        featured_image_url: urlData.publicUrl,
+      }));
+
+      toast.success('Image uploaded!');
+    } catch (err: any) {
+      toast.error('Upload failed: ' + err.message);
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
   };
 
   const handleEdit = (post: BlogPost) => {
@@ -317,12 +359,59 @@ const AdminBlog = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="featured_image_url">Featured Image URL</Label>
+                  <Label>Featured Image</Label>
+                  {formData.featured_image_url ? (
+                    <div className="space-y-2">
+                      <div className="relative inline-block">
+                        <img
+                          src={formData.featured_image_url}
+                          alt="Preview"
+                          className="max-h-40 rounded border object-cover"
+                        />
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="destructive"
+                          className="absolute -top-2 -right-2 h-6 w-6 p-0 rounded-full"
+                          onClick={() => setFormData({ ...formData, featured_image_url: '' })}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="hidden"
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={uploading}
+                      >
+                        {uploading ? (
+                          <>Uploading...</>
+                        ) : (
+                          <>
+                            <Upload className="h-4 w-4 mr-2" />
+                            Upload Image
+                          </>
+                        )}
+                      </Button>
+                      <span className="text-xs text-muted-foreground">or</span>
+                    </div>
+                  )}
                   <Input
                     id="featured_image_url"
                     value={formData.featured_image_url}
                     onChange={(e) => setFormData({ ...formData, featured_image_url: e.target.value })}
-                    placeholder="https://..."
+                    placeholder="https://... (paste URL manually)"
+                    className="text-sm"
                   />
                 </div>
 

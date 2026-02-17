@@ -119,9 +119,29 @@ const Dashboard = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedWeek, setSelectedWeek] = useState<number>(1);
 
+  const [checkingAdmin, setCheckingAdmin] = useState(true);
+
   useEffect(() => {
     if (!loading && !user) {
       navigate('/auth');
+      return;
+    }
+
+    const checkAdmin = async () => {
+      if (!user) {
+        setCheckingAdmin(false);
+        return;
+      }
+      const { data } = await supabase.rpc('has_role', { _user_id: user.id, _role: 'admin' });
+      if (data) {
+        navigate('/admin', { replace: true });
+        return;
+      }
+      setCheckingAdmin(false);
+    };
+
+    if (!loading && user) {
+      checkAdmin();
     }
   }, [user, loading, navigate]);
 
@@ -265,7 +285,7 @@ const Dashboard = () => {
     }
   };
 
-  if (loading) {
+  if (loading || checkingAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="animate-pulse text-gold">Loading...</div>

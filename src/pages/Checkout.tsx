@@ -113,6 +113,7 @@ const Checkout = () => {
     } catch (err: any) {
       console.error('Checkout error:', err);
       setError(err.message || 'An error occurred while processing payment');
+    } finally {
       setProcessing(false);
     }
   };

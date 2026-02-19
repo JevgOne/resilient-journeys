@@ -33,6 +33,9 @@ const PricingCards = ({ cancelUrl = "/" }: PricingCardsProps) => {
         return;
       }
 
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000);
+
       const { data, error: fnError } = await supabase.functions.invoke('create-checkout', {
         body: {
           planId: productType,
@@ -41,6 +44,8 @@ const PricingCards = ({ cancelUrl = "/" }: PricingCardsProps) => {
         },
       });
 
+      clearTimeout(timeout);
+
       if (fnError) {
         throw new Error(fnError.message || "Failed to create checkout session");
       }
@@ -48,7 +53,11 @@ const PricingCards = ({ cancelUrl = "/" }: PricingCardsProps) => {
       else throw new Error("No checkout URL returned");
     } catch (error: any) {
       console.error("Checkout error:", error);
-      toast.error(error.message || "Failed to start checkout");
+      if (error.name === 'AbortError') {
+        toast.error("Request timed out. Please try again.");
+      } else {
+        toast.error(error.message || "Failed to start checkout");
+      }
     } finally {
       setLoadingTier(null);
     }

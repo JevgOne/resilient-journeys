@@ -26,14 +26,21 @@ const PricingCards = ({ cancelUrl = "/" }: PricingCardsProps) => {
   const createCheckoutSession = async (productType: string) => {
     setLoadingTier(productType);
     try {
-      // Refresh session to get a fresh access token
-      const { data: { session }, error: sessionError } = await supabase.auth.refreshSession();
-      if (sessionError || !session) {
+      // Get current session - fast local check first
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      if (!currentSession) {
         toast.error("Please log in first");
-        navigate("/auth");
+        navigate("/auth?redirect=/pricing");
         setLoadingTier(null);
         return;
       }
+
+      // Try to refresh for a fresh token, fall back to current session
+      let accessToken = currentSession.access_token;
+      try {
+        const { data: { session: refreshed } } = await supabase.auth.refreshSession();
+        if (refreshed) accessToken = refreshed.access_token;
+      } catch {}
 
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 15000);

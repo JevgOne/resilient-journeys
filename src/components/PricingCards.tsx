@@ -2,6 +2,7 @@ import { Check, Crown, Loader2, Shield, Clock, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import {
@@ -17,31 +18,48 @@ interface PricingCardsProps {
 
 const PricingCards = ({ cancelUrl = "/" }: PricingCardsProps) => {
   const navigate = useNavigate();
+  const { session: authSession } = useAuth();
   const [loadingTier, setLoadingTier] = useState<string | null>(null);
   const visibleTiers = getVisibleTiers();
   const earlyBird = isEarlyBird();
 
   const createCheckoutSession = async (productType: string) => {
     setLoadingTier(productType);
+
+    // Use auth hook session - this is reliable (has timeout, cleared on expiry)
+    // Don't use supabase.auth.getSession() which reads stale data from localStorage
+    if (!authSession) {
+      toast.error("Please log in first");
+      navigate("/auth?redirect=/pricing");
+      setLoadingTier(null);
+      return;
+    }
+
+    // Safety timeout - always reset button after 10s no matter what
+    const safetyTimeout = setTimeout(() => {
+      setLoadingTier(null);
+      toast.error("Request timed out. Please try again.");
+    }, 10000);
+
     try {
-      // Get current session - fast local check first
-      const { data: { session: currentSession } } = await supabase.auth.getSession();
-      if (!currentSession) {
-        toast.error("Please log in first");
-        navigate("/auth?redirect=/pricing");
-        setLoadingTier(null);
-        return;
+      // Try to refresh for a fresh token (with 3s timeout), fall back to current
+      let accessToken = authSession.access_token;
+      try {
+        const refreshResult = await Promise.race([
+          supabase.auth.refreshSession(),
+          new Promise<never>((_, reject) =>
+            setTimeout(() => reject(new Error("refresh timeout")), 3000)
+          ),
+        ]);
+        if (refreshResult.data?.session) {
+          accessToken = refreshResult.data.session.access_token;
+        }
+      } catch {
+        // Use existing token if refresh fails or times out
       }
 
-      // Try to refresh for a fresh token, fall back to current session
-      let accessToken = currentSession.access_token;
-      try {
-        const { data: { session: refreshed } } = await supabase.auth.refreshSession();
-        if (refreshed) accessToken = refreshed.access_token;
-      } catch {}
-
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 15000);
+      const fetchTimeout = setTimeout(() => controller.abort(), 8000);
 
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
       const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
@@ -61,7 +79,7 @@ const PricingCards = ({ cancelUrl = "/" }: PricingCardsProps) => {
         }),
       });
 
-      clearTimeout(timeout);
+      clearTimeout(fetchTimeout);
 
       const result = await response.json();
 
@@ -70,12 +88,14 @@ const PricingCards = ({ cancelUrl = "/" }: PricingCardsProps) => {
       }
 
       if (result?.url) {
+        clearTimeout(safetyTimeout);
         window.location.href = result.url;
         return;
       }
       throw new Error("No checkout URL returned");
     } catch (error: any) {
       console.error("Checkout error:", error);
+      clearTimeout(safetyTimeout);
       if (error.name === 'AbortError') {
         toast.error("Request timed out. Please try again.");
       } else {

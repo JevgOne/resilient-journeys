@@ -26,15 +26,14 @@ const PricingCards = ({ cancelUrl = "/" }: PricingCardsProps) => {
   const createCheckoutSession = async (productType: string) => {
     setLoadingTier(productType);
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        alert("DEBUG: No session - not logged in");
+      // Refresh session to get a fresh access token
+      const { data: { session }, error: sessionError } = await supabase.auth.refreshSession();
+      if (sessionError || !session) {
+        toast.error("Please log in first");
         navigate("/auth");
         setLoadingTier(null);
         return;
       }
-
-      alert("DEBUG: Session OK, calling checkout...");
 
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 15000);
@@ -60,7 +59,6 @@ const PricingCards = ({ cancelUrl = "/" }: PricingCardsProps) => {
       clearTimeout(timeout);
 
       const result = await response.json();
-      alert(`DEBUG: Response ${response.status}: ${JSON.stringify(result).slice(0, 200)}`);
 
       if (!response.ok) {
         throw new Error(result?.error || `Server error (${response.status})`);
@@ -72,8 +70,12 @@ const PricingCards = ({ cancelUrl = "/" }: PricingCardsProps) => {
       }
       throw new Error("No checkout URL returned");
     } catch (error: any) {
-      alert(`DEBUG: Error - ${error.name}: ${error.message}`);
-      toast.error(error.message || "Failed to start checkout");
+      console.error("Checkout error:", error);
+      if (error.name === 'AbortError') {
+        toast.error("Request timed out. Please try again.");
+      } else {
+        toast.error(error.message || "Failed to start checkout");
+      }
       setLoadingTier(null);
     }
   };

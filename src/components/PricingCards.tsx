@@ -25,15 +25,7 @@ const PricingCards = ({ cancelUrl = "/" }: PricingCardsProps) => {
 
   const createCheckoutSession = async (productType: string) => {
     setLoadingTier(productType);
-
-    // Safety timeout - always reset button after 15s no matter what
-    const safetyTimeout = setTimeout(() => {
-      setLoadingTier(null);
-      toast.error("Request timed out. Please try again.");
-    }, 15000);
-
     try {
-      // Check session locally (no network call) instead of getUser()
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
         toast.error("Please log in first");
@@ -42,36 +34,49 @@ const PricingCards = ({ cancelUrl = "/" }: PricingCardsProps) => {
         return;
       }
 
-      const { data, error: fnError } = await supabase.functions.invoke('create-checkout', {
-        body: {
+      // Use direct fetch instead of supabase.functions.invoke to avoid hanging
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000);
+
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+      const response = await fetch(`${supabaseUrl}/functions/v1/create-checkout`, {
+        method: 'POST',
+        signal: controller.signal,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+          'apikey': supabaseKey,
+        },
+        body: JSON.stringify({
           planId: productType,
           successUrl: `${window.location.origin}/pricing/success`,
           cancelUrl: `${window.location.origin}${cancelUrl}`,
-        },
+        }),
       });
 
-      if (fnError) {
-        // FunctionsHttpError wraps the response - try to extract the real message
-        let errorMsg = "Failed to create checkout session";
-        try {
-          if (fnError.context) {
-            const errBody = await fnError.context.json();
-            errorMsg = errBody?.error || errorMsg;
-          }
-        } catch {}
-        throw new Error(errorMsg);
+      clearTimeout(timeout);
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result?.error || `Server error (${response.status})`);
       }
-      if (data?.url) {
-        window.location.href = data.url;
+
+      if (result?.url) {
+        window.location.href = result.url;
         return;
       }
       throw new Error("No checkout URL returned");
     } catch (error: any) {
       console.error("Checkout error:", error);
-      toast.error(error.message || "Failed to start checkout");
+      if (error.name === 'AbortError') {
+        toast.error("Request timed out. Please try again.");
+      } else {
+        toast.error(error.message || "Failed to start checkout");
+      }
       setLoadingTier(null);
-    } finally {
-      clearTimeout(safetyTimeout);
     }
   };
 

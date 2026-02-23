@@ -5,7 +5,6 @@ import Services from "@/components/Services";
 import AboutPreview from "@/components/AboutPreview";
 import Pricing from "@/components/Pricing";
 import LeadMagnet from "@/components/LeadMagnet";
-import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 
@@ -43,7 +42,6 @@ const Index = () => {
         <AboutPreview />
         <Pricing />
         <LeadMagnet />
-        <Testimonials />
       </main>
       <Footer />
     </div>

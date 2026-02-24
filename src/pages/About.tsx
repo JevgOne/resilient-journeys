@@ -129,19 +129,19 @@ const About = () => {
 
               <div className="prose prose-lg max-w-none">
                 <p className="text-muted-foreground font-sans leading-relaxed mb-6">
-                  My journey began in the Czech Republic, where I completed my Master's degree in Economics and Management. Life presented me with unexpected challenges: a diagnosis of endometriosis, multiple surgeries, and navigating new cultures and healthcare systems far from home. These experiences became profound teachers that shaped my understanding of inner strength and resilience.
+                  My journey began in the Czech Republic, where I completed a Master's degree in Economics and Management. At 24, I had my first surgery for endometriosis, starting a long path of managing chronic pain and the emotional challenges it brought.
                 </p>
 
                 <p className="text-muted-foreground font-sans leading-relaxed mb-6">
-                  Over the years, I've devoted myself to holistic approaches, obtaining a Certificate in Holistic Counselling, an Art Therapy Diploma (HH Dip A.Th), and Reiki Master certification. I integrate these tools to help people cultivate mental, emotional, and energetic balance, often using creative expression—like silk painting—as a powerful way to process emotions beyond words.
+                  Before moving to Australia, I earned my Reiki certifications and discovered silk painting techniques, sparking my interest in holistic and creative approaches to wellbeing. Living in Australia for 13 years shaped the foundation of the Resilient Mind program. I learned to navigate new cultures, stay grounded through change, and transform challenges into growth. After returning to the Czech Republic in 2023, I recently relocated to Spain, continuing to explore life with curiosity and resilience.
                 </p>
 
                 <p className="text-muted-foreground font-sans leading-relaxed mb-6">
-                  Through Resilient Mind, I guide individuals—especially women living abroad—toward inner strength and clarity, including specialized support for those managing chronic conditions like endometriosis.
+                  I've since earned a Certificate in Holistic Counselling and an Art Therapy Diploma (HH Dip A.Th), integrating these tools to help people cultivate mental, emotional, and energetic balance. Through creative expression, nervous system work, and holistic practices, I guide individuals—especially women living abroad—toward clarity, inner strength, and freedom from limitations.
                 </p>
 
                 <p className="text-lg text-foreground/90 font-sans font-medium leading-relaxed">
-                  My mission is simple: to help you transform challenges into growth, creating a life that transcends borders, limitations, and self-doubt.
+                  My mission is simple: to share the knowledge and insights I gained from real-life experiences so you don't have to navigate challenges alone—and to help you turn uncertainty into growth, creating a life that transcends borders, limitations, and self-doubt.
                 </p>
               </div>
             </div>

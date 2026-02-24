@@ -76,11 +76,14 @@ const ResilientHubs = () => {
             </h1>
 
             <p className="text-lg md:text-xl text-foreground/85 font-sans leading-relaxed mb-4 max-w-3xl mx-auto">
-              A 12-month guided membership program that transforms the loneliness, uncertainty, and cultural stress of expat life into your greatest strengths.
+              Expat life can be rewarding, but it also comes with challenges—loneliness, cultural differences, uncertainty, and navigating health challenges while away from your familiar support network.
+            </p>
+            <p className="text-base text-foreground/75 font-sans leading-relaxed mb-4 max-w-3xl mx-auto">
+              Using my 13 years of experience living abroad and my expertise in personal development, expressive arts, and holistic therapies, I created an online membership program that transforms these challenges into opportunities for growth and inner strength.
             </p>
 
             <p className="text-base text-muted-foreground font-sans mb-8 max-w-2xl mx-auto">
-              Created by Silvie — an expatriate of 13+ years who turned her own struggles into a proven methodology combining EFT, art therapy, and energy work.
+              Created by Silvie — an expatriate of 13+ years who developed a practical, accessible methodology designed to support people globally through an online membership and educational programs.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
@@ -108,6 +111,151 @@ const ResilientHubs = () => {
             </div>
           </div>
         </PageHero>
+
+        {/* Membership Details */}
+        <section className="py-16 md:py-24 bg-card">
+          <div className="container px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <p className="text-lg text-foreground/85 font-sans leading-relaxed mb-6 max-w-3xl mx-auto">
+                  I offer a gentle online membership combining Emotional Freedom Techniques (EFT) and other holistic practices, with practical PDF tools for daily practice.
+                </p>
+                <h2 className="text-2xl md:text-4xl font-serif font-semibold mb-4">
+                  A 12-Month Online Membership for <span className="text-gradient-gold">Expat Women</span>
+                </h2>
+                <p className="text-lg text-muted-foreground font-sans max-w-2xl mx-auto mb-6">
+                  Steady emotional support, nervous system regulation and gentle structure while living abroad.
+                </p>
+                <p className="text-base text-foreground/80 font-sans leading-relaxed max-w-3xl mx-auto mb-8">
+                  This ongoing membership supports you month by month as you transform loneliness, uncertainty and cultural stress into emotional stability, self-trust and inner safety.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8 mb-12">
+                <div className="bg-background rounded-2xl p-8 border border-border">
+                  <h3 className="text-xl font-serif font-semibold mb-4 text-gradient-gold">This is for you if:</h3>
+                  <ul className="space-y-3">
+                    {[
+                      "You live abroad and feel emotionally overwhelmed",
+                      "You miss stability and inner safety",
+                      "You want gentle, practical tools",
+                      "You value continuity over quick fixes",
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Check size={12} className="text-primary" />
+                        </div>
+                        <span className="text-foreground/80 font-sans text-sm">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-background rounded-2xl p-8 border border-border">
+                  <h3 className="text-xl font-serif font-semibold mb-4 text-gradient-gold">Each month focuses on one core theme:</h3>
+                  <ul className="space-y-3">
+                    {[
+                      "Emotional overwhelm",
+                      "Loneliness and belonging",
+                      "Boundaries and self-trust",
+                      "Stability during constant change",
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Check size={12} className="text-primary" />
+                        </div>
+                        <span className="text-foreground/80 font-sans text-sm">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-sm text-muted-foreground font-sans mt-4">
+                    <Link to="/resilient-hub" className="text-primary underline underline-offset-4 hover:text-primary/80 font-medium">See the full 12-month overview</Link> for details on each month.
+                  </p>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <p className="text-base text-foreground/80 font-sans leading-relaxed max-w-2xl mx-auto mb-8">
+                  The Membership program teaches you how to look after your mind, regulate stress, and grow self-awareness — one gentle practice at a time.
+                </p>
+
+                <p className="text-lg text-foreground/80 font-sans font-medium leading-relaxed max-w-2xl mx-auto mb-6">
+                  This membership helps you feel more stable, supported and at home within yourself — wherever you live.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* What if resilience... */}
+        <section className="py-16 md:py-24 bg-background">
+          <div className="container px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-2xl md:text-3xl font-serif font-semibold mb-6 italic text-foreground/90">
+                What if resilience wasn't about pushing harder — but about learning how to care for your mind and nervous system, step by step?
+              </h2>
+              <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-8 max-w-3xl mx-auto">
+                The Membership Online Program is built on a simple idea: you don't need more information — you need practical tools you can actually use when life feels overwhelming.
+              </p>
+              <div className="max-w-2xl mx-auto text-left mb-8">
+                <p className="text-base text-foreground/80 font-sans mb-4">Instead of trying to "fix yourself," you learn how to:</p>
+                <ul className="space-y-3">
+                  {[
+                    "Understand your reactions",
+                    "Regulate stress and emotions",
+                    "Build self-awareness and confidence",
+                    "Respond to challenges with more calm and clarity",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Check size={12} className="text-primary" />
+                      </div>
+                      <span className="text-foreground/80 font-sans">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <p className="text-base text-foreground/80 font-sans font-medium italic">
+                This is where resilience becomes something you practice, not something you force.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Resilient Mind Membership details */}
+        <section className="py-16 md:py-24 bg-card">
+          <div className="container px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-2xl md:text-4xl font-serif font-semibold mb-4">
+                Resilient Mind <span className="text-gradient-gold">Membership</span>
+              </h2>
+              <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-4 max-w-3xl mx-auto">
+                Ongoing emotional support and nervous system regulation for expat women. A monthly online membership offering guided practical tools and video support within a holistic approach.
+              </p>
+              <div className="max-w-2xl mx-auto text-left mb-8">
+                <p className="text-base text-foreground/80 font-sans font-medium mb-4">Every month you receive:</p>
+                <ul className="space-y-3">
+                  {[
+                    "Guided EFT sessions and other holistic practices (audio & video)",
+                    "Expressive creative tools (no artistic experience needed)",
+                    "Simple integration practices (journaling & reflection)",
+                    "Access to a private community for Premium members",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Check size={12} className="text-primary" />
+                      </div>
+                      <span className="text-foreground/80 font-sans">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <p className="text-base text-foreground/80 font-sans italic">
+                Resilience isn't something you're born with — it's something you practice gently, one month at a time.
+              </p>
+            </div>
+          </div>
+        </section>
 
         {/* Pain Points — "Does this sound like you?" */}
         <section className="py-16 md:py-24 bg-background">
@@ -211,7 +359,7 @@ const ResilientHubs = () => {
                 {[
                   { step: "1", title: "Choose Your Plan", desc: "Pick Basic for self-guided learning or Premium for the full experience with personal consultations and art therapy kit.", icon: Crown },
                   { step: "2", title: "Start This Month's Theme", desc: "Each month, a new module unlocks with video lessons, workbooks, and guided exercises tailored to a specific aspect of resilience.", icon: Video },
-                  { step: "3", title: "Practice at Your Own Pace", desc: "Watch 1-2 videos per week (15 min each), complete the workbook exercises, and integrate the techniques into your daily life.", icon: FileText },
+                  { step: "3", title: "Practice at Your Own Pace", desc: "Watch 1 video per week (5-10 min), complete the workbook exercises, and integrate the techniques into your daily life. (4 x videos per month)", icon: FileText },
                   { step: "4", title: "Transform Over 12 Months", desc: "By month 12, you'll have a complete toolkit of resilience techniques and an unshakable inner foundation — your 'inner home' that travels with you.", icon: Heart },
                 ].map((item, i) => (
                   <div key={i} className="flex gap-6 items-start">
@@ -292,11 +440,14 @@ const ResilientHubs = () => {
                   Invest in Your <span className="text-gradient-gold">Transformation</span>
                 </h2>
                 <p className="text-lg text-muted-foreground font-sans max-w-2xl mx-auto">
-                  Less than the cost of one therapy session per month — with tools you'll use for the rest of your life.
+                  Now is your moment to invest in your body, mind, and resilience — and step into a life of clarity, calm and confidence, no matter where the world takes you.
                 </p>
               </div>
 
               <PricingCards cancelUrl="/resilient-hubs" />
+              <p className="text-center text-foreground/80 font-sans leading-relaxed max-w-3xl mx-auto mt-6 mb-4">
+                The Membership program teaches you how to look after your mind, regulate stress, and grow self-awareness — one gentle practice at a time.
+              </p>
               <PricingTrustSignals />
 
               {/* Free guide nudge */}

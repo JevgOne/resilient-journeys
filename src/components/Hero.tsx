@@ -35,13 +35,13 @@ const Hero = () => {
           {/* Subheading */}
           <div className="max-w-3xl mx-auto mb-10 space-y-4 animate-fade-in" style={{ animationDelay: "0.2s" }}>
             <p className="text-lg md:text-xl text-foreground/80 font-sans font-medium leading-relaxed drop-shadow-sm">
-              Living between worlds changes everything—your identity, relationships, and sense of belonging. When familiar ground disappears, you need more than just practical adaptation techniques. You need a profound inner transformation.
+              Living between worlds changes everything—your identity, relationships, and sense of belonging.
             </p>
             <p className="text-base md:text-lg text-foreground/75 font-sans leading-relaxed">
-              At Resilient Mind, we guide expatriates through this alchemical process, turning the challenges of cultural transition into your most powerful assets. Through our signature blend of evidence-based techniques, expressive arts, and energy work, you'll develop an unshakable "inner home" that travels with you anywhere.
+              At Resilient Mind, we support expatriate women through the emotional and nervous-system challenges of living abroad. We help you gently transform cultural stress, loneliness, and constant change into emotional stability, self-trust, and a deep sense of inner safety.
             </p>
-            <p className="text-base md:text-lg text-foreground/75 font-sans font-medium leading-relaxed">
-              Because true resilience isn't about resisting change — it's about learning to flow with it and grow stronger.
+            <p className="text-base md:text-lg text-foreground/75 font-sans leading-relaxed">
+              Through our signature blend of evidence-based techniques, EFT, expressive creative practices, and integrative mind–body approaches, you develop an unshakable "inner home" — a steady inner foundation you can carry with you wherever life takes you.
             </p>
           </div>
 

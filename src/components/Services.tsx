@@ -54,9 +54,9 @@ const approaches = [
 ];
 
 const whoItsFor = [
-  "Women navigating new cultures while maintaining their sense of self",
-  "Expatriates managing health challenges far from their support systems",
-  "Global professionals seeking deeper stability despite constant change",
+  "Expat women navigating new cultures while staying connected to who they truly are",
+  "Women living abroad who feel emotionally stretched or unsupported, seeking grounded tools they can rely on anywhere",
+  "Globally mobile women facing constant change and wanting deeper inner stability, confidence, and clarity",
 ];
 
 const Services = () => {
@@ -84,10 +84,10 @@ const Services = () => {
             Transform Your <span className="text-gradient-gold">Expat Experience</span>
           </h2>
           <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-8">
-            At Resilient Mind, we guide expatriates through this alchemical process, turning the challenges of cultural transition into your most powerful assets. Through our signature blend of evidence-based techniques, expressive arts, and energy work, you'll develop an unshakable "inner home" that travels with you anywhere.
+            At Resilient Mind, we support expatriate women through the emotional and nervous-system challenges of living abroad. We help you gently transform cultural stress, loneliness, and constant change into emotional stability, self-trust, and a deep sense of inner safety.
           </p>
           <p className="text-base text-foreground/80 font-sans italic">
-            Because true resilience isn't about resisting change — it's about learning to flow with it and grow stronger.
+            Through our signature blend of evidence-based techniques, EFT, expressive creative practices, and integrative mind–body approaches, you develop an unshakable "inner home" — a steady inner foundation you can carry with you wherever life takes you.
           </p>
         </div>
 

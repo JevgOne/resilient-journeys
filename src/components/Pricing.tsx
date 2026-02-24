@@ -58,6 +58,11 @@ const Pricing = () => {
           <PricingTrustSignals />
         </div>
 
+        {/* Membership description */}
+        <p className="text-center text-foreground/80 font-sans leading-relaxed max-w-3xl mx-auto mt-8 mb-4">
+          Through Resilient Mind Membership Program, you will explore personal beliefs that may be limiting your progress, develop greater self-awareness, and create space to enjoy the simple, meaningful moments of your life with clarity and presence.
+        </p>
+
         {/* 1:1 Session Card */}
         <div className="max-w-md mx-auto mt-12">
           <div className="bg-card/80 backdrop-blur-sm rounded-3xl border border-border/60 p-1 hover:border-primary/30 transition-all duration-300 hover:shadow-[0_8px_30px_-12px_hsla(30,25%,30%,0.12)]">

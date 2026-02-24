@@ -151,7 +151,7 @@ const ResilientHub = () => {
               </p>
 
               <p className="text-lg text-foreground/90 font-sans mb-8 max-w-3xl mx-auto">
-                Using my 13 years of experience living abroad and my expertise in personal development, expressive arts, and holistic therapies, I created a program that turns these challenges into opportunities for growth and inner strength.
+                Using my 13 years of experience living abroad and my expertise in personal development, expressive arts, and holistic therapies, I created an <strong>online membership program</strong> that transforms these challenges into opportunities for growth and inner strength.
               </p>
               
               <button
@@ -162,6 +162,32 @@ const ResilientHub = () => {
               </button>
             </div>
         </PageHero>
+
+        {/* Membership Details */}
+        <section className="py-16 md:py-24 bg-card">
+          <div className="container px-4">
+            <div className="max-w-3xl mx-auto text-center">
+              <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-6">
+                I offer a gentle online membership combining Emotional Freedom Techniques (EFT) and other holistic practices, with practical PDF tools for daily practice.
+              </p>
+              <p className="text-lg font-sans font-semibold text-foreground mb-4">
+                A 12-month online membership for expat women offering
+              </p>
+              <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-8">
+                steady emotional support, nervous system regulation and gentle structure while living abroad. This ongoing membership supports you month by month as you transform loneliness, uncertainty and cultural stress into emotional stability, self-trust and inner safety.
+              </p>
+              <div className="text-left max-w-md mx-auto mb-6">
+                <p className="text-lg font-sans font-semibold text-foreground mb-3">This is for you if:</p>
+                <ul className="space-y-2 text-muted-foreground font-sans">
+                  <li className="flex items-start gap-2"><span className="text-gold mt-1">•</span> you live abroad and feel emotionally overwhelmed</li>
+                  <li className="flex items-start gap-2"><span className="text-gold mt-1">•</span> you miss stability and inner safety</li>
+                  <li className="flex items-start gap-2"><span className="text-gold mt-1">•</span> you want gentle, practical tools</li>
+                  <li className="flex items-start gap-2"><span className="text-gold mt-1">•</span> you value continuity over quick fixes</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* What's Included */}
         <section className="py-16 md:py-24 bg-background">

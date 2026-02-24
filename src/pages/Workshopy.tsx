@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Sparkles, Calendar, ArrowRight, Tag, CreditCard } from "lucide-react";
+import { Sparkles, Calendar, ArrowRight, Tag, CreditCard, Palette, Users, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import WorkshopInquiryForm from '@/components/WorkshopInquiryForm';
 import PageHero from "@/components/PageHero";
@@ -83,8 +83,149 @@ const Workshopy = () => {
             </div>
         </PageHero>
 
-        {/* Workshops */}
+        {/* Section 1: Silk Paintings */}
         <section className="py-16 md:py-24 bg-background">
+          <div className="container px-4">
+            <div className="max-w-5xl mx-auto">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center">
+                  <Palette size={24} className="text-primary" />
+                </div>
+                <h2 className="text-2xl md:text-4xl font-serif font-semibold">
+                  My Creations — Silk Paintings
+                </h2>
+              </div>
+
+              <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-4">
+                I discovered silk painting as my personal way to relax my mind — a space where time seemed to stop, and all the usual thoughts quieted down. It became my "power of now," a moment to simply be and let creativity flow.
+              </p>
+              <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-8">
+                Stepping into a world of color and texture, participants often pause, smile, and breathe a little deeper. These silk painting sessions offer a space to explore creativity without pressure, where each brushstroke can capture a feeling, a thought, or a moment.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="rounded-2xl overflow-hidden shadow-elevated">
+                  <img
+                    src="/workshops/workshop-1.jpg"
+                    alt="Silk painting artwork"
+                    className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="rounded-2xl overflow-hidden shadow-elevated">
+                  <img
+                    src="/workshops/workshop-2.jpg"
+                    alt="Silk painting artwork"
+                    className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="rounded-2xl overflow-hidden shadow-elevated">
+                  <img
+                    src="/workshops/workshop-3.jpg"
+                    alt="Silk painting artwork"
+                    className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 2: Kids & Parents */}
+        <section className="py-16 md:py-24 bg-card">
+          <div className="container px-4">
+            <div className="max-w-5xl mx-auto">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center">
+                  <Users size={24} className="text-primary" />
+                </div>
+                <h2 className="text-2xl md:text-4xl font-serif font-semibold">
+                  Expressive Art Workshops — Kids & Parents
+                </h2>
+              </div>
+
+              <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-4">
+                These workshops are a wonderful opportunity for parents and children to spend valuable time together, creating, learning, and discovering more about each other. They are full of laughter, curiosity, and shared exploration. Parents and children paint side by side, experimenting with colors, shapes, and textures, while gently connecting in a space that encourages creativity and presence.
+              </p>
+              <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-8">
+                It's amazing to watch everyone relax, let go, and connect through art. By the end of the session, the room is alive with happiness, gentle pride, and colorful creations that tell stories only your hearts can tell.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="rounded-2xl overflow-hidden shadow-elevated">
+                  <img
+                    src="/workshops/workshop-4.jpg"
+                    alt="Kids and parents workshop"
+                    className="w-full h-80 object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="rounded-2xl overflow-hidden shadow-elevated">
+                  <img
+                    src="/workshops/workshop-5.jpg"
+                    alt="Kids and parents workshop"
+                    className="w-full h-80 object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3: Adults */}
+        <section className="py-16 md:py-24 bg-background">
+          <div className="container px-4">
+            <div className="max-w-5xl mx-auto">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center">
+                  <Heart size={24} className="text-primary" />
+                </div>
+                <h2 className="text-2xl md:text-4xl font-serif font-semibold">
+                  Expressive Art Workshops — Adults
+                </h2>
+              </div>
+
+              <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-4">
+                In this space, adults allow themselves to slow down and reconnect with their creativity. Through expressive art, participants release stress, explore emotions, and embrace playfulness. Many leave feeling lighter, refreshed, and inspired — carrying with them not only the artworks they created but also the joy and relaxation of a day fully spent expressing themselves.
+              </p>
+              <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-8">
+                People leave not only with a unique piece of art that tells their story, but also with a sense of calm, clarity, and a little spark of joy.
+              </p>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="rounded-2xl overflow-hidden shadow-elevated">
+                  <img
+                    src="/workshops/workshop-6.jpg"
+                    alt="Adult expressive art workshop"
+                    className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="rounded-2xl overflow-hidden shadow-elevated">
+                  <img
+                    src="/workshops/workshop-7.jpg"
+                    alt="Adult expressive art workshop"
+                    className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="rounded-2xl overflow-hidden shadow-elevated">
+                  <img
+                    src="/workshops/workshop-8.jpg"
+                    alt="Adult expressive art workshop"
+                    className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="rounded-2xl overflow-hidden shadow-elevated">
+                  <img
+                    src="/workshops/workshop-9.jpg"
+                    alt="Adult expressive art workshop"
+                    className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Dynamic Workshops from CMS */}
+        <section className="py-16 md:py-24 bg-card">
           <div className="container px-4">
             <div className="max-w-4xl mx-auto">
               {loading ? (

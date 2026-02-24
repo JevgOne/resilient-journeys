@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         console.warn('Auth loading timeout — proceeding without session');
         setLoading(false);
       }
-    }, 4000);
+    }, 2000);
 
     const handleSession = async (session: Session | null) => {
       if (!isMounted) return;

@@ -207,7 +207,7 @@ const Dashboard = () => {
       setLoadingContent(false);
     };
 
-    if (user && profile) {
+    if (user) {
       fetchContent();
     }
   }, [user, profile, canAccessVideo]);

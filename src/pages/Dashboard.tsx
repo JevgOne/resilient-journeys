@@ -375,7 +375,7 @@ const Dashboard = () => {
                 value={week.toString()}
                 className="data-[state=active]:bg-gold data-[state=active]:text-white"
               >
-                Week {week}
+                {week === 5 ? 'Free Bonus' : `Week ${week}`}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -449,7 +449,7 @@ const Dashboard = () => {
                   <Card className="border-gold/20 opacity-60 bg-muted/30">
                     <CardContent className="py-12 text-center">
                       <Sparkles className="h-8 w-8 text-gold/40 mx-auto mb-3" />
-                      <h3 className="font-serif text-lg mb-1">Week {week}</h3>
+                      <h3 className="font-serif text-lg mb-1">{week === 5 ? 'Free Bonus' : `Week ${week}`}</h3>
                       <p className="text-sm text-muted-foreground">
                         Content coming soon
                       </p>

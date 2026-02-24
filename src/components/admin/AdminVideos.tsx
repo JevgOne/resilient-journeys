@@ -355,7 +355,7 @@ const AdminVideos = () => {
                       <SelectItem value="2">Week 2</SelectItem>
                       <SelectItem value="3">Week 3</SelectItem>
                       <SelectItem value="4">Week 4</SelectItem>
-                      <SelectItem value="5">Week 5</SelectItem>
+                      <SelectItem value="5">Bonus (Free)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

@@ -9,15 +9,21 @@ import SEO from "@/components/SEO";
 
 const About = () => {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  const [videoLoading, setVideoLoading] = useState(true);
 
   useEffect(() => {
     const fetchVideo = async () => {
-      const { data } = await supabase
-        .from('cms_content')
-        .select('value')
-        .eq('key', 'about_intro_video')
-        .maybeSingle();
-      if (data?.value) setVideoUrl(data.value);
+      try {
+        const { data } = await supabase
+          .from('cms_content')
+          .select('value')
+          .eq('key', 'about_intro_video')
+          .maybeSingle();
+        if (data?.value) setVideoUrl(data.value);
+      } catch (err) {
+        console.error('Failed to fetch intro video:', err);
+      }
+      setVideoLoading(false);
     };
     fetchVideo();
   }, []);
@@ -99,7 +105,9 @@ const About = () => {
                 </p>
 
                 {/* Video Section - configurable via Admin CMS (key: about_intro_video) */}
-                {videoUrl ? (
+                {videoLoading ? (
+                  <div className="bg-muted rounded-xl mb-6 aspect-video animate-pulse" />
+                ) : videoUrl ? (
                   <div className="rounded-xl overflow-hidden mb-6 aspect-video">
                     <iframe
                       src={getEmbedUrl(videoUrl)}
@@ -109,12 +117,7 @@ const About = () => {
                       title="Introduction Video"
                     />
                   </div>
-                ) : (
-                  <div className="bg-muted rounded-xl p-8 mb-6 text-center">
-                    <div className="text-sm text-muted-foreground font-sans mb-2">Short Introduction Video</div>
-                    <p className="text-xs text-muted-foreground italic">Coming soon</p>
-                  </div>
-                )}
+                ) : null}
               </div>
             </div>
         </PageHero>

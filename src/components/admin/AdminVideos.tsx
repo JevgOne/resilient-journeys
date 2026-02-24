@@ -192,18 +192,19 @@ const AdminVideos = () => {
         is_free: videoData.is_free,
         category_id: videoData.category_id,
         week_number: videoData.week_number,
+        sort_order: 0,
       };
 
       if (workbookResourceId) {
-        // Update existing
-        await supabase.from('resources').update(resourcePayload).eq('id', workbookResourceId);
+        const { error } = await supabase.from('resources').update(resourcePayload).eq('id', workbookResourceId);
+        if (error) { console.error('Workbook update error:', error); toast.error('Workbook save error: ' + error.message); }
       } else {
-        // Create new
-        await supabase.from('resources').insert(resourcePayload);
+        const { error } = await supabase.from('resources').insert(resourcePayload);
+        if (error) { console.error('Workbook insert error:', error); toast.error('Workbook save error: ' + error.message); }
       }
     } else if (workbookResourceId) {
-      // Workbook was removed — delete the resource row
-      await supabase.from('resources').delete().eq('id', workbookResourceId);
+      const { error } = await supabase.from('resources').delete().eq('id', workbookResourceId);
+      if (error) { console.error('Workbook delete error:', error); toast.error('Workbook delete error: ' + error.message); }
     }
   };
 
@@ -446,12 +447,27 @@ const AdminVideos = () => {
                     </Button>
                   </div>
                 )}
-                {!workbookUrl && (
+                {!workbookUrl && !workbookUploading && (
                   <Input
                     className="mt-2"
-                    placeholder="https://... (workbook PDF URL)"
-                    value={workbookUrl}
-                    onChange={(e) => setWorkbookUrl(e.target.value)}
+                    placeholder="https://... (paste workbook PDF URL and press Enter)"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const val = (e.target as HTMLInputElement).value.trim();
+                        if (val) setWorkbookUrl(val);
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const val = e.target.value.trim();
+                      if (val) setWorkbookUrl(val);
+                    }}
+                    onPaste={(e) => {
+                      setTimeout(() => {
+                        const val = (e.target as HTMLInputElement).value.trim();
+                        if (val) setWorkbookUrl(val);
+                      }, 0);
+                    }}
                   />
                 )}
               </div>

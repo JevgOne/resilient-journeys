@@ -413,7 +413,7 @@ const Dashboard = () => {
                   {profile?.membership_type === 'premium' && <Crown className="h-3 w-3 mr-1" />}
                   {membershipLabels[profile?.membership_type || 'free']}
                 </Badge>
-                {profile?.membership_type === 'free' && (
+                {(!profile || profile.membership_type === 'free') && (
                   <Button asChild variant="outline" size="sm" className="border-gold text-gold hover:bg-gold hover:text-white">
                     <Link to="/resilient-hub">
                       Upgrade Membership
@@ -556,7 +556,7 @@ const Dashboard = () => {
           )}
 
           {/* Free Guide Kit - shown for free members */}
-          {profile?.membership_type === 'free' && (
+          {(!profile || profile.membership_type === 'free') && (
             <FreeGuideKit
               videos={videos}
               onNavigateToVideo={(videoId) => navigate(`/video/${videoId}`)}

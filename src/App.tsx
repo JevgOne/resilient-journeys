@@ -2,11 +2,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Link } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, Component, ReactNode } from "react";
 import CookieBanner from "./components/CookieBanner";
-import Navbar from "./components/Navbar";
 import { Loader2 } from "lucide-react";
 
 // Eagerly load the homepage (most common entry point)
@@ -44,6 +43,37 @@ const PageLoader = () => (
   </div>
 );
 
+// Error boundary for lazy-loaded chunks that fail to load
+class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-background flex items-center justify-center">
+          <div className="text-center p-8">
+            <p className="text-lg text-foreground mb-4">Something went wrong loading this page.</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-6 py-3 bg-gradient-gold text-white font-semibold rounded-full"
+            >
+              Reload Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -62,36 +92,38 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/resilient-hub" element={<ResilientHub />} />
-              <Route path="/resilient-hubs" element={<ResilientHubs />} />
-              <Route path="/endometriosis-hub" element={<EndometriosisHub />} />
-              <Route path="/booking" element={<Booking />} />
-              <Route path="/booking/success" element={<BookingSuccess />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="/workshopy" element={<Workshopy />} />
-              <Route path="/workshopy/:slug" element={<WorkshopPost />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/video/:videoId" element={<VideoPlayer />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/checkout/success" element={<CheckoutSuccess />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/pricing/success" element={<PricingSuccess />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/free-guide" element={<FreeGuide />} />
-              <Route path="/cookies" element={<Cookies />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/resilient-hub" element={<ResilientHub />} />
+                <Route path="/resilient-hubs" element={<ResilientHubs />} />
+                <Route path="/endometriosis-hub" element={<EndometriosisHub />} />
+                <Route path="/booking" element={<Booking />} />
+                <Route path="/booking/success" element={<BookingSuccess />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/workshopy" element={<Workshopy />} />
+                <Route path="/workshopy/:slug" element={<WorkshopPost />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/video/:videoId" element={<VideoPlayer />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/checkout/success" element={<CheckoutSuccess />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/pricing/success" element={<PricingSuccess />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/free-guide" element={<FreeGuide />} />
+                <Route path="/cookies" element={<Cookies />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
           <CookieBanner />
         </BrowserRouter>
       </TooltipProvider>

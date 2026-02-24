@@ -81,9 +81,7 @@ const Navbar = () => {
 
           {/* Auth/CTA Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            {loading ? (
-              <div className="w-24 h-10 bg-muted animate-pulse rounded-full" />
-            ) : user ? (
+            {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="border-gold/30 hover:bg-gold/10">
@@ -120,7 +118,7 @@ const Navbar = () => {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-            ) : (
+            ) : !loading ? (
               <>
                 <Button asChild variant="ghost" className="text-foreground/80 hover:text-foreground">
                   <Link to="/auth">
@@ -134,7 +132,7 @@ const Navbar = () => {
                   Get Started
                 </Link>
               </>
-            )}
+            ) : null}
           </div>
 
           {/* Mobile Menu Button */}

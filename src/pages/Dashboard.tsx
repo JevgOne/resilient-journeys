@@ -123,8 +123,6 @@ const Dashboard = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedWeek, setSelectedWeek] = useState<number>(1);
 
-  const [checkingAdmin, setCheckingAdmin] = useState(true);
-
   const canAccessVideo = useCallback((video: Video) => {
     if (video.is_free) return true;
     if (!profile) return false;
@@ -141,37 +139,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!loading && !user) {
-      setCheckingAdmin(false);
       navigate('/auth');
-      return;
     }
-
-    const checkAdmin = async () => {
-      if (!user) {
-        setCheckingAdmin(false);
-        return;
-      }
-      try {
-        const { data } = await supabase.rpc('has_role', { _user_id: user.id, _role: 'admin' });
-        if (data) {
-          navigate('/admin', { replace: true });
-          return;
-        }
-      } catch (err) {
-        console.error('Admin check failed:', err);
-      }
-      setCheckingAdmin(false);
-    };
-
-    if (!loading && user) {
-      checkAdmin();
-    }
-
-    // Safety timeout — never stay on loading forever
-    const timeout = setTimeout(() => {
-      setCheckingAdmin(false);
-    }, 3000);
-    return () => clearTimeout(timeout);
   }, [user, loading, navigate]);
 
   // Welcome message for free guide users
@@ -195,54 +164,24 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        // Fetch categories
-        const { data: categoriesData } = await supabase
-          .from('video_categories')
-          .select('*')
-          .order('month_number');
+        // Run all queries in parallel for speed
+        const [categoriesRes, videosRes, progressRes, resourcesRes] = await Promise.all([
+          supabase.from('video_categories').select('*').order('month_number'),
+          supabase.from('videos').select('*').order('sort_order'),
+          user ? supabase.from('user_progress').select('completed').eq('user_id', user.id).eq('completed', true) : Promise.resolve({ data: null }),
+          supabase.from('resources').select('*').order('sort_order'),
+        ]);
 
-        if (categoriesData) {
-          setCategories(categoriesData);
-        }
-
-        // Fetch videos
-        const { data: videosData } = await supabase
-          .from('videos')
-          .select('*')
-          .order('sort_order');
-
-        if (videosData) {
-          setVideos(videosData as Video[]);
-
-          // Calculate accessible videos
-          const accessible = (videosData as Video[]).filter(v => canAccessVideo(v));
+        if (categoriesRes.data) setCategories(categoriesRes.data);
+        if (videosRes.data) {
+          setVideos(videosRes.data as Video[]);
+          const accessible = (videosRes.data as Video[]).filter(v => canAccessVideo(v));
           setTotalAccessibleVideos(accessible.length);
         }
+        if (progressRes.data) setCompletedVideos(progressRes.data.length);
+        if (resourcesRes.data) setResources(resourcesRes.data as Resource[]);
 
-        // Fetch user progress
-        if (user) {
-          const { data: progressData } = await supabase
-            .from('user_progress')
-            .select('completed')
-            .eq('user_id', user.id)
-            .eq('completed', true);
-
-          if (progressData) {
-            setCompletedVideos(progressData.length);
-          }
-        }
-
-        // Fetch resources (RLS will filter by membership)
-        const { data: resourcesData } = await supabase
-          .from('resources')
-          .select('*')
-          .order('sort_order');
-
-        if (resourcesData) {
-          setResources(resourcesData as Resource[]);
-        }
-
-        // Fetch premium credits if user is premium
+        // Fetch premium credits if user is premium (separate, non-blocking)
         if (user && profile?.membership_type === 'premium') {
           const currentYear = new Date().getFullYear();
           const { data: creditsData } = await supabase
@@ -253,17 +192,10 @@ const Dashboard = () => {
             .maybeSingle();
 
           if (creditsData) {
-            setPremiumCredits({
-              total: creditsData.total_credits,
-              used: creditsData.used_credits
-            });
+            setPremiumCredits({ total: creditsData.total_credits, used: creditsData.used_credits });
           } else {
-            // Create credits for current year if not exists
             await supabase.from('premium_credits').insert({
-              user_id: user.id,
-              year: currentYear,
-              total_credits: 4,
-              used_credits: 0
+              user_id: user.id, year: currentYear, total_credits: 4, used_credits: 0
             });
             setPremiumCredits({ total: 4, used: 0 });
           }
@@ -310,7 +242,7 @@ const Dashboard = () => {
     }
   };
 
-  if (loading || checkingAdmin || !user) {
+  if (loading || !user) {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />

@@ -31,20 +31,26 @@ const Navbar = () => {
   const { user, profile, signOut, loading } = useAuth();
 
   useEffect(() => {
-    const checkAdminRole = async () => {
+    const checkAdminRole = async (retries = 2) => {
       if (!user) {
         setIsAdmin(false);
         return;
       }
 
-      const { data, error } = await supabase
-        .rpc('has_role', { _user_id: user.id, _role: 'admin' });
+      for (let i = 0; i <= retries; i++) {
+        const { data, error } = await supabase
+          .rpc('has_role', { _user_id: user.id, _role: 'admin' });
 
-      if (!error && data) {
-        setIsAdmin(true);
-      } else {
-        setIsAdmin(false);
+        if (!error && data) {
+          setIsAdmin(true);
+          return;
+        }
+
+        if (i < retries) {
+          await new Promise(r => setTimeout(r, 1000));
+        }
       }
+      setIsAdmin(false);
     };
 
     checkAdminRole();
@@ -52,7 +58,7 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate('/');
+    window.location.href = '/';
   };
 
   return (

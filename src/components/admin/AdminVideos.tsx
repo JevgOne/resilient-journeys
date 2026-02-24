@@ -208,48 +208,67 @@ const AdminVideos = () => {
     }
   };
 
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState('');
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const videoData = {
-      title: formData.title,
-      description: formData.description || null,
-      video_url: formData.video_url,
-      thumbnail_url: formData.thumbnail_url || null,
-      duration_minutes: formData.duration_minutes ? parseInt(formData.duration_minutes) : null,
-      is_free: formData.is_free,
-      min_membership: formData.min_membership,
-      category_id: formData.category_id,
-      sort_order: parseInt(formData.sort_order) || 0,
-      week_number: formData.week_number && formData.week_number !== 'none' ? parseInt(formData.week_number) : null,
-      video_type: formData.video_type,
-      is_intro: formData.is_intro,
-    };
+    setFormError('');
+    setSubmitting(true);
 
-    if (!videoData.category_id) {
-      toast.error('Please select a month');
-      return;
-    }
-
-    if (editingVideo) {
-      const { error } = await supabase.from('videos').update(videoData).eq('id', editingVideo.id);
-      if (error) { console.error('Video update error:', error); toast.error('Error: ' + error.message); return; }
-
-      // Handle workbook resource
-      await saveWorkbookResource(editingVideo.id, videoData);
-      toast.success('Video updated');
-    } else {
-      const { data: insertedVideo, error } = await supabase.from('videos').insert(videoData).select('id').single();
-      if (error) { console.error('Video insert error:', error); toast.error('Error: ' + error.message); return; }
-
-      // Handle workbook resource for new video
-      if (insertedVideo) {
-        await saveWorkbookResource(insertedVideo.id, videoData);
+    try {
+      // Verify session is still valid
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        setFormError('Session expired. Please sign out and sign back in.');
+        setSubmitting(false);
+        return;
       }
-      toast.success('Video added');
+
+      const videoData = {
+        title: formData.title,
+        description: formData.description || null,
+        video_url: formData.video_url,
+        thumbnail_url: formData.thumbnail_url || null,
+        duration_minutes: formData.duration_minutes ? parseInt(formData.duration_minutes) : null,
+        is_free: formData.is_free,
+        min_membership: formData.min_membership,
+        category_id: formData.category_id,
+        sort_order: parseInt(formData.sort_order) || 0,
+        week_number: formData.week_number && formData.week_number !== 'none' ? parseInt(formData.week_number) : null,
+        video_type: formData.video_type,
+        is_intro: formData.is_intro,
+      };
+
+      if (!videoData.category_id) {
+        setFormError('Please select a month');
+        setSubmitting(false);
+        return;
+      }
+
+      if (editingVideo) {
+        const { error } = await supabase.from('videos').update(videoData).eq('id', editingVideo.id);
+        if (error) { console.error('Video update error:', error); setFormError('Save failed: ' + error.message); setSubmitting(false); return; }
+
+        await saveWorkbookResource(editingVideo.id, videoData);
+        toast.success('Video updated');
+      } else {
+        const { data: insertedVideo, error } = await supabase.from('videos').insert(videoData).select('id').single();
+        if (error) { console.error('Video insert error:', error); setFormError('Create failed: ' + error.message); setSubmitting(false); return; }
+
+        if (insertedVideo) {
+          await saveWorkbookResource(insertedVideo.id, videoData);
+        }
+        toast.success('Video added');
+      }
+      setDialogOpen(false);
+      resetForm();
+      fetchData();
+    } catch (err: any) {
+      console.error('handleSubmit crash:', err);
+      setFormError('Unexpected error: ' + (err.message || 'Unknown'));
     }
-    setDialogOpen(false);
-    resetForm();
-    fetchData();
+    setSubmitting(false);
   };
 
   const handleDelete = async (id: string) => {
@@ -480,9 +499,16 @@ const AdminVideos = () => {
                 </div>
               </div>
 
+              {formError && (
+                <div className="p-3 bg-destructive/10 border border-destructive/30 rounded-lg text-sm text-destructive">
+                  {formError}
+                </div>
+              )}
+
               <div className="flex justify-end gap-2 pt-2">
                 <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
-                <Button type="submit" className="bg-gold hover:bg-gold-dark text-white">
+                <Button type="submit" className="bg-gold hover:bg-gold-dark text-white" disabled={submitting}>
+                  {submitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
                   {editingVideo ? 'Save' : 'Create'}
                 </Button>
               </div>

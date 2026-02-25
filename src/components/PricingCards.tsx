@@ -215,7 +215,7 @@ export const PricingTrustSignals = () => (
     </div>
     <div className="flex items-center gap-2">
       <Clock size={15} className="text-primary/60" />
-      <span className="font-sans">Cancel anytime — no lock-in</span>
+      <span className="font-sans">One-time payment — no auto-renewal</span>
     </div>
     <div className="flex items-center gap-2">
       <Heart size={15} className="text-primary/60" />
@@ -229,7 +229,7 @@ export const EarlyBirdBanner = () => {
   if (!earlyBird) return null;
   return (
     <div className="mb-8 inline-block bg-gradient-gold text-primary-foreground rounded-full px-6 py-2 font-sans font-semibold text-sm">
-      Early-bird pricing until {formatEarlyBirdEnd()} — Save €10/month!
+      Early-bird pricing until {formatEarlyBirdEnd()} — Save €10!
     </div>
   );
 };

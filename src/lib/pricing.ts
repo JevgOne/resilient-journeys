@@ -71,6 +71,7 @@ export const MEMBERSHIP_TIERS: MembershipTier[] = [
       'Guided meditations',
       'Self-paced access — move in your own rhythm',
       'The program stays open until you finish',
+      '14-day money-back guarantee',
     ],
     idealFor: [
       'Already know this kind of inner work matters',
@@ -131,6 +132,7 @@ export const MEMBERSHIP_TIERS: MembershipTier[] = [
       'Live Zoom calls (group support & integration)',
       '1-hour individual session included',
       'The program stays open until you finish',
+      '14-day money-back guarantee',
     ],
     idealFor: [
       'Want to be seen and supported',

@@ -20,8 +20,8 @@ const Pricing = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Pricing — Membership Plans from €27/month | Resilient Mind"
-        description="Choose from Basic or Premium membership plans. Monthly from €27 or yearly from €270 with savings. Includes video lessons, workbooks and more."
+        title="Pricing — Membership Plans from €27 | Resilient Mind"
+        description="Choose from Basic or Premium membership plans. Pay as you go from €27 or yearly from €270. One-time payments, no auto-renewal. Includes video lessons, workbooks and more."
         path="/pricing"
         jsonLd={{
           "@context": "https://schema.org",
@@ -110,7 +110,7 @@ const Pricing = () => {
                 Resilient Mind Membership
               </h2>
               <p className="text-center text-muted-foreground font-sans mb-12 max-w-xl mx-auto">
-                A monthly online membership offering guided practical tools and video support within a holistic approach.
+                An online membership with guided practical tools and video support. Pay as you go — no auto-renewal.
               </p>
 
               <PricingCards cancelUrl="/pricing" />

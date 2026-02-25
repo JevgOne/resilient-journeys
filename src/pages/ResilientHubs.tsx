@@ -37,8 +37,8 @@ const ResilientHubs = () => {
       a: "Basic gives you the foundational module each month — perfect for self-guided learners. Premium unlocks all modules (A, B, C), gives you 4 hours of personal consultations with Silvie, an art therapy materials kit, and access to all Specialized Hubs. It's the full transformation experience."
     },
     {
-      q: "Can I cancel anytime?",
-      a: "Yes, absolutely. Monthly plans can be cancelled anytime with no penalties. Yearly plans are a one-time payment with full access for 12 months."
+      q: "Is this a subscription?",
+      a: "No — every purchase is a one-time payment. Monthly plans give you access for 1 month with no auto-renewal. Yearly plans give you full access for 12 months with a 14-day money-back guarantee. You decide when and if you want to continue."
     },
     {
       q: "Do I need any prior experience with therapy or art?",
@@ -54,7 +54,7 @@ const ResilientHubs = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="12-Month Membership Program to Inner Strength | Resilient Mind"
-        description="Join a 12-month guided membership program with video lessons, workbooks and community support designed for expatriates seeking inner strength. From €27/month."
+        description="Join a 12-month guided membership program with video lessons, workbooks and community support designed for expatriates seeking inner strength. From €27 — pay as you go."
         path="/resilient-hubs"
       />
       <Navbar />
@@ -230,7 +230,7 @@ const ResilientHubs = () => {
                 Resilient Mind <span className="text-gradient-gold">Membership</span>
               </h2>
               <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-4 max-w-3xl mx-auto">
-                Ongoing emotional support and nervous system regulation for expat women. A monthly online membership offering guided practical tools and video support within a holistic approach.
+                Ongoing emotional support and nervous system regulation for expat women. An online membership with guided practical tools and video support within a holistic approach. Pay as you go — no auto-renewal.
               </p>
               <div className="max-w-2xl mx-auto text-left mb-8">
                 <p className="text-base text-foreground/80 font-sans font-medium mb-4">Every month you receive:</p>

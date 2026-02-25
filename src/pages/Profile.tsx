@@ -358,7 +358,7 @@ const Profile = () => {
                       {isOpeningPortal ? 'Opening...' : 'Manage Payment'}
                     </Button>
                     <p className="text-xs text-muted-foreground mt-2 text-center">
-                      View invoices, update payment method, or cancel subscription
+                      View invoices and payment history
                     </p>
                   </div>
                 )}

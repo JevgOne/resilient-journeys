@@ -229,7 +229,7 @@ export const EarlyBirdBanner = () => {
   if (!earlyBird) return null;
   return (
     <div className="mb-8 inline-block bg-gradient-gold text-primary-foreground rounded-full px-6 py-2 font-sans font-semibold text-sm">
-      Early-bird pricing until {formatEarlyBirdEnd()} — Save €10!
+      Early-bird pricing until {formatEarlyBirdEnd()} — Save €10 per month (€120 total)
     </div>
   );
 };

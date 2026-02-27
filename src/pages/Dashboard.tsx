@@ -612,7 +612,11 @@ const Dashboard = () => {
                         onClick={() => {
                           if (hasAccess) {
                             setSelectedCategory(category.id);
-                            setSelectedWeek(1);
+                            // Default to first week that has an accessible video
+                            const firstAccessibleWeek = categoryVideos
+                              .filter(v => !v.is_intro && canAccessVideo(v) && v.week_number)
+                              .sort((a, b) => (a.week_number || 0) - (b.week_number || 0))[0];
+                            setSelectedWeek(firstAccessibleWeek?.week_number || 1);
                           }
                         }}
                       >

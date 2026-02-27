@@ -148,6 +148,9 @@ const VideoPlayer = () => {
         return;
       }
 
+      setAccessDenied(false);
+      setVideo(null);
+
       try {
         // First try to fetch the video (RLS will handle access control)
         const { data, error } = await supabase
@@ -188,10 +191,10 @@ const VideoPlayer = () => {
       }
     };
 
-    if (!authLoading || !user) {
+    if (!authLoading) {
       fetchVideo();
     }
-  }, [videoId, authLoading, user, profile, navigate, hasAccess, fetchProgress]);
+  }, [videoId, authLoading, profile, navigate, hasAccess, fetchProgress]);
 
   if (authLoading || loading) {
     return (

@@ -1,6 +1,6 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, Lock, Crown, Play, Clock, Calendar, CheckCircle2, Circle, Download } from "lucide-react";
+import { ArrowLeft, Lock, Crown, Play, Clock, CheckCircle2, Circle, Download } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -54,9 +54,9 @@ const VideoPlayer = () => {
   const { user, profile, loading: authLoading, isAdmin } = useAuth();
 
   const [video, setVideo] = useState<Video | null>(null);
+  const [categoryInfo, setCategoryInfo] = useState<{ is_additional_hub: boolean; hub_slug: string | null } | null>(null);
   const [loading, setLoading] = useState(true);
-  const [accessDenied, setAccessDenied] = useState(false);
-  const [requiredMembership, setRequiredMembership] = useState<MembershipType>('basic');
+  const [fetchError, setFetchError] = useState(false);
 
   // Progress tracking state
   const [isCompleted, setIsCompleted] = useState(false);
@@ -65,50 +65,108 @@ const VideoPlayer = () => {
   // Workbook resource linked to this video
   const [workbook, setWorkbook] = useState<{ id: string; title: string; file_url: string } | null>(null);
 
-  // Check if user has access based on membership or purchased hubs
-  const hasAccess = useCallback((videoMinMembership: MembershipType, isFree: boolean, categoryIsHub?: boolean, categoryHubSlug?: string | null): boolean => {
+  // Abort controller ref to cancel stale fetches
+  const abortRef = useRef(0);
+
+  // ─── Fetch video data ONLY when videoId or auth state changes ───
+  useEffect(() => {
+    if (authLoading || !videoId) return;
+
+    const fetchId = ++abortRef.current;
+
+    const fetchVideo = async () => {
+      setLoading(true);
+      setFetchError(false);
+
+      try {
+        const { data, error } = await supabase
+          .from('videos')
+          .select('*')
+          .eq('id', videoId)
+          .single();
+
+        if (fetchId !== abortRef.current) return; // stale
+
+        if (error || !data) {
+          setVideo(null);
+          setCategoryInfo(null);
+          setFetchError(true);
+          setLoading(false);
+          return;
+        }
+
+        // Fetch category info for hub check
+        const { data: category } = await supabase
+          .from('video_categories')
+          .select('is_additional_hub, hub_slug')
+          .eq('id', data.category_id)
+          .single();
+
+        if (fetchId !== abortRef.current) return; // stale
+
+        setVideo(data);
+        setCategoryInfo(category ?? null);
+
+        // Fetch workbook linked to this video
+        const { data: resourceData } = await supabase
+          .from('resources')
+          .select('id, title, file_url')
+          .eq('video_id', videoId)
+          .maybeSingle();
+
+        if (fetchId !== abortRef.current) return; // stale
+        setWorkbook(resourceData ?? null);
+
+        // Fetch progress
+        if (user) {
+          const { data: progressData } = await supabase
+            .from('user_progress')
+            .select('completed')
+            .eq('user_id', user.id)
+            .eq('video_id', videoId)
+            .maybeSingle();
+
+          if (fetchId !== abortRef.current) return;
+          if (progressData) setIsCompleted(progressData.completed || false);
+        }
+      } catch (err) {
+        if (fetchId !== abortRef.current) return;
+        console.error('Error fetching video:', err);
+        setFetchError(true);
+      } finally {
+        if (fetchId === abortRef.current) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchVideo();
+  }, [videoId, authLoading, user]);
+
+  // ─── Compute access reactively (no refetch needed) ───
+  const hasAccess = useMemo((): boolean => {
+    if (!video) return false;
     if (isAdmin) return true;
-    if (isFree) return true;
+    if (video.is_free) return true;
     if (!profile) return false;
 
-    // Check if this is a purchased hub video
-    if (categoryIsHub && categoryHubSlug) {
-      return (profile.purchased_hubs || []).includes(categoryHubSlug);
+    // Hub video — check purchased hubs
+    if (categoryInfo?.is_additional_hub && categoryInfo.hub_slug) {
+      return (profile.purchased_hubs || []).includes(categoryInfo.hub_slug);
     }
 
     const userLevel = membershipHierarchy[profile.membership_type as MembershipType] || 0;
-    const requiredLevel = membershipHierarchy[videoMinMembership] || 1;
+    const requiredLevel = membershipHierarchy[video.min_membership as MembershipType] || 1;
 
-    // Check if membership is still valid
     if (profile.membership_expires_at) {
       const expiresAt = new Date(profile.membership_expires_at);
       if (expiresAt < new Date()) return false;
     }
 
     return userLevel >= requiredLevel;
-  }, [profile, isAdmin]);
+  }, [video, categoryInfo, profile, isAdmin]);
 
-  // Fetch user progress for this video
-  const fetchProgress = useCallback(async () => {
-    if (!user || !videoId) return;
-
-    try {
-      const { data, error } = await supabase
-        .from('user_progress')
-        .select('completed')
-        .eq('user_id', user.id)
-        .eq('video_id', videoId)
-        .maybeSingle();
-
-      if (!error && data) {
-        setIsCompleted(data.completed || false);
-      }
-    } catch (err) {
-      console.error('Error fetching progress:', err);
-    }
-  }, [user, videoId]);
-
-  // Toggle video completion status
+  // ─── Toggle video completion ───
   const toggleCompletion = async () => {
     if (!user || !videoId || progressLoading) return;
 
@@ -144,69 +202,7 @@ const VideoPlayer = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchVideo = async () => {
-      if (!videoId) {
-        navigate('/resilient-hub');
-        return;
-      }
-
-      setAccessDenied(false);
-      setVideo(null);
-      setWorkbook(null);
-
-      try {
-        // First try to fetch the video (RLS will handle access control)
-        const { data, error } = await supabase
-          .from('videos')
-          .select('*')
-          .eq('id', videoId)
-          .single();
-
-        if (error) {
-          setAccessDenied(true);
-          setLoading(false);
-          return;
-        }
-
-        if (data) {
-          // Fetch category to check if it's a hub
-          const { data: category } = await supabase
-            .from('video_categories')
-            .select('is_additional_hub, hub_slug')
-            .eq('id', data.category_id)
-            .single();
-
-          // Double-check access on frontend
-          if (!hasAccess(data.min_membership as MembershipType, data.is_free, category?.is_additional_hub, category?.hub_slug)) {
-            setAccessDenied(true);
-            setRequiredMembership(data.min_membership as MembershipType);
-          } else {
-            setVideo(data);
-            // Fetch workbook linked to this video
-            const { data: resourceData } = await supabase
-              .from('resources')
-              .select('id, title, file_url')
-              .eq('video_id', videoId)
-              .maybeSingle();
-            if (resourceData) setWorkbook(resourceData);
-            // Fetch progress after video loads successfully
-            fetchProgress();
-          }
-        }
-      } catch (err) {
-        console.error('Error fetching video:', err);
-        setAccessDenied(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (!authLoading) {
-      fetchVideo();
-    }
-  }, [videoId, authLoading, profile, navigate, hasAccess, fetchProgress]);
-
+  // ─── Loading skeleton ───
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-background">
@@ -228,8 +224,8 @@ const VideoPlayer = () => {
     );
   }
 
-  // Not logged in and video is not free - show sign up prompt
-  if (!user && !video?.is_free) {
+  // ─── Not logged in + video is paid → sign up prompt ───
+  if (!user && video && !video.is_free) {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
@@ -261,8 +257,9 @@ const VideoPlayer = () => {
     );
   }
 
-  // Access denied - needs upgrade
-  if (accessDenied) {
+  // ─── Access denied (fetch error or no permission) ───
+  if (fetchError || (video && !hasAccess)) {
+    const requiredMembership = (video?.min_membership as MembershipType) || 'basic';
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
@@ -304,7 +301,35 @@ const VideoPlayer = () => {
     );
   }
 
-  // Video player
+  // ─── No video found ───
+  if (!video) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <main className="pt-24 pb-16">
+          <div className="container px-4">
+            <div className="max-w-xl mx-auto text-center">
+              <Card className="p-8">
+                <Play className="h-16 w-16 text-muted-foreground mx-auto mb-6" />
+                <h1 className="text-2xl font-serif font-semibold mb-4">
+                  Video Not Found
+                </h1>
+                <Button variant="outline" asChild>
+                  <Link to="/resilient-hub">
+                    <ArrowLeft className="mr-2 h-4 w-4" />
+                    Back to program
+                  </Link>
+                </Button>
+              </Card>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // ─── Video player ───
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -323,7 +348,7 @@ const VideoPlayer = () => {
 
             {/* Video player */}
             <div className="aspect-video bg-foreground rounded-2xl overflow-hidden mb-6">
-              {video?.video_url ? (
+              {video.video_url ? (
                 <iframe
                   src={getEmbedUrl(video.video_url)}
                   className="w-full h-full"
@@ -343,17 +368,17 @@ const VideoPlayer = () => {
               <div className="flex flex-wrap items-center gap-3 mb-4">
                 <Badge
                   className={
-                    video?.is_free
+                    video.is_free
                       ? "bg-muted text-muted-foreground"
-                      : video?.min_membership === 'premium'
+                      : video.min_membership === 'premium'
                         ? "bg-gradient-gold text-white border-0"
                         : "bg-gold/20 text-gold-dark border-gold/30"
                   }
                   variant="outline"
                 >
-                  {video?.is_free ? 'Free' : membershipLabels[video?.min_membership as MembershipType]}
+                  {video.is_free ? 'Free' : membershipLabels[video.min_membership as MembershipType]}
                 </Badge>
-                {video?.duration_minutes && (
+                {video.duration_minutes && (
                   <span className="flex items-center gap-1 text-sm text-muted-foreground">
                     <Clock className="h-4 w-4" />
                     {video.duration_minutes} min
@@ -362,10 +387,10 @@ const VideoPlayer = () => {
               </div>
 
               <h1 className="text-2xl md:text-3xl font-serif font-semibold mb-4">
-                {video?.title}
+                {video.title}
               </h1>
 
-              {video?.description && (
+              {video.description && (
                 <p className="text-muted-foreground text-lg mb-6">
                   {video.description}
                 </p>

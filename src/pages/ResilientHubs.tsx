@@ -445,22 +445,18 @@ const ResilientHubs = () => {
               </div>
 
               <PricingCards cancelUrl="/resilient-hubs" />
-              <p className="text-center text-foreground/80 font-sans leading-relaxed max-w-3xl mx-auto mt-6 mb-4">
-                The Membership program teaches you how to look after your mind, regulate stress, and grow self-awareness — one gentle practice at a time.
-              </p>
-              <PricingTrustSignals />
 
-              {/* Start in Four Simple Steps */}
-              <div className="max-w-2xl mx-auto mt-12 p-8 bg-card rounded-2xl border border-border">
+              {/* How to get started — right below pricing cards */}
+              <div className="max-w-2xl mx-auto mt-10 p-8 bg-card rounded-2xl border border-border">
                 <h3 className="text-xl md:text-2xl font-serif font-semibold mb-6 text-center">
-                  Start in Four Simple Steps
+                  How to Get Started
                 </h3>
                 <div className="space-y-4">
                   {[
                     { step: "1", text: "Choose the membership that suits you." },
-                    { step: "2", text: "Click Sign up to create your personal account." },
-                    { step: "3", text: "Complete your secure payment." },
-                    { step: "4", text: "Receive your welcome email with access to your private Dashboard and full 12-month programme." },
+                    { step: "2", text: "Click Sign Up to create your personal account." },
+                    { step: "3", text: "Complete your secure payment via Stripe." },
+                    { step: "4", text: "You'll receive a welcome email and instant access to your private Dashboard with the full 12-month programme." },
                   ].map((item) => (
                     <div key={item.step} className="flex items-start gap-4">
                       <div className="w-8 h-8 bg-gradient-gold rounded-full flex items-center justify-center flex-shrink-0">
@@ -472,10 +468,15 @@ const ResilientHubs = () => {
                 </div>
               </div>
 
+              <p className="text-center text-foreground/80 font-sans leading-relaxed max-w-3xl mx-auto mt-8 mb-4">
+                The Membership program teaches you how to look after your mind, regulate stress, and grow self-awareness — one gentle practice at a time.
+              </p>
+              <PricingTrustSignals />
+
               {/* Free guide nudge */}
               <div className="text-center mt-8">
                 <p className="text-sm text-muted-foreground font-sans">
-                  💛 Not sure yet? <Link to="/free-guide" className="text-primary underline underline-offset-4 hover:text-primary/80 font-medium">Download our free guide</Link> and experience the program first.
+                  Not sure yet? <Link to="/free-guide" className="text-primary underline underline-offset-4 hover:text-primary/80 font-medium">Download our free guide</Link> and experience the program first.
                 </p>
               </div>
             </div>

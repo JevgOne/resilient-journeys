@@ -89,16 +89,41 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (session?.user) {
         try {
-          const [profileData, adminResult] = await Promise.all([
-            fetchProfile(session.user.id),
-            supabase.rpc('has_role', { _user_id: session.user.id, _role: 'admin' }),
+          // Race against a timeout — supabase.from() can deadlock when called
+          // from within the INITIAL_SESSION callback (awaits _initializePromise)
+          const result = await Promise.race([
+            Promise.all([
+              fetchProfile(session.user.id),
+              supabase.rpc('has_role', { _user_id: session.user.id, _role: 'admin' }),
+            ]),
+            new Promise<null>(resolve => setTimeout(() => resolve(null), 6000)),
           ]);
+
           if (isMounted) {
-            setProfile(profileData);
-            if (adminResult.error) {
-              console.error('Admin role check failed:', adminResult.error);
+            if (result) {
+              const [profileData, adminResult] = result;
+              setProfile(profileData);
+              if (adminResult.error) {
+                console.error('Admin role check failed:', adminResult.error);
+              } else {
+                setIsAdmin(!!adminResult.data);
+              }
             } else {
-              setIsAdmin(!!adminResult.data);
+              console.warn('Auth: profile/admin fetch timed out — will retry');
+              // Schedule a retry outside the init callback
+              setTimeout(async () => {
+                if (!isMounted || !session.user) return;
+                try {
+                  const [profileData, adminResult] = await Promise.all([
+                    fetchProfile(session.user.id),
+                    supabase.rpc('has_role', { _user_id: session.user.id, _role: 'admin' }),
+                  ]);
+                  if (isMounted) {
+                    setProfile(profileData);
+                    setIsAdmin(!adminResult.error && !!adminResult.data);
+                  }
+                } catch {}
+              }, 100);
             }
           }
         } catch (err) {

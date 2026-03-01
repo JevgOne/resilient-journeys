@@ -717,7 +717,11 @@ const Dashboard = () => {
                   {categories.map((category) => {
                     const IconComponent = iconMap[category.icon] || Heart;
                     const categoryVideos = videos.filter(v => v.category_id === category.id);
-                    const hasAccess = categoryVideos.some(v => canAccessVideo(v));
+                    // Check access based on paid videos (ignore free bonuses for lock status)
+                    const paidVideos = categoryVideos.filter(v => !v.is_free);
+                    const hasAccess = paidVideos.length > 0
+                      ? paidVideos.some(v => canAccessVideo(v))
+                      : categoryVideos.some(v => canAccessVideo(v));
 
                     return (
                       <Card

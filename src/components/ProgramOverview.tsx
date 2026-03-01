@@ -100,6 +100,11 @@ const ProgramOverview = () => {
 
   const isCategoryLocked = (categoryId: string) => {
     const categoryVideos = videos.filter(v => v.category_id === categoryId);
+    // Check access based on paid videos (ignore free bonuses for lock status)
+    const paidVideos = categoryVideos.filter(v => !v.is_free);
+    if (paidVideos.length > 0) {
+      return !paidVideos.some(v => canAccessVideo(v));
+    }
     return categoryVideos.length > 0 && !categoryVideos.some(v => canAccessVideo(v));
   };
 

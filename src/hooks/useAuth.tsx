@@ -13,6 +13,7 @@ interface Profile {
   membership_expires_at: string | null;
   stripe_customer_id: string | null;
   purchased_hubs: string[] | null;
+  months_unlocked: number;
 }
 
 interface AuthContextType {

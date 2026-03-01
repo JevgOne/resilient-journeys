@@ -78,15 +78,7 @@ const ProgramOverview = () => {
     fetchContent();
   }, []);
 
-  // Calculate how many months the user has been a member
-  const currentProgramMonth = (() => {
-    if (!profile?.membership_started_at) return 0;
-    const started = new Date(profile.membership_started_at);
-    const now = new Date();
-    const monthsElapsed = (now.getFullYear() - started.getFullYear()) * 12
-      + (now.getMonth() - started.getMonth());
-    return Math.max(1, Math.min(12, monthsElapsed + 1));
-  })();
+  const monthsUnlocked = profile?.months_unlocked || 0;
 
   const canAccessVideo = (video: Video) => {
     if (isAdmin) return true;
@@ -97,10 +89,10 @@ const ProgramOverview = () => {
     const hasTier = membershipOrder[profile.membership_type as keyof typeof membershipOrder] >= membershipOrder[video.min_membership];
     if (!hasTier) return false;
 
-    // Progressive month unlock
+    // Progressive month unlock: only months paid for
     const category = categories.find(c => c.id === video.category_id);
     if (category && category.month_number >= 1 && category.month_number <= 12) {
-      if (currentProgramMonth < category.month_number) return false;
+      if (monthsUnlocked < category.month_number) return false;
     }
 
     return true;

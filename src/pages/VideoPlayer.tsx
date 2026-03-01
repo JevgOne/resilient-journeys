@@ -164,16 +164,10 @@ const VideoPlayer = () => {
 
     if (userLevel < requiredLevel) return false;
 
-    // Progressive month unlock
+    // Progressive month unlock: only months the user has paid for
     if (categoryInfo?.month_number && categoryInfo.month_number >= 1 && categoryInfo.month_number <= 12) {
-      if (profile.membership_started_at) {
-        const started = new Date(profile.membership_started_at);
-        const now = new Date();
-        const monthsElapsed = (now.getFullYear() - started.getFullYear()) * 12
-          + (now.getMonth() - started.getMonth());
-        const currentMonth = Math.max(1, Math.min(12, monthsElapsed + 1));
-        if (currentMonth < categoryInfo.month_number) return false;
-      }
+      const monthsUnlocked = (profile as any).months_unlocked || 0;
+      if (monthsUnlocked < categoryInfo.month_number) return false;
     }
 
     return true;

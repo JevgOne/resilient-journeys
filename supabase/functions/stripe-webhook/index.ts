@@ -123,29 +123,41 @@ serve(async (req) => {
 
           if (membershipType) {
             try {
-              // Calculate expiry based on subscription
+              // Cancel auto-renewal — user must actively re-subscribe each month
               const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
-
-              // Ensure subscription doesn't auto-renew (user must actively re-subscribe)
               if (!subscription.cancel_at_period_end) {
                 await stripe.subscriptions.update(subscription.id, {
                   cancel_at_period_end: true,
                 });
               }
 
-              const expiresAt = new Date(subscription.current_period_end * 1000);
+              // Fetch current profile to determine months_unlocked
+              const { data: currentProfile } = await supabaseAdmin
+                .from("profiles")
+                .select("months_unlocked, membership_started_at")
+                .eq("user_id", userId)
+                .single();
+
+              const currentMonths = currentProfile?.months_unlocked || 0;
+              const newMonths = currentMonths + 1;
+
+              // 60-day access window from now
+              const expiresAt = new Date();
+              expiresAt.setDate(expiresAt.getDate() + 60);
 
               await supabaseAdmin
                 .from("profiles")
                 .update({
                   membership_type: membershipType,
-                  membership_started_at: new Date().toISOString(),
+                  // Only set membership_started_at on first subscription
+                  membership_started_at: currentProfile?.membership_started_at || new Date().toISOString(),
                   membership_expires_at: expiresAt.toISOString(),
                   stripe_customer_id: session.customer as string,
+                  months_unlocked: newMonths,
                 })
                 .eq("user_id", userId);
 
-              console.log(`Updated subscription membership for user ${userId} to ${membershipType}`);
+              console.log(`Updated subscription membership for user ${userId} to ${membershipType}, months_unlocked: ${newMonths}, expires: ${expiresAt.toISOString()}`);
 
               // Send confirmation email
               await sendMembershipEmail(userId, membershipType);
@@ -178,6 +190,7 @@ serve(async (req) => {
                   membership_started_at: new Date().toISOString(),
                   membership_expires_at: expiresAt.toISOString(),
                   stripe_customer_id: session.customer as string,
+                  months_unlocked: 12,
                 })
                 .eq("user_id", userId);
 
@@ -186,7 +199,7 @@ serve(async (req) => {
                 throw error;
               }
 
-              console.log(`Updated yearly membership for user ${userId} to ${membershipType}, expires: ${expiresAt.toISOString()}`);
+              console.log(`Updated yearly membership for user ${userId} to ${membershipType}, months_unlocked: 12, expires: ${expiresAt.toISOString()}`);
 
               // Send confirmation email
               await sendMembershipEmail(userId, membershipType);
@@ -378,7 +391,7 @@ serve(async (req) => {
         // Find user by customer ID
         const { data: invoiceProfile } = await supabaseAdmin
           .from("profiles")
-          .select("user_id, membership_type")
+          .select("user_id, membership_type, months_unlocked")
           .eq("stripe_customer_id", paidCustomerId)
           .single();
 
@@ -387,14 +400,17 @@ serve(async (req) => {
           break;
         }
 
-        // Retrieve subscription to get the new period end
-        const renewedSub = await stripe.subscriptions.retrieve(paidSubId);
-        const newExpiresAt = new Date(renewedSub.current_period_end * 1000);
+        // 60-day access window from now + unlock next month
+        const newExpiresAt = new Date();
+        newExpiresAt.setDate(newExpiresAt.getDate() + 60);
+
+        const currentUnlocked = (invoiceProfile as any).months_unlocked || 0;
 
         const { error: renewError } = await supabaseAdmin
           .from("profiles")
           .update({
             membership_expires_at: newExpiresAt.toISOString(),
+            months_unlocked: currentUnlocked + 1,
           })
           .eq("user_id", invoiceProfile.user_id);
 
@@ -403,7 +419,7 @@ serve(async (req) => {
           throw renewError;
         }
 
-        console.log(`Renewed membership for user ${invoiceProfile.user_id}, new expiry: ${newExpiresAt.toISOString()}`);
+        console.log(`Renewed membership for user ${invoiceProfile.user_id}, months_unlocked: ${currentUnlocked + 1}, new expiry: ${newExpiresAt.toISOString()}`);
         break;
       }
 

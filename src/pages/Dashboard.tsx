@@ -252,8 +252,6 @@ const Dashboard = () => {
   };
 
   const handleDownloadResource = (resource: Resource) => {
-    // Open file immediately (must be synchronous for iOS Safari popup blocker)
-    window.open(resource.file_url, '_blank');
     toast.success(`Downloading: ${resource.title}`);
 
     // Increment download count in background
@@ -355,10 +353,13 @@ const Dashboard = () => {
                       <Button
                         variant="outline"
                         className="w-full border-gold/30 hover:bg-gold/10"
+                        asChild
                         onClick={() => handleDownloadResource(hWorkbook)}
                       >
-                        <Download className="h-4 w-4 mr-2" />
-                        Download Workbook
+                        <a href={hWorkbook.file_url} target="_blank" rel="noopener noreferrer">
+                          <Download className="h-4 w-4 mr-2" />
+                          Download Workbook
+                        </a>
                       </Button>
                     )}
                   </CardContent>
@@ -487,10 +488,13 @@ const Dashboard = () => {
                         <Button
                           variant="outline"
                           className="w-full border-gold/30 hover:bg-gold/10"
+                          asChild
                           onClick={() => handleDownloadResource(wWorkbook)}
                         >
-                          <Download className="h-4 w-4 mr-2" />
-                          Download Workbook
+                          <a href={wWorkbook.file_url} target="_blank" rel="noopener noreferrer">
+                            <Download className="h-4 w-4 mr-2" />
+                            Download Workbook
+                          </a>
                         </Button>
                       )}
                     </CardContent>
@@ -838,9 +842,12 @@ const Dashboard = () => {
                             onClick={() => handleDownloadResource(resource)}
                             className="w-full bg-gold hover:bg-gold-dark text-white"
                             size="sm"
+                            asChild
                           >
-                            <Download className="h-4 w-4 mr-2" />
-                            Download
+                            <a href={resource.file_url} target="_blank" rel="noopener noreferrer">
+                              <Download className="h-4 w-4 mr-2" />
+                              Download
+                            </a>
                           </Button>
                         </CardContent>
                       </Card>

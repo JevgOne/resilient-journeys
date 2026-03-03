@@ -251,21 +251,17 @@ const Dashboard = () => {
     }
   };
 
-  const handleDownloadResource = async (resource: Resource) => {
-    try {
-      // Increment download count
-      await supabase
-        .from('resources')
-        .update({ download_count: (resource.download_count || 0) + 1 })
-        .eq('id', resource.id);
+  const handleDownloadResource = (resource: Resource) => {
+    // Open file immediately (must be synchronous for iOS Safari popup blocker)
+    window.open(resource.file_url, '_blank');
+    toast.success(`Downloading: ${resource.title}`);
 
-      // Open file in new tab
-      window.open(resource.file_url, '_blank');
-      toast.success(`Downloading: ${resource.title}`);
-    } catch (err) {
-      console.error('Error downloading resource:', err);
-      toast.error('Failed to download file');
-    }
+    // Increment download count in background
+    supabase
+      .from('resources')
+      .update({ download_count: (resource.download_count || 0) + 1 })
+      .eq('id', resource.id)
+      .then(undefined, (err: unknown) => console.error('Error updating download count:', err));
   };
 
   if (loading || !user) {

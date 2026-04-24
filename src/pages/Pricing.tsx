@@ -71,63 +71,7 @@ const Pricing = () => {
           </div>
         </PageHero>
 
-        {/* Problem — resonance */}
-        <section className="py-14 bg-cream/30">
-          <div className="container px-4">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl md:text-3xl font-serif font-semibold text-center mb-8">
-                Does This Sound Like You?
-              </h2>
-              <ul className="space-y-4 text-base md:text-lg font-sans text-foreground/90 leading-relaxed">
-                {[
-                  "You feel disconnected — like you don't fully belong anywhere, stuck between two worlds.",
-                  "The loneliness creeps in, even when your day looks busy.",
-                  "Adapting is exhausting, and your nervous system never quite switches off.",
-                  "You love the life you've built abroad, but you've lost parts of yourself in the process.",
-                  "You want support — but no one around you truly understands what expat life does to your body, mind, and identity.",
-                ].map((text, i) => (
-                  <li key={i} className="flex gap-3 items-start">
-                    <span className="text-primary font-serif text-xl leading-none mt-1">◆</span>
-                    <span>{text}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* Solution — how membership solves it */}
-        <section className="py-14">
-          <div className="container px-4">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl md:text-3xl font-serif font-semibold text-center mb-4">
-                The Resilient Mind Membership Is Built for You
-              </h2>
-              <p className="text-center text-muted-foreground font-sans mb-10 max-w-2xl mx-auto leading-relaxed">
-                A guided monthly practice designed specifically for expat women — so you can come home to yourself, no matter where in the world you live.
-              </p>
-              <ul className="space-y-4 max-w-2xl mx-auto text-base md:text-lg font-sans text-foreground/90 leading-relaxed">
-                {[
-                  { emoji: "🤲", bold: "Guided EFT tapping", rest: "— calm your nervous system on demand" },
-                  { emoji: "🧠", bold: "One monthly theme", rest: "— loneliness, cultural stress, health, boundaries, stability" },
-                  { emoji: "🫶", bold: "A community of women", rest: "who actually get it (Premium)" },
-                  { emoji: "📄", bold: "Practical workbooks", rest: "— real tools for real life abroad" },
-                  { emoji: "🤍", bold: "Your safe members-only space", rest: "— no pressure, no performance" },
-                ].map((item, i) => (
-                  <li key={i} className="flex gap-3 items-start">
-                    <span className="text-xl leading-none mt-0.5">{item.emoji}</span>
-                    <span><strong className="font-semibold text-foreground">{item.bold}</strong> {item.rest}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-8 text-center text-foreground/80 font-sans italic leading-relaxed max-w-2xl mx-auto">
-                Every month you come back to practices that rebuild your sense of belonging, safety, and inner strength.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Offer — Pricing */}
+        {/* Solution — Pricing (moved to top) */}
         <section className="py-12">
           <div className="container px-4">
             <div className="max-w-7xl mx-auto">

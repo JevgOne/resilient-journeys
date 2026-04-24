@@ -278,12 +278,12 @@ const FreeGuide = () => {
                   </span>
                 </div>
 
-                <div className="mt-4 rounded-lg border border-gold/20 bg-cream/40 p-3 text-center text-xs text-muted-foreground">
-                  <p className="font-medium text-foreground">
-                    📧 Please check your Promotions or Spam folder
+                <div className="mt-5 rounded-xl border-2 border-gold/50 bg-gold/10 p-4 text-center shadow-sm">
+                  <p className="text-sm font-bold text-foreground">
+                    📧 Important: Check your Promotions or Spam folder
                   </p>
-                  <p className="mt-1">
-                    Add <span className="font-medium text-gold">contact@resilientmind.io</span> to your contacts so you don't miss your free practice materials.
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Add <span className="font-semibold text-gold">contact@resilientmind.io</span> to your contacts so you don't miss your free practice materials.
                   </p>
                 </div>
 

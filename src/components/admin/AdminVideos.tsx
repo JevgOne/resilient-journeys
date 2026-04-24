@@ -50,14 +50,19 @@ const typeConfig: Record<string, { label: string; emoji: string }> = {
 
 /** Convert YouTube / Vimeo URL to embed format for iframe playback. */
 const toEmbedUrl = (url: string): string => {
-  const ytWatch = url.match(/(?:youtube\.com\/watch\?(?:[^&]*&)*v=)([a-zA-Z0-9_-]+)/);
+  const trimmed = url.trim();
+  if (trimmed.includes('youtube.com/embed/')) return trimmed;
+  const ytShorts = trimmed.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
+  if (ytShorts) return `https://www.youtube.com/embed/${ytShorts[1]}`;
+  const ytWatch = trimmed.match(/(?:youtube\.com\/watch\?(?:[^&]*&)*v=)([a-zA-Z0-9_-]{11})/);
   if (ytWatch) return `https://www.youtube.com/embed/${ytWatch[1]}`;
-  const ytShort = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+  const ytLive = trimmed.match(/youtube\.com\/live\/([a-zA-Z0-9_-]{11})/);
+  if (ytLive) return `https://www.youtube.com/embed/${ytLive[1]}`;
+  const ytShort = trimmed.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
   if (ytShort) return `https://www.youtube.com/embed/${ytShort[1]}`;
-  if (url.includes('youtube.com/embed/')) return url;
-  const vimeo = url.match(/vimeo\.com\/(\d+)/);
+  const vimeo = trimmed.match(/vimeo\.com\/(\d+)/);
   if (vimeo) return `https://player.vimeo.com/video/${vimeo[1]}`;
-  return url;
+  return trimmed;
 };
 
 const AdminVideos = () => {

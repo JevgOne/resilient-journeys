@@ -66,14 +66,10 @@ const FreeGuide = () => {
           }
         });
 
-      // Send free guide email + add to Brevo (fire-and-forget)
-      await supabase.functions.invoke('send-free-guide', {
-        body: { email: formData.email, name: formData.name || undefined },
-      });
-
-      supabase.functions.invoke('brevo-add-contact', {
+      // Add contact to Brevo — automation in Brevo handles the welcome email
+      await supabase.functions.invoke('brevo-add-contact', {
         body: { email: formData.email, name: formData.name || undefined, listIds: [2] },
-      }).catch(() => {});
+      });
 
       toast.success('Your free practice kit is on the way!');
       navigate('/thank-you');

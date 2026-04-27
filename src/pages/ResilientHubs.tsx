@@ -409,7 +409,7 @@ const ResilientHubs = () => {
                 {[
                   { title: "Built by someone who's lived it", desc: "Silvie has 13+ years of expatriate experience across multiple countries. Every technique in this program was forged in real life — not a textbook.", icon: Globe },
                   { title: "Three proven methods, one program", desc: "We combine EFT tapping (evidence-based stress relief), expressive art therapy (emotional processing), and guided meditation (inner calm) into a single, cohesive journey.", icon: Zap },
-                  { title: "Made for busy expat lives", desc: "15 minutes per week. No live schedules. No group calls to coordinate across time zones. Watch when you want, practice at your own pace.", icon: Clock },
+                  { title: "Made for busy expat lives", desc: "15–30 minutes daily. No live schedules. Group calls included with Premium membership. Watch when you want, practice at your own pace.", icon: Clock },
                   { title: "Not just coping — transforming", desc: "Other programs teach you to 'manage' challenges. We help you turn uncertainty, cultural stress, and identity shifts into actual sources of strength and growth.", icon: Star },
                 ].map((item, i) => (
                   <div key={i} className="flex gap-4 p-6 bg-card rounded-2xl border border-border hover:border-primary/30 transition-all">

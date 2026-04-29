@@ -142,16 +142,12 @@ const ResilientHub = () => {
               </div>
 
               <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif font-semibold mb-6">
-                <span className="text-gradient-gold">12 Months Program</span>
-                <br />to Inner Strength
+                <span className="text-gradient-gold">A 12-month membership</span>
+                <br />for expat women
               </h1>
 
-              <p className="text-lg text-muted-foreground font-sans mb-4 max-w-3xl mx-auto">
-                Expat life can be rewarding, but it also comes with challenges—loneliness, cultural differences, uncertainty, and navigating health challenges while away from your familiar support network.
-              </p>
-
-              <p className="text-lg text-foreground/90 font-sans mb-8 max-w-3xl mx-auto">
-                Using my 13 years of experience living abroad and my expertise in personal development, expressive arts, and holistic therapies, I created an <strong>online membership program</strong> that transforms these challenges into opportunities for growth and inner strength.
+              <p className="text-lg text-foreground/90 font-sans mb-8 max-w-3xl mx-auto leading-relaxed">
+                Supporting your emotional wellbeing, helping you regulate your nervous system and build inner stability while living abroad.
               </p>
               
               <button
@@ -163,20 +159,64 @@ const ResilientHub = () => {
             </div>
         </PageHero>
 
-        {/* Membership Details */}
+        {/* What if resilience... */}
+        <section className="py-16 md:py-24 bg-background">
+          <div className="container px-4">
+            <div className="max-w-3xl mx-auto text-center">
+              <h2 className="text-2xl md:text-3xl font-serif font-semibold mb-8 italic text-foreground/90 leading-relaxed">
+                What if resilience wasn't about pushing harder — but about learning how to care for your mind and nervous system, step by step?
+              </h2>
+              <p className="text-lg text-foreground/85 font-sans leading-relaxed mb-6">
+                Inside <strong className="text-foreground">Resilient Hub</strong>, you learn how to care for your mind and nervous system — step by step.
+              </p>
+              <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-8">
+                Resilient Hub is built on a simple idea: you don't need more information — you need practical tools you can actually use when life feels overwhelming.
+              </p>
+              <div className="text-left max-w-2xl mx-auto mb-8">
+                <p className="text-base text-foreground/80 font-sans mb-4">
+                  Instead of trying to "fix yourself," you begin to:
+                </p>
+                <ul className="space-y-3">
+                  {[
+                    "Understand your reactions",
+                    "Regulate stress and emotions",
+                    "Build self-awareness and confidence",
+                    "Respond to challenges with more calm and clarity",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                        <Check size={12} className="text-primary" />
+                      </div>
+                      <span className="text-foreground/85 font-sans">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <p className="text-base md:text-lg text-foreground/85 font-sans font-medium italic">
+                This is where resilience becomes something you practise, not something you force.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* What is Resilient Hub? */}
         <section className="py-16 md:py-24 bg-card">
           <div className="container px-4">
             <div className="max-w-3xl mx-auto text-center">
+              <h2 className="text-2xl md:text-4xl font-serif font-semibold mb-8">
+                What is <span className="text-gradient-gold">Resilient Hub?</span>
+              </h2>
+              <p className="text-lg text-foreground/85 font-sans leading-relaxed mb-6">
+                Resilient Hub is a structured 12-month online membership combining EFT (Emotional Freedom Techniques), nervous system regulation practices and reflective tools to support your emotional wellbeing while living abroad.
+              </p>
               <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-6">
-                I offer a gentle online membership combining Emotional Freedom Techniques (EFT) and other holistic practices, with practical PDF tools for daily practice.
+                Living abroad can be enriching, but it can also bring loneliness, uncertainty and emotional challenges.
               </p>
-              <p className="text-lg font-sans font-semibold text-foreground mb-4">
-                A 12-month online membership for expat women offering
+              <p className="text-lg text-foreground/85 font-sans leading-relaxed mb-10">
+                Resilient Hub was created to offer steady support, practical tools and a gentle structure to help you feel more grounded and at home within yourself.
               </p>
-              <p className="text-lg text-muted-foreground font-sans leading-relaxed mb-8">
-                steady emotional support, nervous system regulation and gentle structure while living abroad. This ongoing membership supports you month by month as you transform loneliness, uncertainty and cultural stress into emotional stability, self-trust and inner safety.
-              </p>
-              <div className="text-left max-w-md mx-auto mb-6">
+
+              <div className="text-left max-w-md mx-auto">
                 <p className="text-lg font-sans font-semibold text-foreground mb-3">This is for you if:</p>
                 <ul className="space-y-2 text-muted-foreground font-sans">
                   <li className="flex items-start gap-2"><span className="text-gold mt-1">•</span> you live abroad and feel emotionally overwhelmed</li>
